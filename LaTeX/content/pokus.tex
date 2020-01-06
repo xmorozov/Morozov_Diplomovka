@@ -1,0 +1,63 @@
+For the upright operation point:\\
+Initial condition:
+\begin{equation}
+\begin{split}
+\begin{bmatrix}
+x_1 & x_2 & x_3 & x_4
+\end{bmatrix}^T& = 
+\begin{bmatrix}
+0 & 0 & 0 & 0
+\end{bmatrix}^T\\
+\tau& = 0
+\end{split}
+\end{equation}
+Constant matrices:
+\begin{equation} A = 
+\begin{bmatrix}
+0&1&0&0\\0&0&-15.88&0\\0&0&0&1\\0&0&&0
+\end{bmatrix}
+\end{equation}
+\begin{equation}B = 
+\begin{bmatrix}
+0\\ \\0\\
+\end{bmatrix}
+\end{equation}
+For the downside operation point:\\
+Initial condition:
+\begin{equation}
+\begin{split}
+\begin{bmatrix}
+x_1 & x_2 & x_3 & x_4
+\end{bmatrix}^T& = 
+\begin{bmatrix}
+0 & 0 & \pi & 0
+\end{bmatrix}^T\\
+\tau& = 0
+\end{split}
+\end{equation}
+Constant matrices:
+\begin{equation} A = 
+\begin{bmatrix}
+0&1&0&0\\0&0&-15.88&0\\0&0&0&1\\0&0&&0
+\end{bmatrix}
+\end{equation}
+\begin{equation}B = 
+\begin{bmatrix}
+0\\ \\0\\
+\end{bmatrix}
+\end{equation}
+
+
+
+
+\begin{equation}
+\begin{split}
+\^{x_{k+1}} &= Ax_k + Bu_k\\
+\^{x_{k+2}} &= A\^{x_{k+1}} + Bu_{k+1}\\
+&= A^2x_k + ABu_k + Bu_{k+1}\\
+\^{x_{k+3}} &= A\^{x_{k+2}} + Bu_{k+2}\\
+&= A^3x_k + A^2Bu_k + ABu_{k+1} + Bu_{k+2}\\
+&\vdots\\
+\^{x_{k+N}} &= A^Nx_k+\sum_{j=k}^{k+N-1}A^jBu_{k+N-j-1}
+\end{split}
+\end{equation}
