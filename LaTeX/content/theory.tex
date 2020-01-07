@@ -63,7 +63,7 @@ Now these non-linear differential equations we can write in the form of matrices
 \end{bmatrix}
 \end{equation}
 or:
-\begin{equation}\dot{\textbf{x}} = f(\textbf{x},u) =\begin{bmatrix}f_1(\textbf{x},u)\\f_2(x,u)\\f_3(x,u)\\f_4(x,u)\end{bmatrix} \end{equation}
+\begin{equation}\dot{x} = f(x,u) =\begin{bmatrix}f_1(x,u)\\f_2(x,u)\\f_3(x,u)\\f_4(x,u)\end{bmatrix} \end{equation}
 So that’s our non-linear dynamic model of the process. But only the NMPC controller is able to operate with such a model.  So, to make that model suitable for LQR and MPC controller we can approximate that non-linear model by a linear model as follows:
 \begin{equation}\dot{x} = Ax + Bu\end{equation}
 And the constant matrices are derived as:
