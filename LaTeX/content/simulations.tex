@@ -1,5 +1,6 @@
 \chapter{Simulation Results}
 \section{LQR}
+As first we design a Linear-Quadratic regulator to control the process in the upright position. To simulate the system's behavior we use matrices $A$ and $B$, which were linearised relative to the upper operating point.\\
 To design an LQR we have to define weight matrices $Q$ and $R$:
 \begin{equation}
 	Q = \begin{bmatrix}
@@ -7,7 +8,7 @@ To design an LQR we have to define weight matrices $Q$ and $R$:
 	0&0.05&0&0\\
 	0&0&10&0\\
 	0&0&0&0.5
-	\end{bmatrix}; \quad R = \begin{bmatrix}1\end{bmatrix};
+	\end{bmatrix} \quad R = 1
 \end{equation}
 Then we calculate state-feedback gain:
 \begin{equation}
@@ -17,16 +18,18 @@ Now we choose the initial condition:
 \begin{equation}
 	x_0 = \begin{bmatrix}
 	-1&-2&0.5&2
-	\end{bmatrix}^T
+	\end{bmatrix}^\intercal
 \end{equation}
-\begin{figure}[h]
+\newpage
+\begin{figure}[H]
 	\centering
-	\includegraphics[width=.6\linewidth]{images/LQR}
+	\includegraphics[width=1.1\linewidth]{images/LQR}
 	\caption{Control with LQR: simulation}
 	\label{lqr}
 \end{figure}
 \newpage
 \section{MPC}
+An MPC comtoller will be used with the same purpose as LQR: to control the pendulum at the upright position. The optimization problem \ref{mpcformu;ation} is solved via using $quadprog$ solver in MATLLAB.
 To design an MPC controller we have to define weight matrices $Q_x$ and $Q_u$:
 \begin{equation}
 Q_x = \begin{bmatrix}
@@ -34,7 +37,7 @@ Q_x = \begin{bmatrix}
 0&0.08&0&0\\
 0&0&10&0\\
 0&0&0&0.2
-\end{bmatrix}; \quad Q_u = \begin{bmatrix}1\end{bmatrix};
+\end{bmatrix} \quad Q_u = 1
 \end{equation}
 And set constrains for the control input:
 \begin{equation}
@@ -44,27 +47,30 @@ And set constrains for the control input:
 	\end{split}
 \end{equation}
 We use the same initial condition as with the LQR
-\begin{figure}[h]
+\newpage
+\begin{figure}[H]
 	\centering
-	\includegraphics[width=.6\linewidth]{images/MPC}
+	\includegraphics[width=1.1\linewidth]{images/MPC}
 	\caption{Control with MPC: simulation}
 	\label{mpc}
 \end{figure}
 \newpage
 \section{Swing-Up}
 The main purpose of the Swing-Up controller is to swing the pendulum from the downside position into the upright position where the control of the process will be taken by another controller.
-\begin{figure}[h]
+\newpage
+\begin{figure}[H]
 	\centering
-	\includegraphics[width=.6\linewidth]{images/Swing}
+	\includegraphics[width=1.1\linewidth]{images/Swing}
 	\caption{Control with Swing-Up: simulation}
 	\label{swing}
 \end{figure}
 \newpage
-\section{Combined LQR/Swing-Up and MPC/Swing-up control}
+\section{Combined Control Strategy}
 Now we combine the Swing-Up controller with an LQR or MPC controller to fully control the process. The strategy is the following: at the beginning, we oscillate the pendulum from the steady-state at the downside position with the Swing-Up controller. With every swing the amplitude of swings is increasing. And as the position of the pendulum reaches the value of 0.5 radians, we are switching to another controller. And also we have to recalculate the predicted states because while we control the system with the Swing-Up controller, states are calculated via matrices A and B, which were linearised relative to downside operating point. While LQR and MPC controller require matrices A and B, which were linearised relative to the upright operating point.
-\begin{figure}[h]
+\newpage
+\begin{figure}[H]
 	\centering
-	\includegraphics[width=.6\linewidth]{images/MPC-LQR_Swing}
+	\includegraphics[width=1.1\linewidth]{images/MPC-LQR_Swing}
 	\caption{Combined LQR/Swing-Up and MPC/Swing-up control: simulation}
 	\label{combo}
 \end{figure}
@@ -83,11 +89,12 @@ As we have all the toolboxes, we use nonlinear model of the process \ref{nonlinm
 	0&0.1&0&0\\
 	0&0&2&0\\
 	0&0&0&0.1
-	\end{bmatrix}; \quad Q_u = \begin{bmatrix}0.1\end{bmatrix}
+	\end{bmatrix} \quad Q_u = 0.1
 \end{equation}
-\begin{figure}[h]
+\newpage
+\begin{figure}[H]
 	\centering
-	\includegraphics[width=.6\linewidth]{images/NMPC}
+	\includegraphics[width=1.1\linewidth]{images/NMPC}
 	\caption{NMPC control: simulation}
 	\label{NMPC}
 \end{figure}
