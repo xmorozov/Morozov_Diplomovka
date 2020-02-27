@@ -31,21 +31,71 @@ switch settings.model
       case 'FurutaPendulum'
         
         figure(1);
-        subplot(321)
+        subplot(511)
         plot(time,state_sim(:,1));
-        title('\theta0');
-        subplot(322)
+        %title('Arm Position');
+        box on
+        xlabel('t [s]')
+        ylabel('$\theta_0\,[rad]$','interpreter','latex')
+        grid on
+        axis([0 4 -0.55 0.55])
+        subplot(512)
         plot(time,state_sim(:,2)*180/pi);
-        title('d\theta0');
-        subplot(323)
+        %title('Arm Velocity');
+        xlabel('t [s]')
+        ylabel('$\dot{\theta_0}\,[rad s^{-1}]$','interpreter','latex')
+        axis([0 4 -420 80])
+        grid on
+        subplot(513)
         plot(time,state_sim(:,3));
-        title('\theta1');
-        subplot(324)
+        %title('Pendulum Position');
+        axis([0 4 -0.5 3.8])
+        xlabel('t [s]')
+        ylabel({'$\theta_1\,[rad]$';' '},'interpreter','latex')
+        grid on
+        subplot(514)
         plot(time,state_sim(:,4)*180/pi);
-        title('d\theta1');
-        subplot(3,2,[5 6]);
-        title('F');
-        stairs(time,controls_MPC(:,1));  
+        %title('Pendulum Velocity');
+        axis([0 4 -600 50])
+        xlabel('t [s]')
+        ylabel('$\dot{\theta_1}\,[rads^{-1}]$','interpreter','latex')
+        grid on
+        subplot(515);
+        stairs(time,controls_MPC(:,1));
+        %title('Torque');
+        xlabel('t [s]')
+        ylabel('$\tau\,[V]$','interpreter','latex')
+        grid on
+        
+        close all
+        
+        subplot(311)
+        plot(time,rad2deg(state_sim(:,1)));
+        %title('Arm Position');
+        box on
+        xlabel('t [s]')
+        ylabel('$\theta_0\,[deg]$','interpreter','latex')
+        grid on
+        axis([0 4 -30 30])
+        subplot(312)
+        plot(time,rad2deg(state_sim(:,3)));
+        %title('Pendulum Position');
+        axis([0 4 -20 200])
+        xlabel('t [s]')
+        ylabel({'$\theta_1\,[deg]$';' '},'interpreter','latex')
+        grid on
+        box on
+        subplot(313);
+        hold on
+        stairs(time,controls_MPC(:,1));
+        xlabel('t [s]')
+        ylabel('$\tau\,[V]$','interpreter','latex')
+        grid on
+        box on
+        plot([0,4],[10 10],'k--')
+        plot([0,4],[-10 -10],'k--')
+        axis([0 4 -10.5 10.5])
+        hold off
     case 'ChainofMasses_Lin'
         figure(1);
         subplot(311);

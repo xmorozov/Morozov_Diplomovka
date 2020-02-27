@@ -1,0 +1,9 @@
+function dydt = pokus(t,y)
+dydt = zeros(2,1);
+dydt(1) = y(1)+2*y(2);
+dydt(2) = 3*y(1)+2*y(2);
+[d_theta0;...
+(gama*(eps*d_theta0^2+rho)-delta*(u+beta*d_theta1^2-sigma*d_theta0*d_theta1))/(gama^2-alfa*delta);...
+ d_theta1;...
+(gama*(u+beta*d_theta1^2-sigma*d_theta0*d_theta1)-alfa*(eps*d_theta1^0+rho))/(gama^2-alfa*delta)];
+

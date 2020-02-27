@@ -11,21 +11,21 @@ eps = l1^2*m1*sin(theta1)*cos(theta1);
 rho = m1*g*l1*sin(theta1);
 sigma = 2*l1^2*m1*sin(theta1)*cos(theta1);
 
-x_states = [d_theta0;...
+states = [d_theta0;...
          (gama*(eps*d_theta0^2+rho)-delta*(tau+beta*d_theta1^2-sigma*d_theta0*d_theta1))/(gama^2-alfa*delta);...
           d_theta1;...
           (gama*(tau+beta*d_theta1^2-sigma*d_theta0*d_theta1)-alfa*(eps*d_theta1^0+rho))/(gama^2-alfa*delta)];
       
       
-A = [diff(x_states(1,1),theta0), diff(x_states(1,1),d_theta0), diff(x_states(1,1),theta1), diff(x_states(1,1),d_theta1);...
-    diff(x_states(2,1),theta0), diff(x_states(2,1),d_theta0), diff(x_states(2,1),theta1), diff(x_states(2,1),d_theta1);...
-    diff(x_states(3,1),theta0), diff(x_states(3,1),d_theta0), diff(x_states(3,1),theta1), diff(x_states(3,1),d_theta1);...
-    diff(x_states(4,1),theta0), diff(x_states(4,1),d_theta0), diff(x_states(4,1),theta1), diff(x_states(4,1),d_theta1)];
+A = [diff(states(1,1),theta0), diff(states(1,1),d_theta0), diff(states(1,1),theta1), diff(states(1,1),d_theta1);...
+    diff(states(2,1),theta0), diff(states(2,1),d_theta0), diff(states(2,1),theta1), diff(states(2,1),d_theta1);...
+    diff(states(3,1),theta0), diff(states(3,1),d_theta0), diff(states(3,1),theta1), diff(states(3,1),d_theta1);...
+    diff(states(4,1),theta0), diff(states(4,1),d_theta0), diff(states(4,1),theta1), diff(states(4,1),d_theta1)];
 
-B = [diff(x_states(1,1),tau);...
-    diff(x_states(2,1),tau);...
-    diff(x_states(3,1),tau);...
-    diff(x_states(4,1),tau)];
+B = [diff(states(1,1),tau);...
+    diff(states(2,1),tau);...
+    diff(states(3,1),tau);...
+    diff(states(4,1),tau)];
    
 %% System parametres
 m0 = 0.6; % mass of arm
@@ -36,7 +36,7 @@ l1 = 0.21; % location of pendulum center mass
 I0 = (1/3)*m0*L0^2; % moment of iteria of the arm
 I1 = (1/12)*m1*L1^2; % moment of iteria of pendulum
 g = 9.81; % gravity
-om = sqrt(m1*g*l1/I1);
+
 %% Operation points
 tau=0;
 theta0=0;
@@ -66,147 +66,101 @@ B_down = [0;...
 %% System
 Ts=0.02;
 [nx,nu] = size(B);
-C = [0,0,1,0];
+C = eye(nx);
 ny = size(C,1);
 D = zeros(ny,nu);
-%up-right
-sys1_d = ss(A_up,B_up,C,D);
-sys1_d = c2d(sys1_d,Ts);
-%downside
-sys2_c = ss(A_down,B_down,C,D);
-sys2_d = c2d(sys2_c,Ts);
+sys_c = ss(A_up,B_up,C,D);
+sys_d = c2d(sys_c,Ts);
 
-%% LQR setup
-Q = diag([0.6 0.05 10 0.5]);
-R = 1;
-K = dlqr(sys1_d.A,sys1_d.B,Q,R);
+A = sys_d.A;
+B = sys_d.B;
+C = sys_d.C;
+D = sys_d.D;
 
 %% MPC setup
+
 N = 20;
-u = sdpvar(nu,N);
-x = sdpvar(nx,N+1);
-y = sdpvar(nx,N);
-Qx = diag([5 0.08 10 0.2]);
+Qx = diag([8 0.08 10 0.2]);
 Qu = 1;
-u_cst = [-5,5];
+
+% vytvaranie sdpvarov
+xx = cell(N+1, 1);
+uu = cell(N, 1);
+yy = cell(N, 1);
+for kf = 1:1:N+1
+    xx{kf} = sdpvar(nx, 1, 'full');
+    if kf<N+1
+        uu{kf} = sdpvar(nu, 1, 'full');
+        yy{kf} = sdpvar(ny, 1, 'full');
+    end
+end
+
+% vytvaranie obj a cst
 cst = [];
 obj = 0;
-ISE_L = 0;
-ISE_M = 0;
+u_cst = [-5,5];
 for i = 1:N
-    obj = obj+x(:,i)'*Qx*x(:,i)+u(:,i)'*Qu*u(:,i);
-    cst = cst+[x(:,i+1) == sys1_d.A*x(:,i)+sys1_d.B*u(:,i)];
-    cst = cst+[y(:,i) == sys1_d.C*x(:,i)+sys1_d.D*u(:,i)];
-    cst = cst+[u_cst(1)<=u(:,i)<=u_cst(2)];
+    obj = obj + xx{i}'*Qx*xx{i} + uu{i}'*Qu*uu{i};
+    
+    cst = cst + [xx{i+1} == A*xx{i} + B*uu{i}];
+    cst = cst + [yy{i} == C*xx{i}+D*uu{i}];
+    
+    cst = cst + [u_cst(1) <= uu{i} <= u_cst(2)];
 end
+
+
+%% Simulacie
+tf = 3; % sekundy
+kf = tf/Ts;
+x0 = [-1;-2;0.5;2];
+%x0 = [-0.3151;-2.6642;-2.0901;-11.2293];
+
 options = sdpsettings('verbose',0,'cachesolvers',1,'solver','quadprog');
-OPT = optimizer(cst,obj,options,x(:,1),u(:,1));
+OPT = optimizer(cst, obj, options, xx{1}, uu{1});
 
-%% Simulation
-kf = 300;
-x0 = [0,0,0.01,-0.01];
+mpc_x = zeros(nx,kf+1);
+mpc_u = zeros(nu,kf);
+mpc_y = zeros(nx,kf);
+mpc_x(:,1)=x0;
 
-lqr_x = zeros(nx,kf);
-lqr_u = zeros(nu,kf);
-lqr_y = zeros(1,kf);
-
-x_sim = zeros(nx,kf);
-u_sim = zeros(nu,kf);
-y_sim = zeros(1,kf);
-x_sim(:,1)=x0;
-lqr_x(:,1)=x0; %LQR
-swg = 1;
-for k = 1:kf
-    
-    if swg == 1 %swing up
-        E = (m1*g*l1/2)*((x_sim(4,k)/om)^2+cos(x_sim(3,k)-1));
-        u_sim(:,k) = 4*E*sign(x_sim(4,k)*cos(x_sim(3,k)));
-        x_sim(:,k+1) = sys2_d.A*x_sim(:,k)+sys2_d.B*u_sim(:,k);
-        y_sim(k) = sys2_d.C*x_sim(:,k)+sys2_d.D*u_sim(:,k)+pi;
-        
-        %LQR
-        lqr_u(k) = u_sim(k);
-        lqr_x(:,k+1) = x_sim(:,k+1);
-        lqr_y(k) = y_sim(k);
-        
-        if y_sim(k)<0.9 
-           swg = 0;
-           x_sim(3,k+1)=x_sim(3,k+1)+pi;
-           lqr_x(3,k+1)=lqr_x(3,k+1)+pi;
-        end
-    
-    else %MPC
-        u_sim(:,k) = OPT(x_sim(:,k));
-        x_sim(:,k+1) = sys1_d.A*x_sim(:,k)+sys1_d.B*u_sim(:,k);
-        y_sim(:,k) = sys1_d.C*x_sim(:,k)+sys1_d.D*u_sim(:,k);
-        
-        %LQR
-        lqr_u(:,k) = -K*lqr_x(:,k);
-        lqr_x(:,k+1) = sys1_d.A*lqr_x(:,k)+sys1_d.B*lqr_u(:,k);
-        lqr_y(:,k) = sys1_d.C*lqr_x(:,k);
-        
-        %ISE
-        ISE_L = ISE_L+(lqr_y(:,k))^2;
-        ISE_M = ISE_M+(y_sim(:,k))^2;
-    end
+for i = 1:kf
+    % optimizacia
+    t0 = cputime;
+    [mpc_u(:,i), problem] = OPT(mpc_x(:,i));
+    t1 = cputime - t0
+    if problem ~=0
+       fprintf('PROBLEM!')
+       problem
+       return
+   end
+    % simulacia
+    mpc_x(:,i+1) = A*mpc_x(:,i)+B*mpc_u(:,i);
+    %mpc_x(:,i+1) = x_next(mpc_x(:,i), mpc_u(:,i));
+    mpc_y(:,i) = C*mpc_x(:,i)+D*mpc_u(:,i);
 
 end
-x_sim(:,end) = [];
-lqr_x(:,end) = [];
+mpc_x(:,end) = [];
+
 %% Plots
 t = linspace(0,kf*Ts,kf);
-subplot(3,1,1)
-plot(t,rad2deg(x_sim(1,:)))
+figure
+txt = {'\theta_0','d\theta_0','\theta_1','d\theta_1'};
+for i = 1:nx
+    subplot(nx+1,1,i)
+    hold on
+    plot(t,mpc_y(i,1:end))
+    title(txt{i})
+    legend('MPC')
+    xlabel('t [s]')
+    hold off
+end
+subplot(nx+1,1,nx+1)
 hold on
-plot(t,rad2deg(lqr_x(1,:)))
-legend({'MPC','LQR'},'Orientation','horizontal')
-grid on
-box on
+plot(t,mpc_u)
+hold off
+legend('MPC')
 xlabel('t [s]')
-ylabel('$\theta_0\,[deg]$','interpreter','latex')
-axis([0 6 -140 30])
+title('u')
 
-subplot(3,1,2)
-plot(t,rad2deg(y_sim))
-hold on
-plot(t,rad2deg(lqr_y))
-legend({'MPC','LQR'},'Orientation','horizontal')
-%title('Pendulum position')
-xlabel('t [s]')
-ylabel('$\theta_1\,[deg]$','interpreter','latex')
-axis([0 6 -40 300])
-grid on
-hold off
-subplot(3,1,3)
-hold on
-plot(t,u_sim,t,lqr_u)
-plot([t(1),t(end)],[u_cst(1),u_cst(1)],'k--');
-plot([t(1),t(end)],[u_cst(2),u_cst(2)],'k--');
-%title('Torque')
-xlabel('t [s]')
-ylabel('$\tau\,[V]$','interpreter','latex')
-axis([0 6 -5.3 5.3])
-grid on
-box on
-hold off
-legend({'MPC','LQR'},'Orientation','horizontal')
-% figure
-% txt = {'\theta_0','d\theta_0','\theta_1','d\theta_1'};
-% for i = 1:nx
-%     subplot(nx+1,1,i)
-%     hold on
-%     plot(t,y_sim(i,1:end))
-%     title(txt{i})
-%     legend('MPC')
-%     xlabel('t [s]')
-%     hold off
-% end
-% subplot(nx+1,1,nx+1)
-% hold on
-% plot(t,u_sim)
-% hold off
-% legend('MPC')
-% xlabel('t [s]')
-% title('u')
-ISE_L
-ISE_M
+
+
