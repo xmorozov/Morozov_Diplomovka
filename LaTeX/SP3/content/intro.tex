@@ -1,0 +1,7 @@
+\chapter{Introduction}
+\label{ch:intro}
+Nowadays the PID controller is the most commonly used controller in process control engineering. They are cheap, easy to tune and could be easily implemented in PLC what makes it a good choice for single-input and single-output (SISO) systems without significant time delay. However it almost unsuitable for multiple-input and multiple-output (MIMO) systems don’t handle constraints and disturbances, and we can’t guarantee that the PID controller ensures the best process behavior. That’s why advanced control strategies are required.
+
+This work is dedicated to designing the optimal controllers for the fast nonlinear process with complex dynamics. And the rotational inverted pendulum or Furuta’s pendulum is a great example of such a process. It was invented in 1992 at Tokyo Institute of Technology by Katsuhisa as an example of a complex nonlinear oscillator. This pendulum is underactuated and extremely non-linear due to gravitational forces and Coriolis interactions.
+
+As the model of the process behavior is available the final thesis is consists of two main parts: first is designing of the controllers and their testing in simulations and the second part is the final tuning and controllers testing on the real pendulum. The process is controlled in three different ways: first is the LQR combined with the Swing-up controller, the second is MPC controller with the Swing-up controller and the third is the NMPC controller. This work demonstrates how advanced control strategies could be used to control a complex process.
