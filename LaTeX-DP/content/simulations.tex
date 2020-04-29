@@ -38,15 +38,15 @@ with the discretization step $0.02$, what is equal to real devices sampling time
 	0&1&-0.3140&-0.0031\\
 	0&0&\ \; \,1.0161&\ \; \,0.0201\\
 	0&0&\ \; \,1.6096&\ \; \,1.0161
-	\end{bmatrix}\\
+	\end{bmatrix},\\
 	\ui{B}{D} &=\begin{bmatrix}
 	\ \; \,0.0035\\
 	\ \; \,0.3509\\
 	-0.0081\\
 	-0.8083
-	\end{bmatrix}\\
-	\ui{C}{D} &= \begin{bmatrix}0&0&1&0\end{bmatrix}\\
-	\ui{D}{D} &= 0
+	\end{bmatrix},\\
+	\ui{C}{D} &= \begin{bmatrix}0&0&1&0\end{bmatrix},\\
+	\ui{D}{D} &= 0.
 	\end{align}
 \end{subequations}
 The next step is to design weight matrices $\ui{Q}{x}$ and $\ui{Q}{u}$.
@@ -56,7 +56,7 @@ The next step is to design weight matrices $\ui{Q}{x}$ and $\ui{Q}{u}$.
 0&0.08&0&0\\
 0&0&10&0\\
 0&0&0&0.2
-\end{bmatrix}, \quad \ui{Q}{u} = 1
+\end{bmatrix}, \quad \ui{Q}{u} = 1.
 \end{equation}
 The main weights are given obviously to the position of the pendulum, what is our main controlled parameter, and the position of the arm, to prevent the possible scenario when the pendulum is stabilized at the upright position and the arm rotates constantly. 
 The remain MPC parametres are shown in the following table
@@ -101,7 +101,7 @@ To perform Swing-Up Control of the pendulum, a combined control strategy should 
 	\label{combo}
 \end{figure}
 \newpage
-\section{NMPC}
+\section{Nonlinear Model Predictive Controller}
 To design a Nnlinear Model Predictive Controller freely availabe \textit{MATMPC} toolbox is used. This toolbox which could be downloaded from \textit{https://github.com/chenyutao36/MATMPC}. Also additional software is required:
 \begin{itemize}
 	\item \textbf{CasAdi} - the state-of-the-art automatic/algorithmic differentiation toolbox.
@@ -112,7 +112,7 @@ Basically \tt{MATMPC} solves the folloving NLP problem:
 \begin{subequations}\label{NLP}
 	\begin{align}
 	\min_{U} &\sum_{k=0}^{N-1} (\left\| \ui{Q}{x}x_{k}\right\|_p+\left\|\ui{Q}{u}u_{k}\right\|_p)\\
-	s.t.\quad&x_{k+1} = \phi(x_{k},u_{k})\qquad k \in \mathbb{N}_0^{N-1}\\
+	\text{s.t.}\quad&x_{k+1} = \phi(x_{k},u_{k})\qquad k \in \mathbb{N}_0^{N-1}\\
 	&x_0 = x(t)\\
 	&x_{k}\in\mathcal{X}\qquad\qquad\qquad\!\: k \in \mathbb{N}_0^{N-1}\\
 	&u_{k}\in\mathcal{U}\qquad\qquad\qquad\, k \in \mathbb{N}_0^{N-1}
@@ -144,7 +144,7 @@ g_{u_k}^i
 \Delta x_k\\
 \Delta u_k
 \end{bmatrix} ) \\
-s.t. \quad & \Delta x_0=\hat{x}_0-x_0\\
+\text{s.t.} \quad & \Delta x_0=\hat{x}_0-x_0\\
 & \Delta x_{k+1}=A_{k}^i \Delta x_{k}+ B_{k}^i \Delta u_{k} +a_{k}^i \qquad k \in \mathbb{N}_0^{N-1}\\
 & \Delta x_{min}\leq \Delta x_k\leq \Delta x_{max}\qquad\qquad\quad\; k \in \mathbb{N}_1^{N}\\
 & \Delta u_{min}\leq \Delta u_k\leq\Delta u_{max}\qquad\qquad\quad\; k \in \mathbb{N}_0^{N-1}\\
@@ -153,21 +153,21 @@ s.t. \quad & \Delta x_0=\hat{x}_0-x_0\\
 where 
 \begin{equation}
 \begin{aligned}
-&\Delta \mathbf{x}=\mathbf{x}-\mathbf{x}^i\\
-&\Delta \mathbf{u}=\mathbf{u}-\mathbf{u}^i
+&\Delta \mathbf{x}=\mathbf{x}-\mathbf{x}^i,\\
+&\Delta \mathbf{u}=\mathbf{u}-\mathbf{u}^i,
 \end{aligned}
 \end{equation}
 and
 \begin{equation}\label{QP data}
 \begin{aligned}
 &g_{x_k}^i = \frac{\partial d^i}{\partial x_k},\quad g_{u_k}^i = \frac{\partial d^i}{\partial u_k},\\
-&A_k^i=\frac{\partial \phi_k}{\partial x_k}, \quad B_k^i=\frac{\partial \phi_k}{\partial u_k},\quad a_k^i = \phi(x_k^i,u_k^i)-x_{k+1}^i,\\
+&A_k^i=\frac{\partial \phi_k}{\partial x_k}, \quad B_k^i=\frac{\partial \phi_k}{\partial u_k},\quad a_k^i = \phi(x_k^i,u_k^i)-x_{k+1}^i.\\
 \end{aligned}
 \end{equation}
 Where outer objective function $d:\mathbb{R}^{n_y}\rightarrow \mathbb{R}$, is convex. The Hessian matrices $Q_k,S_k,R_k$ can be approximated by the Gauss-Newton (GN) or the Generalized-Gauss-Newton (GGN) method. By solving that QP the optimal primal solution $(\Delta \mathbf{x}^{i^*}, \Delta \mathbf{u}^{i^*})$ is obtained. That primal solution is used to update the solution of \eqref{NLP} by
 \begin{subequations}
 	\begin{align}
-	\mathbf{x}^{i+1} = \mathbf{x}^{i} + \alpha^i \Delta\mathbf{x}^{i^*}, \\ \mathbf{u}^{i+1} = \mathbf{u}^{i} + \alpha^i \Delta\mathbf{u}^{i^*},
+	\mathbf{x}^{i+1} = \mathbf{x}^{i} + \alpha^i \Delta\mathbf{x}^{i^*}, \\ \mathbf{u}^{i+1} = \mathbf{u}^{i} + \alpha^i \Delta\mathbf{u}^{i^*}.
 	\end{align}
 \end{subequations}
 where $\alpha^i$ is the step length determined by globalization strategies. 
@@ -178,7 +178,7 @@ Now only weight matrices $Q_x$ and $Q_u$ remain:
 	0&0.1&0&0\\
 	0&0&2&0\\
 	0&0&0&0.1
-	\end{bmatrix} \quad \ui{Q}{u} = 0.1
+	\end{bmatrix}, \quad \ui{Q}{u} = 0.1.
 \end{equation}
 And now with such setup, a swing-up control of the Furuta Pendulum is performed
 \newpage

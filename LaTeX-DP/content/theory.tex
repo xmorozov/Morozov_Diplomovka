@@ -77,14 +77,14 @@ The angular velocity of Arm is given by
 \begin{equation}
 	\omega_0 = 	\begin{bmatrix}
 					0 & 0 & \dot{\theta}_0
-				\end{bmatrix}^\intercal
+				\end{bmatrix}^\intercal.
 \end{equation}
 Let the velocity of the base frame be at rest, such that the joint
 between the frame and the Arm is also at rest, that is,
 \begin{equation}
 	\text{\textbf{v}}_0 = 	\begin{bmatrix}
 					0 & 0 & 0
-			\end{bmatrix}^\intercal
+			\end{bmatrix}^\intercal.
 \end{equation}
 The total linear velocity of the centre of mass of Arm is
 given by
@@ -93,7 +93,7 @@ given by
 					l_0 & 0 & 0
 				\end{bmatrix}^\intercal = \begin{bmatrix}
 				0 & \dot{\theta}_0l_0 & 0
-				\end{bmatrix}^\intercal
+				\end{bmatrix}^\intercal.
 \end{equation}
 The angular velocity of the Pendulum is given by
 \begin{equation}
@@ -102,7 +102,7 @@ The angular velocity of the Pendulum is given by
 			\end{bmatrix}^\intercal = 
 			\begin{bmatrix}
 				-\cos(\theta_1)\dot{\theta}_0 & \sin(\theta_1)\dot{\theta}_0 & \dot{\theta}_1
-			\end{bmatrix}^\intercal
+			\end{bmatrix}^\intercal.
 \end{equation}
 The velocity of the joint between Arm and the pendulum in
 reference frame 1 is
@@ -114,7 +114,7 @@ reference frame 1 is
 		\dot{\theta}_0L_0\sin(\theta_1)\\
 		\dot{\theta}_0L_0\cos(\theta_1)\\
 		0
-	\end{bmatrix}
+	\end{bmatrix}.
 \end{equation}
 The total linear velocity of the centre of mass of Arm 2 is
 given by
@@ -126,7 +126,7 @@ given by
 		\dot{\theta}_0L_0\sin(\theta_1)\\
 		\dot{\theta}_0L_0\cos(\theta_1) + \dot{\theta}_1l_1\\
 		-\dot{\theta}_0l_1\sin(\theta_1)
-	\end{bmatrix}														
+	\end{bmatrix}.														
 \end{equation}
 \subsubsection{Energies}
 The potential energy of Arm is
@@ -153,14 +153,14 @@ and the kinetic energy is
 The total potential and kinetic energies are given, respectively, by
 \begin{subequations}
 	\begin{align}
-		\ui{E}{p} &= \ui{E}{p0} + \ui{E}{p1} \\
-		\ui{E}{k} &= \ui{E}{k0} + \ui{E}{k1}
+		\ui{E}{p} &= \ui{E}{p0} + \ui{E}{p1}, \\
+		\ui{E}{k} &= \ui{E}{k0} + \ui{E}{k1}.
 	\end{align}
 \end{subequations}
 \subsubsection{Lagrangian}
 The Lagrangian is the difference in kinetic and potential energies
 \begin{equation}
-	L = \ui{E}{k} - \ui{E}{p}
+	L = \ui{E}{k} - \ui{E}{p}.
 \end{equation}
 From this, we obtain the Euler-Lagrange equations for two degrees of freedom system
 \begin{subequations}
@@ -172,20 +172,20 @@ From this, we obtain the Euler-Lagrange equations for two degrees of freedom sys
 Evaluating the terms of those Euler-Lagrange equations and following substitution gives the following equations of motion
 \begin{subequations}
 	\begin{align}
-	\ddot{\theta}_0 &= \frac{\gamma(\epsilon\dot{\theta}_0^2+\rho)-\delta(\tau+\beta\dot{\theta}_1^2-\sigma\dot{\theta}_0\dot{\theta}_1)}{\gamma^2-\alpha\delta}\label{motion1}\\
-	\ddot{\theta}_1 &= \frac{\gamma(\tau+\beta\dot{\theta}_1^2-\sigma\dot{\theta}_0\dot{\theta}_1)-\alpha(\epsilon\dot{\theta}_0^2+\rho)}{\gamma^2-\alpha\delta}\label{motion2}
+	\ddot{\theta}_0 &= \frac{\gamma(\epsilon\dot{\theta}_0^2+\rho)-\delta(\tau+\beta\dot{\theta}_1^2-\sigma\dot{\theta}_0\dot{\theta}_1)}{\gamma^2-\alpha\delta}\label{motion1},\\
+	\ddot{\theta}_1 &= \frac{\gamma(\tau+\beta\dot{\theta}_1^2-\sigma\dot{\theta}_0\dot{\theta}_1)-\alpha(\epsilon\dot{\theta}_0^2+\rho)}{\gamma^2-\alpha\delta}\label{motion2},
 	\end{align}
 \end{subequations}
 where
 \begin{subequations}
 	\begin{align}
-	\alpha &= I_0+L_0^2m_1+l_1^2m_1\sin^2\theta_1\\
-	\beta &= L_0m_1l_1\sin\theta_1 \\
-	\gamma &= L_0m_1l_1\cos\theta_1\\
-	\delta &= I_1+l_1^2m_1\\
-	\epsilon &= l^2_1m_1\sin\theta_1\cos\theta_1\\
-	\rho &= m_1gl_1\sin\theta_1\\
-	\tau &= 2l^2_1m_1\sin\theta_1\cos\theta_1
+	\alpha &= I_0+L_0^2m_1+l_1^2m_1\sin^2\theta_1,\\
+	\beta &= L_0m_1l_1\sin\theta_1, \\
+	\gamma &= L_0m_1l_1\cos\theta_1,\\
+	\delta &= I_1+l_1^2m_1,\\
+	\epsilon &= l^2_1m_1\sin\theta_1\cos\theta_1,\\
+	\rho &= m_1gl_1\sin\theta_1,\\
+	\tau &= 2l^2_1m_1\sin\theta_1\cos\theta_1.
 	\end{align}
 \end{subequations}
 \subsection{State-Space Reprentation} 
@@ -196,19 +196,19 @@ x_1(t)&x_2(t)&x_3(t)&x_4(t)
 \end{bmatrix}^\intercal = 
 \begin{bmatrix}
 \theta_0(t)&\dot{\theta}_0(t)&\theta_1(t)&\dot{\theta}_1(t)
-\end{bmatrix}^\intercal
+\end{bmatrix}^\intercal.
 \end{equation}
 And the control variable:
-\begin{equation} u(t) = \tau(t) \end{equation}
+\begin{equation} u(t) = \tau(t). \end{equation}
 \subsubsection{Nonlinear Model}
 Equations (\ref{motion1}) and (\ref{motion2}) are further utilized to establish the state
 space model
 \begin{subequations}
 	\begin{align}
-	\dot{x}_1 &= \dot{\theta_0} \\
-	\dot{x}_2 &= \frac{\gamma(\epsilon\dot{\theta_0}^2+\rho)-\delta(\tau+\beta\dot{\theta_1}^2-\sigma\dot{\theta_0}\dot{\theta_1})}{\gamma^2-\alpha\delta}\\
-	\dot{x}_3 &= \dot{\theta_1}\\
-	\dot{x}_4 &= \frac{\gamma(\tau+\beta\dot{\theta_1}^2-\sigma\dot{\theta_0}\dot{\theta_1})-\alpha(\epsilon\dot{\theta_0}^2+\rho)}{\gamma^2-\alpha\delta}
+	\dot{x}_1 &= \dot{\theta_0}, \\
+	\dot{x}_2 &= \frac{\gamma(\epsilon\dot{\theta_0}^2+\rho)-\delta(\tau+\beta\dot{\theta_1}^2-\sigma\dot{\theta_0}\dot{\theta_1})}{\gamma^2-\alpha\delta},\\
+	\dot{x}_3 &= \dot{\theta_1},\\
+	\dot{x}_4 &= \frac{\gamma(\tau+\beta\dot{\theta_1}^2-\sigma\dot{\theta_0}\dot{\theta_1})-\alpha(\epsilon\dot{\theta_0}^2+\rho)}{\gamma^2-\alpha\delta}.
 	\end{align}
 \end{subequations}
 Now these non-linear differential equations could be written in the form of matrices:
@@ -220,15 +220,15 @@ Now these non-linear differential equations could be written in the form of matr
 \frac{\gamma(\epsilon\dot{\theta}_0^2+\rho)-\delta(\tau+\beta\dot{\theta}_1^2-\sigma\dot{\theta}_0\dot{\theta}_1)}{\gamma^2-\alpha\delta}\\
 \dot{\theta}_1\\
 \frac{\gamma(\tau+\beta\dot{\theta}_1^2-\sigma\dot{\theta}_0\dot{\theta}_1)-\alpha(\epsilon\dot{\theta}_0^2+\rho)}{\gamma^2-\alpha\delta}
-\end{bmatrix}
+\end{bmatrix}.
 \end{equation}
 As we can see the derivatives of the states are the functions of the current states and control input. And more importantly, those variables have nonlinear interactions within each dynamic equation. 
 \begin{equation}\begin{bmatrix}
 \dot{x}_1(t) \\ \dot{x}_2(t) \\ \dot{x}_3(t) \\ \dot{x}_4(t)
-\end{bmatrix} = f(x(t),u(t)) =\begin{bmatrix}f_1(x(t),u(t))\\f_2(x(t),u(t))\\f_3(x(t),u(t))\\f_4(x(t),u(t))\end{bmatrix} \end{equation}
+\end{bmatrix} = f(x(t),u(t)) =\begin{bmatrix}f_1(x(t),u(t))\\f_2(x(t),u(t))\\f_3(x(t),u(t))\\f_4(x(t),u(t))\end{bmatrix}. \end{equation}
 \subsubsection{Linear Model}
 Non-linear model (\ref{nonlinmodel}) can be approximated around operation point by a linear, time-invariant state-space model in the following form
-\begin{equation}\dot{x}(t) = Ax(t) + Bu(t)\end{equation}.
+\begin{equation}\dot{x}(t) = Ax(t) + Bu(t).\end{equation}
 Its constant matrices can be obtained by calculating its partial derivatives with respect to the state and control variables.
 \begin{subequations}
 	\begin{align}
@@ -237,10 +237,10 @@ Its constant matrices can be obtained by calculating its partial derivatives wit
 	\frac{\partial f_2(x(t),u(t))}{\partial x_1}&\frac{\partial f_2(x(t),u(t))}{\partial x_2}&\frac{\partial f_2(x(t),u(t))}{\partial x_3}&\frac{\partial f_2(x(t),u(t))}{\partial x_4}\\
 	\frac{\partial f_3(x(t),u(t))}{\partial x_1}&\frac{\partial f_3(x(t),u(t))}{\partial x_2}&\frac{\partial f_3(x(t),u(t))}{\partial x_3}&\frac{\partial f_3(x(t),u(t))}{\partial x_4}\\
 	\frac{\partial f_4(x(t),u(t))}{\partial x_1}&\frac{\partial f_4(x(t),u(t))}{\partial x_2}&\frac{\partial f_4(x(t),u(t))}{\partial x_3}&\frac{\partial f_4(x(t),u(t))}{\partial x_4}
-	\end{bmatrix}\\ 
+	\end{bmatrix},\\ 
 	B &= \begin{bmatrix}
 	\frac{\partial f_1(x(t),u(t))}{\partial u}\\\frac{\partial f_2(x(t),u(t))}{\partial u}\\\frac{\partial f_3(x(t),u(t))}{\partial u}\\\frac{\partial f_4(x(t),u(t))}{\partial u}
-	\end{bmatrix}
+	\end{bmatrix}.
 	\end{align}
 \end{subequations}
 And when we compute these derivatives, we obtain a linearized continuous-time dynamic model of the pendulum in the form of state matrices
@@ -250,15 +250,15 @@ And when we compute these derivatives, we obtain a linearized continuous-time dy
 	0&0&\frac{-gL_0l_1^2m_1^2}{(m_1L_0^2+I_0)(m_1l_1^2+I_1)-L_0^2l_1^2m_1^2}&0\\
 	0&0&0&1\\
 	0&0&\frac{gl_1m_1(m_1L_0^2+I_0)}{(m_1L_0^2+I_0)(m_1l_1^2+I_1)-L_0^2l_1^2m_1^2}&0
-	\end{bmatrix}\\
+	\end{bmatrix},\\
 	B &=	\begin{bmatrix}
 	0\\ 
 	\frac{m_1L_1^2+I_1}{(m_1L_0^2+I_0)(m_1l_1^2+I_1)-L_0^2l_1^2m_1^2}\\
 	0\\
 	\frac{-L_0l_1m_1}{(m_1L_0^2+I_0)(m_1l_1^2+I_1)-L_0^2l_1^2m_1^2}
-	\end{bmatrix}\\
-	C &= \begin{bmatrix}0&0&1&0\end{bmatrix}\\
-	D &= 0
+	\end{bmatrix},\\
+	C &= \begin{bmatrix}0&0&1&0\end{bmatrix},\\
+	D &= 0.
 	\end{align}
 \end{subequations}
 Now those linearized equations of motion would be evaluated at two equilibrium positions: upright and downward. The reason is that at the downward position the system's output, which is the position of the pendulum, has a stable point at “$+\pi$” and “$-\pi$”, while at the upright position system has no stable point.
@@ -272,8 +272,8 @@ Model Predictive Control (MPC) uses a model of the system to make predictions ab
 The model predictive control requires the linear discrete-time state-space model of the process
 \begin{subequations}\label{linmodel}
 	\begin{align}	
-	x_{k+1} = Ax_k + Bu_k\\
-	y_k = Cx_k + Du_k
+	x_{k+1} = Ax_k + Bu_k,\\
+	y_k = Cx_k + Du_k.
 	\end{align}
 \end{subequations}
 Thanks to the knowledge of that model, we can predict the evolution of states and outputs of the system.\\
@@ -290,8 +290,8 @@ Due to the setup of the controlled process, the MPC should be formulated to regu
 where $\mathcal{X}$ and $\mathcal{U}$ are polytopic state and input constraints respectively and defined as
 \begin{subequations}
 	\begin{align}
-	\mathcal{X} &= \{\ui{H}{x}x_k\leq \ui{K}{x}\}\\
-	\mathcal{U} &= \{\ui{H}{u}u_k\leq \ui{K}{u}\}
+	\mathcal{X} &= \{\ui{H}{x}x_k\leq \ui{K}{x}\},\\
+	\mathcal{U} &= \{\ui{H}{u}u_k\leq \ui{K}{u}\}.
 	\end{align}
 \end{subequations}
 In case of box constraints
@@ -336,12 +336,12 @@ where $X$ is a vector of predicted states, $U$ is an optimal trajectory of futur
 \begin{equation}
 	X = \begin{bmatrix}
 	x_0\\x_{1}\\\vdots\\x_{N-1}
-		\end{bmatrix}
+		\end{bmatrix},
 \end{equation}
 \begin{equation}
 U = \begin{bmatrix}
 u_0\\u_{1}\\\vdots\\u_{N-1}
-\end{bmatrix}
+\end{bmatrix},
 \end{equation}
 \begin{equation}
 \ui{\tilde{Q}}{x} = \begin{bmatrix}
@@ -349,7 +349,7 @@ u_0\\u_{1}\\\vdots\\u_{N-1}
 0&\ui{Q}{x}&\cdots&0\\
 \vdots&\vdots&\ddots&\vdots\\
 0&0&\cdots&\ui{Q}{x}
-\end{bmatrix}
+\end{bmatrix},
 \end{equation}
 \begin{equation}
 \ui{\tilde{Q}}{u} = \begin{bmatrix}
@@ -357,7 +357,7 @@ u_0\\u_{1}\\\vdots\\u_{N-1}
 0&\ui{Q}{u}&\cdots&0\\
 \vdots&\vdots&\ddots&\vdots\\
 0&0&\cdots&\ui{Q}{u}
-\end{bmatrix}
+\end{bmatrix}.
 \end{equation}
 At the next step, the equality constrains (\ref{eq217b}) should be expressed in the vector form. We can achieve that by predicting the evolution of states over the whole prediction horizon.
 \begin{equation}
@@ -384,26 +384,26 @@ Or, if we write these equations in a compact form, we obtain
 	AB&B&\cdots&0&0\\
 	\vdots&\vdots&\ddots&\vdots&\vdots\\
 	A^{N-2}B&A^{N-3}B&\cdots&B&0\end{bmatrix}
-	\begin{bmatrix}u_0\\u_{1}\\u_{2}\\\vdots\\u_{N-1}\end{bmatrix}
+	\begin{bmatrix}u_0\\u_{1}\\u_{2}\\\vdots\\u_{N-1}\end{bmatrix}.
 \end{equation}
 Or in the short form
 \begin{equation}\label{eq227}
-	X = \tilde{A}x_0 + \tilde{B}U
+	X = \tilde{A}x_0 + \tilde{B}U.
 \end{equation}
 At this point, we can substitute as $X$ in the cost function by (\ref{eq227}). Then we obtain the new objective function
 \begin{equation}\label{eq228}
-	\min_{U}\ (\tilde{A}x_0 + \tilde{B}U)^\intercal\ui{\tilde{Q}}{x}(\tilde{A}x_0 + \tilde{B}U) + U^\intercal\ui{\tilde{Q}}{u}\,U\\
+	\min_{U}\ (\tilde{A}x_0 + \tilde{B}U)^\intercal\ui{\tilde{Q}}{x}(\tilde{A}x_0 + \tilde{B}U) + U^\intercal\ui{\tilde{Q}}{u}\,U.
 \end{equation}
 And when we expand and simplfie (\ref{eq228}), we obtain
 \begin{equation}
-	U^\intercal(\tilde{B}^\intercal\ui{\tilde{Q}}{x}\tilde{B} + \ui{\tilde{Q}}{u})U + 2x_0^\intercal\tilde{A}^\intercal\ui{\tilde{Q}}{x}\tilde{B}U + x_0^\intercal\tilde{A}\ui{\tilde{Q}}{x}\tilde{A}x_0
+	U^\intercal(\tilde{B}^\intercal\ui{\tilde{Q}}{x}\tilde{B} + \ui{\tilde{Q}}{u})U + 2x_0^\intercal\tilde{A}^\intercal\ui{\tilde{Q}}{x}\tilde{B}U + x_0^\intercal\tilde{A}\ui{\tilde{Q}}{x}\tilde{A}x_0.
 \end{equation}
 Now if we define $z = U$, we can cleary see matrices $P$, $Q$ and $R$, which occurs in a standart cost function for the quadratic optimization.
 \begin{subequations}
 	\begin{align}
-		P &= \tilde{B}^\intercal\ui{\tilde{Q}}{x}\tilde{B} + \ui{\tilde{Q}}{u}\\
-		Q &= (2x_0^\intercal\tilde{A}^\intercal\ui{\tilde{Q}}{x}\tilde{B}U)^\intercal\\
-		R &= x_0^\intercal\tilde{A}\ui{\tilde{Q}}{x}\tilde{A}x_0
+		P &= \tilde{B}^\intercal\ui{\tilde{Q}}{x}\tilde{B} + \ui{\tilde{Q}}{u},\\
+		Q &= (2x_0^\intercal\tilde{A}^\intercal\ui{\tilde{Q}}{x}\tilde{B}U)^\intercal,\\
+		R &= x_0^\intercal\tilde{A}\ui{\tilde{Q}}{x}\tilde{A}x_0.
 	\end{align}
 \end{subequations}
 Now only constrains remain. Constrains (\ref{cst_x}) and (\ref{cst_u}) must be reformulated as (\ref{cst_qp}). Those constrains we consider as a upper and lower bounds for the states and control inputs respectively
@@ -416,19 +416,19 @@ Now only constrains remain. Constrains (\ref{cst_x}) and (\ref{cst_u}) must be r
 Now we split and vectorise those constrains
 \begin{subequations}
 \begin{align}
-	X &\leq \ \; \, \ui{X}{max}\\
-	-X &\leq -\ui{X}{min}\\
-	U &\leq \ \; \, \ui{U}{max}\\
-	-U &\leq -\ui{U}{min}
+	X &\leq \ \; \, \ui{X}{max},\\
+	-X &\leq -\ui{X}{min},\\
+	U &\leq \ \; \, \ui{U}{max},\\
+	-U &\leq -\ui{U}{min}.
 \end{align}
 \end{subequations}
 In the next step, $X$ in the states constrains is substituted by a (\ref{eq227}) and $U$ expressed
 \begin{subequations}
 	\begin{align}
-	\tilde{B}\,U &\leq \ \; \,\ui{X}{max} - \tilde{A}x_0\\
-	-\tilde{B}\,U &\leq -\ui{X}{min} + \tilde{A}x_0\\
-	U &\leq \ \; \,\ui{U}{max}\\
-	-U &\leq -\ui{U}{min}
+	\tilde{B}\,U &\leq \ \; \,\ui{X}{max} - \tilde{A}x_0,\\
+	-\tilde{B}\,U &\leq -\ui{X}{min} + \tilde{A}x_0,\\
+	U &\leq \ \; \,\ui{U}{max},\\
+	-U &\leq -\ui{U}{min}.
 	\end{align}
 \end{subequations}
 Those constraints are in the standard form and by combining them, we obtain matrices of inequality constraints $H$ and $G$ for the quadratic programming problem
@@ -444,17 +444,17 @@ Those constraints are in the standard form and by combining them, we obtain matr
 	-\ui{X}{min} + \tilde{A}x_0\\
 	\ \ \:\ui{U}{max}\\
 	-\ui{U}{min}
-	\end{bmatrix}
+	\end{bmatrix}.
 \end{equation}
 At this point, as matrices $R$, $Q$, $R$, $H$ and $G$ are defined, and MPC strategy can be implemented via using any QP solver.
 \subsection{Energy Shaping Controller}\label{energyshapingsection}
 For the initial excitation of the system, we use the energy-based swing-up controller. The strategy with this controller is that we increase the amplitude of swings by increasing the energy of the system with every swing. The energy is added by controlling arms movements and depends on the actual energy of the pendulum. The actual energy of the pendulum can be calculated from the actual position of the pendulum and its velocity: 
 \begin{equation}
-E = \frac{m_1gl_1}{2}\lrp{\lrp{\frac{\dot{\theta}_1}{\omega_0}}^2+\cos\theta_1 - 1}
+E = \frac{m_1gl_1}{2}\lrp{\lrp{\frac{\dot{\theta}_1}{\omega_0}}^2+\cos\theta_1 - 1}.
 \end{equation}
 Than the control law has following form:
 \begin{equation}\label{energy-shaping}
-	u = \ui{k}{v}E\,\mathrm{sign}\lrp{\dot{\theta}_1\cos\theta_1}
+	u = \ui{k}{v}E\,\mathrm{sign}\lrp{\dot{\theta}_1\cos\theta_1}.
 \end{equation}
 Where element $\mathrm{sign}\lrp{\dot{\theta_1}\cos\theta_1}$ determines direction i which the force will be applied and $\ui{k}{v}$ is the gain of the controller.
 \newpage
@@ -476,34 +476,34 @@ Sequential Quadratic Programming is arguably become the most successful method f
 The main condition for a QP subproblem is that it has to reflect the properties of NLP at current iteration. But before such subproblem could be constructed, a few terms should be establish first.
 \begin{itemize}
 	\item Lagrangian functional of the NLP, $\mathcal{L}$ is defined as\begin{equation}
-		\mathcal{L}(x,\lambda,\mu) = f(x) + \lambda^\intercal h(x) + \mu^\intercal g(x) 
+		\mathcal{L}(x,\lambda,\mu) = f(x) + \lambda^\intercal h(x) + \mu^\intercal g(x). 
 	\end{equation}
 	\item The gradient of $f$, $\nabla f(x)$ is denoted as
 	\begin{equation}
-		\nabla f(x) = \lrp{\diff{f(x)}{x_1},\diff{f(x)}{x_2},\cdots,\diff{f(x)}{x_n}}^\intercal
+		\nabla f(x) = \lrp{\diff{f(x)}{x_1},\diff{f(x)}{x_2},\cdots,\diff{f(x)}{x_n}}^\intercal.
 	\end{equation}
 	\item Hessian of f, $Hf(x)$ is the matrix of second partial derivatives as given by
 	\begin{equation}
-		\lrp{Hf(x)}_{ij} := \diffxy{f(x)}{x_i}{x_j}
+		\lrp{Hf(x)}_{ij} := \diffxy{f(x)}{x_i}{x_j}.
 	\end{equation}
 \end{itemize}
 A major concern in SQP method is the choice of appropriate quadratic subproblem. 
 The most obvious choice for the objective functional in this quadratic program is its local quadratic approximation
 \begin{equation}
-f(x)\approx f(x_k)+\nabla f(x_k)\lrp{x-x_k}+\frac{1}{2}\lrp{x-x_k}^\intercal Hf(x_k)\lrp{x-x_k}
+f(x)\approx f(x_k)+\nabla f(x_k)\lrp{x-x_k}+\frac{1}{2}\lrp{x-x_k}^\intercal Hf(x_k)\lrp{x-x_k}.
 \end{equation}
 and the constraint functions $h$ and $g$ by their local affine approximations
 \begin{subequations}
 	\begin{align}
-		h(x)&\approx h(x_k)+\nabla h(x_k)\lrp{x-x_k}\\
-		g(x)&\approx g(x_k)+\nabla g(x_k)\lrp{x-x_k}	
+		h(x)&\approx h(x_k)+\nabla h(x_k)\lrp{x-x_k},\\
+		g(x)&\approx g(x_k)+\nabla g(x_k)\lrp{x-x_k}.	
 	\end{align}
 \end{subequations}
 And after setting 
 \begin{subequations}
 	\begin{align}
-		d_x:=x-x_k\\
-		B_k = hf(x_k)
+		d_x&=x-x_k,\\
+		B_k &= Hf(x_k).
 	\end{align}
 \end{subequations}
 The following form of the QP subproblem is accured
@@ -526,7 +526,7 @@ To take nonlinearities in the constraints into account a quadratic model of the 
 \end{subequations}
 Although the optimal multipliers are unknown, then approximations $\lambda_k$,$\mu_k$ could be contained as part of the iterative process. Then at a current iterate $(x_k,\lambda_k,\mu_k)$, the objective functional in stems from the quadratic Taylor series approximation.
 \begin{equation}
-	\mathcal{L}(x_k,\lambda_k,\mu_k)+\nabla\mathcal{L}(x_k,\lambda_k,\mu_k)^\intercal d(x)+\frac{1}{2}d(x)^\intercal H\mathcal{L}(x_k,\lambda_k,\mu_k) d(x)
+	\mathcal{L}(x_k,\lambda_k,\mu_k)+\nabla\mathcal{L}(x_k,\lambda_k,\mu_k)^\intercal d(x)+\frac{1}{2}d(x)^\intercal H\mathcal{L}(x_k,\lambda_k,\mu_k) d(x).
 \end{equation}
 What leads to the final QP subproblem
 \begin{subequations}
@@ -539,16 +539,16 @@ What leads to the final QP subproblem
 By solving that QP subproblem solution $d_x$ as well as local optimal values of multipliers $\lambda_{qp}$ and $\mu_{qp}$ are accuried, and setting 
 \begin{subequations}
 	\begin{align}
-		d_\lambda &= \lambda_{qp}-\lambda_k\\
-		d_\mu &= \mu_{qp}-\mu_k
+		d_\lambda &= \lambda_{qp}-\lambda_k,\\
+		d_\mu &= \mu_{qp}-\mu_k.
 	\end{align}
 \end{subequations}
 allow the updates of $(x,\lambda,\mu)$ to be written in the compact form
 \begin{subequations}
 	\begin{align}
-	x_{k+1} &= x_k + \alpha d_x\\
-	\lambda_{k+1} &= \lambda_k + \alpha d_\lambda\\
-	\mu_{k+1} &= \mu_k + \alpha d_\mu
+	x_{k+1} &= x_k + \alpha d_x,\\
+	\lambda_{k+1} &= \lambda_k + \alpha d_\lambda,\\
+	\mu_{k+1} &= \mu_k + \alpha d_\mu.
 	\end{align}
 \end{subequations}
 for some selection of the steplength parameter $\alpha$. Once the new iterates are constructed, the problem functions and derivatives are evaluated and a
@@ -563,18 +563,18 @@ Given approximations $(x_0,\lambda_0,\mu_0)$, $B_0$ and a merit function $\phi$,
 	\item Form and solve QP subproblem to obtain $(d_x,d_\lambda,d_\mu)$.
 	\item Choose steplength $\alpha$ so that
 	\begin{equation}
-		\phi(x_k + \alpha d_x)<\phi(x_k)
+		\phi(x_k + \alpha d_x)<\phi(x_k),
 	\end{equation}
 	\item Set
 	\begin{subequations}
 		\begin{align}
-		x_{k+1} &= x_k + \alpha d_x\\
-		\lambda_{k+1} &= \lambda_k + \alpha d_\lambda\\
-		\mu_{k+1} &= \mu_k + \alpha d_\mu
+		x_{k+1} &= x_k + \alpha d_x.\\
+		\lambda_{k+1} &= \lambda_k + \alpha d_\lambda.\\
+		\mu_{k+1} &= \mu_k + \alpha d_\mu,
 		\end{align}
 	\end{subequations}
 	\item Stop if converged.
 	\item Compute $B_{k+1}$.
-	\item Set $k := k+1$; go to 1.
+	\item Set $k = k+1$; go to 1.
 \end{enumerate}
 \end{itemize}
