@@ -1,4 +1,30 @@
-\chapter{Simulation Results}
+\chapter{Case Study}
+In this section the theory from Section \ref{mpcsection}, Sections \ref{energyshapingsection} and Sections \ref{nmpcsection} in attempt design and tested in simulations an optimal controllers, suitable to control the real device Fig.\ref{furutareal}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=.6\linewidth]{images/furutareal}
+	\caption{Laboratory model of Furuta pendulum}
+	\label{furutareal}
+\end{figure}
+which values of parametres are given in the following table
+\begin{table}[H]
+	\caption{Values of Furuta Pendulum Parameters}
+\begin{tabular}{l l l}
+	\noalign{\hrule height 1pt}
+	Parameter&Symbol&Value\\
+	\noalign{\hrule height 1pt}
+	Gravitational acceleration&$g$&9.81\si{\metre\per\square\second}\\
+	Mass of arm&$m_0$&0.6 \si{\kilogram}\\
+	Mass of pendulum&$m_1$&0.198 \si{\kilogram}\\
+	Length of arm&$L_0$&0.51 \si{\metre}\\
+	Llength of pendulum&$L_1$&0.23 \si{\metre}\\
+	Location of the pendulums center of mass&$l_1$&0.21 \si{\metre}\\
+	Moment of inertia of arm&$I_0$&0.052 \si{\kilogram\per\square\metre}\\
+	Moment of inertia of pendulum&$I_1$&8.72e-4 \si{\kilogram\per\square\metre}\\
+	\hline
+\end{tabular}
+\end{table}
+First will be designed a linear MPC strategy to stabilize the pendulum at the upright pozition. Second is the Energy-Shaping controller to swing the pendulum from the downside position. Then the MPC and Swing-Up controllers will be combined to perform Heuristic Swing-Up control of the pendulum. And finally by NMPC strategy an Optimal Swing-Up control will be performed.
 \section{Model Predictive Controller}
 Due to the pendulums setup, the MPC formulation (\ref{mpcgeneral}) could be applied directly. As known, a linear MPC uses a linear prediction model of the process to predict the behavior of the system over the prediction horizon. So such a predictive controller is used to control the pendulum in range, where such a linear predictive model is relevant.So the first step of the construction of such a controller is to obtain the discrete-time linear predictive model via discretization of (\ref{linmatrices}) at the upright operation point 
 \begin{equation}
@@ -39,12 +65,12 @@ The remain MPC parametres are shown in the following table
 	\begin{tabular}{l c c}
 		\noalign{\hrule height 1pt}
 		Parameter&Symbol&Value\\
-		\hline
+		\noalign{\hrule height 1pt}
 		Prediction horizon&$N$&$20$\\
 		Initial condition&$x_0$&$\begin{bmatrix}-1,-2,0.5,2\end{bmatrix}^\intercal$\\
 		Constraint on control input-upper bound&$\ui{u}{max}$&$\ \; \,5$\\
 		Constraint on control input-lower bound&$\ui{u}{min}$&$-5$\\
-		\noalign{\hrule height 1pt}
+		\hline
 	\end{tabular}
 \end{table}
 \newpage
@@ -68,7 +94,6 @@ Such controller can be designed by applying the control law (\ref{energy-shaping
 \newpage
 \section{Heuristic Swing-Up Control}
 To perform Swing-Up Control of the pendulum, a combined control strategy should be designed, because no MPC nor Swing-Up controller can not perform a Swing-Up control by itself. So the strategy of Heuristic Swing-Up Control is that at the beginning the pendulum is steady at the downside position and the Energy-Shaping controller is used to add the energy to the pendulum via its oscillation. As more energy is added to the pendulum, the greater the oscillations become. As the pendulum is close to the upright operation point, the control law switches from Energy-Shaping to MPC. And MPC finishes the Swing-Up Control by stabilizing the pendulum at the upright position.
-\newpage
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1.1\linewidth]{images/MPC-LQR_Swing}

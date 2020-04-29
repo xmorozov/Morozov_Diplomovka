@@ -1,9 +1,41 @@
-function dydt = pokus(t,y)
-dydt = zeros(2,1);
-dydt(1) = y(1)+2*y(2);
-dydt(2) = 3*y(1)+2*y(2);
-[d_theta0;...
-(gama*(eps*d_theta0^2+rho)-delta*(u+beta*d_theta1^2-sigma*d_theta0*d_theta1))/(gama^2-alfa*delta);...
- d_theta1;...
-(gama*(u+beta*d_theta1^2-sigma*d_theta0*d_theta1)-alfa*(eps*d_theta1^0+rho))/(gama^2-alfa*delta)];
+%% pokus
+clc,clear,close all
+%% 
+
+% mpc_y(:,50)
+% ans =
+%    -0.1604
+%     0.7438
+%    -0.0282
+%    -0.0138
+% 
+% mpc_y(:,51)
+% ans = 
+%    -0.1456
+%     0.7317
+%    -0.0285
+%    -0.0122
+% 
+% mpc_u(:,50) 
+% ans =
+%    -0.0596
+x0 = [-0.1604 0.7438 -0.0282 -0.0138]';
+u = -0.0596;
+tspan = [0, 0.02];
+[t,y] = ode45(@(t,x) odefun(t,x,u),tspan,x0,opts);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
