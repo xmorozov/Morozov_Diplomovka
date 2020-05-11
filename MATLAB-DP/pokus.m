@@ -22,6 +22,7 @@ clc,clear,close all
 x0 = [-0.1604 0.7438 -0.0282 -0.0138]';
 u = -0.0596;
 tspan = [0, 0.02];
+opts = odeset('RelTol',1e-2,'AbsTol',1e-4);
 [t,y] = ode45(@(t,x) odefun(t,x,u),tspan,x0,opts);
 
 

@@ -122,7 +122,7 @@ options = sdpsettings('verbose',0,'cachesolvers',1,'solver','gurobi');
 OPT = optimizer(cst, obj, options, xx{1}, uu{1});
 
 %% Simulation
-tf = 20; % sekundy
+tf = 4; % sekundy
 kf = tf/Ts;
 x0 = [0,0,0.01,-0.01];
 
@@ -133,10 +133,9 @@ x_sim(:,1)=x0;
 
 %ISE_M = 0;
 swg = 1;
-for k = 1:kf
-    
+for k = 1:kf    
     if swg == 1 %swing up
-        E = (m1*g*l1/2)*((x_sim(4,k)/om)^2+cos(x_sim(3,k)-1));
+        E = (m1*g*l1/2)*((x_sim(4,k)/om)^2+cos(x_sim(3,k))-1)-2
         u_sim(:,k) = 4*E*sign(x_sim(4,k)*cos(x_sim(3,k)));
         x_sim(:,k+1) = A2*x_sim(:,k)+B2*u_sim(:,k);
         y_sim(k) = C2*x_sim(:,k)+D2*u_sim(:,k)+pi;
@@ -161,58 +160,58 @@ x_sim(:,end) = [];
 
 %% Plots Short
 t = linspace(0,tf,kf);
-subplot(3,1,1)
-plot(t,rad2deg(x_sim(1,:)))
-hold on
-legend({'MPC'},'Orientation','horizontal')
-grid on
-box on
-xlabel('t [s]')
-ylabel('$\theta_0\,[deg]$','interpreter','latex')
-axis([0 tf -140 30])
-
-subplot(3,1,2)
-plot(t,rad2deg(y_sim))
-hold on
-legend({'MPC'},'Orientation','horizontal')
-%title('Pendulum position')
-xlabel('t [s]')
-ylabel('$\theta_1\,[deg]$','interpreter','latex')
-axis([0 tf -40 300])
-grid on
-hold off
-subplot(3,1,3)
-hold on
-plot(t,u_sim)
-plot([t(1),t(end)],[u_cst(1),u_cst(1)],'k--');
-plot([t(1),t(end)],[u_cst(2),u_cst(2)],'k--');
-%title('Torque')
-xlabel('t [s]')
-ylabel('$\tau\,[V]$','interpreter','latex')
-axis([0 tf -5.3 5.3])
-grid on
-box on
-hold off
-legend({'MPC'},'Orientation','horizontal')
-
-%% Plost Full
-% figure
-% txt = {'\theta_0','d\theta_0','\theta_1','d\theta_1'};
-% for i = 1:nx
-%     subplot(nx+1,1,i)
-%     hold on
-%     plot(t,y_sim(i,1:end))
-%     title(txt{i})
-%     legend('MPC')
-%     xlabel('t [s]')
-%     hold off
-% end
-% subplot(nx+1,1,nx+1)
+% subplot(3,1,1)
+% plot(t,rad2deg(x_sim(1,:)))
+% hold on
+% legend({'MPC'},'Orientation','horizontal')
+% grid on
+% box on
+% xlabel('t [s]')
+% ylabel('$\theta_0\,[deg]$','interpreter','latex')
+% axis([0 tf -140 30])
+% 
+% subplot(3,1,2)
+% plot(t,rad2deg(y_sim))
+% hold on
+% legend({'MPC'},'Orientation','horizontal')
+% %title('Pendulum position')
+% xlabel('t [s]')
+% ylabel('$\theta_1\,[deg]$','interpreter','latex')
+% axis([0 tf -40 300])
+% grid on
+% hold off
+% subplot(3,1,3)
 % hold on
 % plot(t,u_sim)
-% hold off
-% legend('MPC')
+% plot([t(1),t(end)],[u_cst(1),u_cst(1)],'k--');
+% plot([t(1),t(end)],[u_cst(2),u_cst(2)],'k--');
+% %title('Torque')
 % xlabel('t [s]')
-% title('u')
+% ylabel('$\tau\,[V]$','interpreter','latex')
+% axis([0 tf -5.3 5.3])
+% grid on
+% box on
+% hold off
+% legend({'MPC'},'Orientation','horizontal')
+
+% Plost Full
+figure
+txt = {'\theta_0','d\theta_0','\theta_1','d\theta_1'};
+for i = 1:nx
+    subplot(nx+1,1,i)
+    hold on
+    plot(t,x_sim(i,1:end))
+    title(txt{i})
+    legend('MPC')
+    xlabel('t [s]')
+    hold off
+end
+subplot(nx+1,1,nx+1)
+hold on
+plot(t,u_sim)
+hold off
+legend('MPC')
+xlabel('t [s]')
+title('u')
 
 %ISE_M

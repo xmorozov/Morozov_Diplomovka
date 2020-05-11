@@ -1,5 +1,24 @@
 \chapter{Resumé}
 \label{ch:resume}
+Táto diplomová práca je venovaná riadeniu rotačného invertoveneho kyvadla taktiež známeho ako Furutovho kyvadlo. Toto kyvadlo prvýkrát bolo navrhnuté v roku 1992 na Tokijskej Technickej Univerzite pánom Katsuhisa Furutom a jeho kolegami ako príklad komplexného nelinearneho oscilátora. Toto zariadenie poskytuje kompaktnú, ale reprezentatívnu platformu na testovanie riadiacich algoritmov. Furutovho kyvadlo sa skladá z dvoch hlavných časti ramena, ktoré je pohanane DC motorom a kyvadla, ktoré je pripojené k ramenu tak, že sa môže voľne otáčať vo verikalnej rovine. Toto zariadenie bolo použité vo viacerých článkoch a prácach na demonštráciu riadiacich algoritmov. V rámci tejto práce Furutovho kyvadlo je riadené Swing-Up algoritmom pomocou prediktivneho regulátora (z angličtiny – model predictive control (MPC)). A sú ukazane dva prístupy Heuristicky Swing-Up a Optimaly Swing-Up.
 
-Resumé v slovenčine, sa píše v prípade, že záverečná práca ja napísaná v 
-anglickom jazyku. Rozsah resumé tvorí 5-10\% rozsahu diplomovej práce.
+Celá práca je rozdelená na dve hlavne časti:
+\begin{enumerate}
+	\item Teoretická časť
+	\item Pripadova štúdia
+\end{enumerate}
+
+V dôsledku toho, že MPC potrebuje model procesu, aby bolo možné robiť predikcie stavov a výstupov ako prvé v rámci teoretickej časti (kapitola \ref{furuta_Theory}) rozoberáme samotné zariadenie a odvádzame jeho dynamicky matematicky model. Takýto model zo začiatku dostávame v tvare pohybových rovníc, ktoré následne transformujeme na nelinearny matematicky model a ďalej aj lineárny matematicky model v tvare stavového opisu.
+
+Ďalšia kapitola (kapitola \ref{regulatory:teoria}) v rámci teoretickej časti je venovaná teórie návrhu regulátorov. Tato kapitola poskytuje teoretické základy pre tri regulátory:
+\begin{enumerate}
+	\item Lineárny prediktivny regulátor - Je ukazana základná formulácia problému regulácie stavov do nuly a jej transformácia na štandardnú formuláciu problému Kvadratického Programovania.
+\item Energy-Shaping regulátor - Je vysvetlený princíp fungovania tohto regulátora a je ukazany vzťah na výpočet akčného zásahu.
+\item Nelinearny prediktivny regulátor - Preto, že sa takýto regulátor dá nafurmolovat v podobe problému nelinearneho programovania, v tejto podkapitole sa rozoberá, ako sa takýto problém rieši pomocou numerickej metódy sekvenčného kvadratického programovania. 
+\end{enumerate}
+
+Druha časť tejto diplomovej práce je venovaná simulačnému riadeniu Furutovho kyvadla. Kde si najprv ukážeme fyzikálne parametre reálneho zariadenia a získame lineárny stavový model kyvadla v okolí vrhneho pracovného bodu. A ďalej navrhneme a otestujeme jednotlivé reguglatory.
+
+Pri riadeni kyvadla hlavným cieľom bolo dostať kyvadlo zo stabilnej dolnej polohy do nestabilnej hornej polohy a udrziat ho tam. Takýto priebeh riadenia pol dosiahnutý pomocou dvoch prístupov Heuristicky Swing-Up, kde kombinujeme riadenie pomocou Energy-Shaping a MPC regulátorov a Optimaly Swing-Up, kde v celom rozsahu je kyvadlo riadené nelinearnym prediktivnym regulátorom (z angličtiny – non-linear model predictive control (NMPC)).
+
+%Rozsirit?% 

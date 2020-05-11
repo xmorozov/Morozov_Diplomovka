@@ -16,6 +16,6 @@ dxdt = zeros(4,1);
 dxdt(1) = d_theta0;
 dxdt(2) =(gama*(eps*d_theta0^2+rho)-delta*(u+beta*d_theta1^2-sigma*d_theta0*d_theta1))/(gama^2-alfa*delta);
 dxdt(3) = d_theta1;
-dxdt(4) = (gama*(u+beta*d_theta1^2-sigma*d_theta0*d_theta1)-alfa*(eps*d_theta1^0+rho))/(gama^2-alfa*delta);
+dxdt(4) = (gama*(u+beta*d_theta1^2-sigma*d_theta0*d_theta1)-alfa*(eps*d_theta0^2+rho))/(gama^2-alfa*delta);
 
 end

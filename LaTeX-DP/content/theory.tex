@@ -1,13 +1,13 @@
 \chapter{Theory}
-\section{Furuta's Pendulum}
+\section{Furuta's Pendulum}\label{furuta_Theory}
 \subsection{Device Overview}
-Rotational inverted pendulum or Furuta’s pendulum was firstly invented in 1992 at the Tokyo Institute of Technology by Katsuhisa Furuta as an example of a complex nonlinear oscillator in the sake of control algorithms testing in process control theory.
-The pendulum composes of motor-driven arm, which rotates in the horizontal plane and a pendulum, attached to that arm, which freely rotates in the vertical plane. The system is underactuated and extremely nonlinear due to the gravitational forces and the coupling arising from the Coriolis and centripetal forces. The schematic representation of the pendulum is shown in \ref{furuta}
+Rotational inverted pendulum was first developed in 1992 at the Tokyo Institute of Technology by Katsuhisa Furuta as an example of a complex nonlinear oscillator in the need of control algorithms testing in process control theory.
+The pendulum composes of motor-driven arm, which rotates in the horizontal plane and a pendulum, attached to that arm, which freely rotates in the vertical plane. The system is underactuated and extremely nonlinear due to the gravitational forces and the coupling arising from the Coriolis and centripetal forces. The schematic representation of the pendulum is shown in \ref{furuta:schematic}.
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=.55\linewidth]{images/furuta}
+	\includegraphics[width=.45\linewidth]{images/furuta}
 	\caption{Furuta's Pendulum}
-	\label{furuta}
+	\label{furuta:schematic}
 \end{figure}
 \newpage
 Consider the rotational inverted pendulum
@@ -17,14 +17,14 @@ A right hand coordinate system has been used to define the inputs, states, and t
 \begin{subequations}
 	\begin{align}
 		J_0 = 	\begin{bmatrix}
-					J_{0xx} & 0 & 0\\
-					0 & J_{0yy} & 0\\
-					0 & 0 & J_{0zz}\\
+					J_{0,\text{xx}} & 0 & 0\\
+					0 & J_{0,\text{yy}} & 0\\
+					0 & 0 & J_{0,\text{zz}}\\
 				\end{bmatrix},\\
 		J_1 = 	\begin{bmatrix}
-					J_{1xx} & 0 & 0\\
-					0 & J_{1yy} & 0\\
-					0 & 0 & J_{1zz}\\
+					J_{1,\text{xx}} & 0 & 0\\
+					0 & J_{1,\text{yy}} & 0\\
+					0 & 0 & J_{1,\text{zz}}\\
 				\end{bmatrix}.
 	\end{align}
 \end{subequations}
@@ -52,9 +52,15 @@ A right hand coordinate system has been used to define the inputs, states, and t
 \end{table}
 \subsection{Lagrangian Formulation}
 To design a predictive controller, the knowledge of the dynamic model of the process is necessary. The analytical model based on the equations of motion could be derived from the Lagrange equations \cite{furuta:model}, which represent the most commonly used method for establishing equations of motion of difficult mechanical systems.
+
+The Lagrangian defined as the difference in kinetic and potential energies
+\begin{equation}
+L = \ui{E}{k} - \ui{E}{p}.
+\end{equation}
+As we know, the kinetic energy is a function of both the speed and position and the potential energy is a function of position. Therefore to define the energies, a way to describe the state of the point during the rotary motion is required.
 \subsubsection{Rotation Matrices}
-First, define two rotation matrices
-which are used in both the Lagrange formulation. The rotation matrix from the base to Arm is
+Rotation Matrices are used to describe rotation in a Euclidean space. For three-dimensional Cartesian coordinate system two rotation matrices are defined.
+The rotation matrix from the base to Arm is
 \begin{equation}
 	R_0 = 	\begin{bmatrix}
 					\ \ \,\cos(\theta_0) & \sin(\theta_0) & 0\\
@@ -62,7 +68,7 @@ which are used in both the Lagrange formulation. The rotation matrix from the ba
 					0 & 0 & 1
 				\end{bmatrix}.
 \end{equation}
-The rotation matrix from Arm to Pendulum is derived by
+The rotation matrix from arm to pendulum is derived by
 initially applying a (diagonal) matrix to that maps the frame
 0 to frame 1, followed by a rotation matrix for $\theta_1$, given by
 \begin{equation}
@@ -73,29 +79,29 @@ R_1 = 	\begin{bmatrix}
 		\end{bmatrix}.
 \end{equation}
 \subsubsection{Velocities}
-The angular velocity of Arm is given by
+The angular velocity of arm is given by
 \begin{equation}
 	\omega_0 = 	\begin{bmatrix}
 					0 & 0 & \dot{\theta}_0
 				\end{bmatrix}^\intercal.
 \end{equation}
 Let the velocity of the base frame be at rest, such that the joint
-between the frame and the Arm is also at rest, that is,
+between the frame and the arm is also at rest, that is,
 \begin{equation}
 	\text{\textbf{v}}_0 = 	\begin{bmatrix}
 					0 & 0 & 0
 			\end{bmatrix}^\intercal.
 \end{equation}
-The total linear velocity of the centre of mass of Arm is
+The total linear velocity of the centre of mass of arm is
 given by
 \begin{equation}
-	\text{\textbf{v}}_{0c} = v_0+\omega_0\times\begin{bmatrix}
+	\text{\textbf{v}}_{0, \text{c}} = v_0+\omega_0\times\begin{bmatrix}
 					l_0 & 0 & 0
 				\end{bmatrix}^\intercal = \begin{bmatrix}
 				0 & \dot{\theta}_0l_0 & 0
 				\end{bmatrix}^\intercal.
 \end{equation}
-The angular velocity of the Pendulum is given by
+The angular velocity of the pendulum is given by
 \begin{equation}
 \omega_1 = R_1\omega_0 + \begin{bmatrix}
 				0 & 0 & \dot{\theta}_1
@@ -104,7 +110,7 @@ The angular velocity of the Pendulum is given by
 				-\cos(\theta_1)\dot{\theta}_0 & \sin(\theta_1)\dot{\theta}_0 & \dot{\theta}_1
 			\end{bmatrix}^\intercal.
 \end{equation}
-The velocity of the joint between Arm and the pendulum in
+The velocity of the joint between arm and the pendulum in
 reference frame 1 is
 \begin{equation}
 	\text{\textbf{v}}_{1} = R_1\lrp{\omega_0\times	\begin{bmatrix}
@@ -116,12 +122,13 @@ reference frame 1 is
 		0
 	\end{bmatrix}.
 \end{equation}
-The total linear velocity of the centre of mass of Arm 2 is
+The total linear velocity of the centre of mass of arm is
 given by
 \begin{equation}
-	\text{\textbf{v}}_{1c} = \text{\textbf{v}}_1+\omega_1\times\begin{bmatrix}
-																	l_1 & 0& 0
-															\end{bmatrix}^\intercal=
+	\text{\textbf{v}}_{1,\text{c}} = \text{\textbf{v}}_1+\omega_1\times
+		\begin{bmatrix}
+			l_1 & 0& 0
+		\end{bmatrix}^\intercal=
 	\begin{bmatrix}
 		\dot{\theta}_0L_0\sin(\theta_1)\\
 		\dot{\theta}_0L_0\cos(\theta_1) + \dot{\theta}_1l_1\\
@@ -129,40 +136,37 @@ given by
 	\end{bmatrix}.														
 \end{equation}
 \subsubsection{Energies}
-The potential energy of Arm is
+The potential energy of arm is
 \begin{equation}
-	\ui{E}{p0} = 0,
+	\ui{E}{p,0} = 0,
 \end{equation}
 and the kinetic energy is
 \begin{equation}
-	\ui{E}{k0} = \frac{1}{2}\lrp{\text{\textbf{v}}_{0c}^\intercal m_0\textbf{v}_{0c} + \omega_0^\intercal J_0\omega_0 } = 
-	\frac{1}{2}\dot{\theta}_0^2\lrp{ m_0l_0^2+J_{0zz} }.
+	\ui{E}{k,0} = \frac{1}{2}\lrp{\text{\textbf{v}}_{0,\text{c}}^\intercal m_0\textbf{v}_{0,\text{c}} + \omega_0^\intercal J_0\omega_0 } = 
+	\frac{1}{2}\dot{\theta}_0^2\lrp{ m_0l_0^2+J_{0,\text{zz}} }.
 \end{equation}
-The potential energy of the Pendulum is
+The potential energy of the pendulum is
 \begin{equation}
-\ui{E}{p1} = gm_1l_1\lrp{1-\cos(\theta_1)},
+\ui{E}{p,1} = gm_1l_1\lrp{1-\cos(\theta_1)},
 \end{equation}
 and the kinetic energy is
 \begin{equation}
 \begin{split}
-	\ui{E}{k1} = &\frac{1}{2}\lrp{\text{\textbf{v}}_{1c}^\intercal m_1\textbf{v}_{1c} + \omega_1^\intercal J_1\omega_1 }\\
-	= &\frac{1}{2}\dot{\theta}_0^2\lrp{m_1L_1^2+\lrp{m_1l_1^2+J_{1yy}}\sin^2(\theta_1)+J_{1xx}\cos^2(\theta_1)}\\
-	&+\frac{1}{2}\dot{\theta}_1^2\lrp{ J_{1zz}+m_1l_1^2 }+m_1L_0l_1\cos(\theta_1)\dot{\theta}_0\dot{\theta}_1.
+	\ui{E}{k,1} = &\frac{1}{2}\lrp{\text{\textbf{v}}_{1,\text{c}}^\intercal m_1\textbf{v}_{1,\text{c}} + \omega_1^\intercal J_1\omega_1 }\\
+	= &\frac{1}{2}\dot{\theta}_0^2\lrp{m_1L_1^2+\lrp{m_1l_1^2+J_{1,\text{yy}}}\sin^2(\theta_1)+J_{1,\text{xx}}\cos^2(\theta_1)}\\
+	&+\frac{1}{2}\dot{\theta}_1^2\lrp{ J_{1,\text{zz}}+m_1l_1^2 }+m_1L_0l_1\cos(\theta_1)\dot{\theta}_0\dot{\theta}_1.
 \end{split}
 \end{equation}
 The total potential and kinetic energies are given, respectively, by
 \begin{subequations}
 	\begin{align}
-		\ui{E}{p} &= \ui{E}{p0} + \ui{E}{p1}, \\
-		\ui{E}{k} &= \ui{E}{k0} + \ui{E}{k1}.
+		\ui{E}{p} &= \ui{E}{p,0} + \ui{E}{p,1}, \\
+		\ui{E}{k} &= \ui{E}{k,0} + \ui{E}{k,1}.
 	\end{align}
 \end{subequations}
-\subsubsection{Lagrangian}
-The Lagrangian is the difference in kinetic and potential energies
-\begin{equation}
-	L = \ui{E}{k} - \ui{E}{p}.
-\end{equation}
-From this, we obtain the Euler-Lagrange equations for two degrees of freedom system
+Now, all necessary prerequisite equations for the derivation of the Lagrange equations are presented.
+\subsubsection{Euler-Lagrange Equations}
+For two degrees of freedom system the Euler-Lagrange equations have the following form
 \begin{subequations}
 	\begin{align}
 		\dif{}{t}\lrp{\diff{L}{\dot{\theta}_0}}-\diff{L}{\dot{\theta}_0} = \tau,\\
@@ -228,17 +232,17 @@ As we can see the derivatives of the states are the functions of the current sta
 \end{bmatrix} = f(x(t),u(t)) =\begin{bmatrix}f_1(x(t),u(t))\\f_2(x(t),u(t))\\f_3(x(t),u(t))\\f_4(x(t),u(t))\end{bmatrix}. \end{equation}
 \subsubsection{Linear Model}
 Non-linear model (\ref{nonlinmodel}) can be approximated around operation point by a linear, time-invariant state-space model in the following form
-\begin{equation}\dot{x}(t) = Ax(t) + Bu(t).\end{equation}
+\begin{equation}\dot{x}(t) = \ui{A}{c}x(t) + \ui{B}{c}u(t).\end{equation}
 Its constant matrices can be obtained by calculating its partial derivatives with respect to the state and control variables.
-\begin{subequations}
+\begin{subequations}\label{linSSmodel:general}
 	\begin{align}
-	A &= \begin{bmatrix}
+	\ui{A}{c} &= \begin{bmatrix}
 	\frac{\partial f_1(x(t),u(t))}{\partial x_1}&\frac{\partial f_1(x(t),u(t))}{\partial x_2}&\frac{\partial f_1(x(t),u(t))}{\partial x_3}&\frac{\partial f_1(x(t),u(t))}{\partial x_4}\\
 	\frac{\partial f_2(x(t),u(t))}{\partial x_1}&\frac{\partial f_2(x(t),u(t))}{\partial x_2}&\frac{\partial f_2(x(t),u(t))}{\partial x_3}&\frac{\partial f_2(x(t),u(t))}{\partial x_4}\\
 	\frac{\partial f_3(x(t),u(t))}{\partial x_1}&\frac{\partial f_3(x(t),u(t))}{\partial x_2}&\frac{\partial f_3(x(t),u(t))}{\partial x_3}&\frac{\partial f_3(x(t),u(t))}{\partial x_4}\\
 	\frac{\partial f_4(x(t),u(t))}{\partial x_1}&\frac{\partial f_4(x(t),u(t))}{\partial x_2}&\frac{\partial f_4(x(t),u(t))}{\partial x_3}&\frac{\partial f_4(x(t),u(t))}{\partial x_4}
 	\end{bmatrix},\\ 
-	B &= \begin{bmatrix}
+	\ui{B}{c} &= \begin{bmatrix}
 	\frac{\partial f_1(x(t),u(t))}{\partial u}\\\frac{\partial f_2(x(t),u(t))}{\partial u}\\\frac{\partial f_3(x(t),u(t))}{\partial u}\\\frac{\partial f_4(x(t),u(t))}{\partial u}
 	\end{bmatrix}.
 	\end{align}
@@ -246,12 +250,12 @@ Its constant matrices can be obtained by calculating its partial derivatives wit
 And when we compute these derivatives, we obtain a linearized continuous-time dynamic model of the pendulum in the form of state matrices
 \begin{subequations}\label{linmatrices}
 	\begin{align}
-	A &=\begin{bmatrix}0&1&0&0\\
+	\ui{A}{c} &=\begin{bmatrix}0&1&0&0\\
 	0&0&\frac{-gL_0l_1^2m_1^2}{(m_1L_0^2+I_0)(m_1l_1^2+I_1)-L_0^2l_1^2m_1^2}&0\\
 	0&0&0&1\\
 	0&0&\frac{gl_1m_1(m_1L_0^2+I_0)}{(m_1L_0^2+I_0)(m_1l_1^2+I_1)-L_0^2l_1^2m_1^2}&0
 	\end{bmatrix},\\
-	B &=	\begin{bmatrix}
+	\ui{B}{c} &=	\begin{bmatrix}
 	0\\ 
 	\frac{m_1L_1^2+I_1}{(m_1L_0^2+I_0)(m_1l_1^2+I_1)-L_0^2l_1^2m_1^2}\\
 	0\\
@@ -264,7 +268,7 @@ And when we compute these derivatives, we obtain a linearized continuous-time dy
 Now those linearized equations of motion would be evaluated at two equilibrium positions: upright and downward. The reason is that at the downward position the system's output, which is the position of the pendulum, has a stable point at “$+\pi$” and “$-\pi$”, while at the upright position system has no stable point.
 
 The model, obtained by linearization around the upright operation point, is used for fulfilling the main control objective, which is stabilizing the pendulum at the upright position. The second model is used to simulate process behavior during initial excitation by a Swing-up controller.
-\section{Controller Theory}
+\section{Controller Theory}\label{regulatory:teoria}
 In this section theory for the individual controllers is described. As we are aiming for swing-up control of the pendulum, several controllers should be designed. For the heuristic swing-up approach an energy shaping controller and a predictive controller. And for the optimal swing-up approach a nonlinear model predictive control strategy.
 \subsection{Model Predictive Control}\label{mpcsection}
 Model Predictive Control (MPC) uses a model of the system to make predictions about the system’s future behavior. MPC solves an online optimization algorithm to find the optimal control action that drives the predicted output to the reference. MPC can handle MIMO systems that may have interactions between their inputs and outputs. It can also handle input and output constraints. MPC has preview capability; it can incorporate future reference information into the control problem to improve controller performance. Due to all these properties MPC provides the highest quality of control performance at the moment.
@@ -280,21 +284,21 @@ Thanks to the knowledge of that model, we can predict the evolution of states an
 Due to the setup of the controlled process, the MPC should be formulated to regulate the states of the system to the origin. And such MPC can be formulated as
 \begin{subequations}\label{mpcgeneral}
 	\begin{align}
-		\min_{U}\ \sum_{k=0}^{N-1}& \lrp{\left\| \ui{Q}{x}x_{k}\right\|_2+\left\|\ui{Q}{u}u_{k}\right\|_2}\\
-	    \label{eq217b}\text{s.t.}\qquad&x_{k+1} = Ax_{k} + Bu_{k}\qquad\quad  k \in \mathbb{N}_0^{N-1}\\
+		\min_{u_0,...,u_{N-1}}\ &\sum_{k=0}^{N-1} \lrp{\left\| \ui{Q}{x}x_{k}\right\|_2+\left\|\ui{Q}{u}u_{k}\right\|_2}\\
+	    \label{eq217b}\text{s.t.}\quad\,\ &x_{k+1} = Ax_{k} + Bu_{k}\qquad\quad  k \in \mathbb{N}_0^{N-1}\\
 		&x_0 = x(0)\\
 		\label{cst_x}&x_{k}\in\mathcal{X}\qquad\qquad\qquad\qquad\,  k \in \mathbb{N}_0^{N-1}\\
 		\label{cst_u}&u_{k}\in\mathcal{U}\qquad\qquad\qquad\qquad\;   k \in \mathbb{N}_0^{N-1}
 	\end{align}
 \end{subequations}
-where $\mathcal{X}$ and $\mathcal{U}$ are polytopic state and input constraints respectively and defined as
+where $N$ is a length of the prediction horizon, which defines the number of future control intervals the MPC must evaluate by prediction. The $N$ must be big enough to cover the closed-loop response of the process to prevent stability issues. Likewise, with the wider prediction horizon also increases the quality of control performance. On the other hand, the length of the prediction horizon greatly influences the solving time, so the compromise should be found. Matrices $\ui{Q}{x}$ and $\ui{Q}{u}$ are the weighting matrices, representing the penalty on the offset from the reference value, which in this case is equal zero and amount of energy, invested into the conrtol inputs. The $\mathcal{X}$ and $\mathcal{U}$ are polytopic state and input constraints respectively and defined as
 \begin{subequations}
 	\begin{align}
 	\mathcal{X} &= \{\ui{H}{x}x_k\leq \ui{K}{x}\},\\
 	\mathcal{U} &= \{\ui{H}{u}u_k\leq \ui{K}{u}\}.
 	\end{align}
 \end{subequations}
-In case of box constraints
+For case of box constraints
 \begin{subequations}
 	\begin{align}
 		\ui{x}{min}\leq x_k \leq\ui{x}{max},\\
@@ -318,7 +322,7 @@ the matrices $\ui{H}{x}$, $\ui{K}{x}$, $\ui{H}{u}$ and $\ui{K}{u}$ have the foll
 					\end{bmatrix}.
 	\end{align}
 \end{subequations}
-Unfortunately, such formulation is inappropriate for quadratic programming solver, so it has to be reformulated in the form of a quadratic optimization problem.
+Unfortunately, such formulation is inappropriate for quadratic programming solver, so it has to be reformulated in the form of a quadratic optimization problem. More detailed information could be find in \cite{MPC:kniha}.
 \subsubsection{Model Predictive Control as a Quadraic Programming Optimization Problem}
 To solve an MPC problem, the Quadratic Programming (QP) solver is used. Unfortunately, an MPC formulation (\ref{mpcgeneral}) is inappropriate for QP solver and has to be reformulated. The standard QP problem has the following form
 \begin{subequations}
@@ -332,7 +336,7 @@ As the first step, the standard MPC cost function should be written in a vector 
 \begin{equation}
 	\min_{U}\quad X^\intercal\ui{\tilde{Q}}{x}X + U^\intercal\ui{\tilde{Q}}{u}\,U\\
 \end{equation}
-where $X$ is a vector of predicted states, $U$ is an optimal trajectory of future control inputs and $\ui{\tilde{Q}}{x}$ and $\ui{\tilde{Q}}{u}$ are the matrices of original weight matrices.
+where $X$ is a vector of predicted states, $U$ is an optimal trajectory of predicted control inputs and $\ui{\tilde{Q}}{x}$ and $\ui{\tilde{Q}}{u}$ are the matrices of original weight matrices.
 \begin{equation}
 	X = \begin{bmatrix}
 	x_0\\x_{1}\\\vdots\\x_{N-1}
@@ -364,15 +368,15 @@ At the next step, the equality constrains (\ref{eq217b}) should be expressed in 
 \begin{split}
 x_0 &= x(t)\\
 x_{1} &= Ax_0 + Bu_0\\
-x_{2} &= A\hat{x}_{1} + Bu_{1}\\
+x_{2} &= Ax_{1} + Bu_{1}\\
 &= A^2x_0 + ABu_0 + Bu_{1}\\
-x_{3} &= A\hat{x}_{2} + Bu_{2}\\
+x_{3} &= Ax_{2} + Bu_{2}\\
 &= A^3x_0 + A^2Bu_0 + ABu_{1} + Bu_{2}\\
 &\vdots\\
 x_{k} &= A^kx_0+\sum_{j=0}^{k-1}A^jBu_{k-j-1}
 \end{split}
 \end{equation}
-Or, if we write these equations in a compact form, we obtain
+Next, these equations could be written in a compact form
 \begin{equation}
 	\begin{bmatrix}
 	x_0\\x_{1}\\ x_{2}\\\vdots\\ x_{N-1}
@@ -448,7 +452,7 @@ Those constraints are in the standard form and by combining them, we obtain matr
 \end{equation}
 At this point, as matrices $R$, $Q$, $R$, $H$ and $G$ are defined, and MPC strategy can be implemented via using any QP solver.
 \subsection{Energy Shaping Controller}\label{energyshapingsection}
-For the initial excitation of the system, we use the energy-based swing-up controller. The strategy with this controller is that we increase the amplitude of swings by increasing the energy of the system with every swing. The energy is added by controlling arms movements and depends on the actual energy of the pendulum. The actual energy of the pendulum can be calculated from the actual position of the pendulum and its velocity: 
+For the initial excitation of the system, we use the energy-based swing-up controller \cite{furuta:swing}. The strategy with this controller is that we increase the amplitude of swings by increasing the energy of the system with every swing. The energy is added by controlling arms movements and depends on the actual energy of the pendulum. The actual energy of the pendulum can be calculated from the actual position of the pendulum and its velocity: 
 \begin{equation}
 E = \frac{m_1gl_1}{2}\lrp{\lrp{\frac{\dot{\theta}_1}{\omega_0}}^2+\cos\theta_1 - 1}.
 \end{equation}
@@ -456,7 +460,7 @@ Than the control law has following form:
 \begin{equation}\label{energy-shaping}
 	u = \ui{k}{v}E\,\mathrm{sign}\lrp{\dot{\theta}_1\cos\theta_1}.
 \end{equation}
-Where element $\mathrm{sign}\lrp{\dot{\theta_1}\cos\theta_1}$ determines direction i which the force will be applied and $\ui{k}{v}$ is the gain of the controller.
+Where element $\mathrm{sign}\lrp{\dot{\theta}_1\cos\theta_1}$ determines direction i which the force will be applied and $\ui{k}{v}$ is the gain of the controller.
 \newpage
 \subsection{Nonlinear Model Predictive Control}\label{nmpcsection}
 To control the process, MPC uses a model of the process to predict the evolution of states and outputs of the process in the following sampling periods. In general, the process dynamics are complex and cannot be described perfectly. Any modeling method introduces some uncertainties into the resulting model. For example, the linear model is valid only in som range around the linearization point. So linear MPC, which uses such could be designed to control the process only in that range. But nonlinear modeling is a much more precise approach to describe the process dynamic. And in the case of Furuta pendulum, its full range dynamic can be described by a nonlinear model (\ref{nonlinmodel}). And by using such a model to predict the behavior of the process an NMPC strategy to perform Swing-Up control of the pendulum can be designed.
@@ -470,7 +474,7 @@ To design an optimal controller, an optimization problem has to be solved. In ca
 	\end{align}
 \end{subequations}
 Sometimes, to obtain an analytical solution to such problem, could be extremely difficult. So a numerical method called Sequential Quatratic Programming (SQP) is used instead.
-\subsubsection{Sequential Quatratic Programming}
+\subsubsection{Sequential Quatratic Programming}\label{SQP:theory}
 Sequential Quadratic Programming is arguably become the most successful method for solving nonlinearly constrained optimization problems \cite{SQP:Theory}. Its general idea is to approximate NLP at current iterate by QP subproblem, solve that subproblem, than use the solution to construct a new iterate. This construction is done in such a way that the sequence converges to a local minimum of the NLP.
 
 The main condition for a QP subproblem is that it has to reflect the properties of NLP at current iteration. But before such subproblem could be constructed, a few terms should be establish first.
@@ -482,15 +486,15 @@ The main condition for a QP subproblem is that it has to reflect the properties 
 	\begin{equation}
 		\nabla f(x) = \lrp{\diff{f(x)}{x_1},\diff{f(x)}{x_2},\cdots,\diff{f(x)}{x_n}}^\intercal.
 	\end{equation}
-	\item Hessian of f, $Hf(x)$ is the matrix of second partial derivatives as given by
+	\item Hessian of f, $\nabla^2f(x)$ is the matrix of second partial derivatives as given by
 	\begin{equation}
-		\lrp{Hf(x)}_{ij} := \diffxy{f(x)}{x_i}{x_j}.
+		\lrp{\nabla^2f(x)}_{ij} = \diffxy{f(x)}{x_i}{x_j}.
 	\end{equation}
 \end{itemize}
 A major concern in SQP method is the choice of appropriate quadratic subproblem. 
 The most obvious choice for the objective functional in this quadratic program is its local quadratic approximation
 \begin{equation}
-f(x)\approx f(x_k)+\nabla f(x_k)\lrp{x-x_k}+\frac{1}{2}\lrp{x-x_k}^\intercal Hf(x_k)\lrp{x-x_k}.
+f(x)\approx f(x_k)+\nabla f(x_k)\lrp{x-x_k}+\frac{1}{2}\lrp{x-x_k}^\intercal \nabla^2f(x_k)\lrp{x-x_k}.
 \end{equation}
 and the constraint functions $h$ and $g$ by their local affine approximations
 \begin{subequations}
@@ -503,7 +507,7 @@ And after setting
 \begin{subequations}
 	\begin{align}
 		d_x&=x-x_k,\\
-		B_k &= Hf(x_k).
+		B_k &= \nabla^2f(x_k).
 	\end{align}
 \end{subequations}
 The following form of the QP subproblem is accured
@@ -555,26 +559,47 @@ for some selection of the steplength parameter $\alpha$. Once the new iterates a
 prescribed choice of $B_k$ can be calculated.
 
 In summary the Basic SQP algorithm looks like this:
-\begin{itemize}
-	\item Inicializacia:\\
-Given approximations $(x_0,\lambda_0,\mu_0)$, $B_0$ and a merit function $\phi$, set $k=0$
-\item Loop:
-\begin{enumerate}
-	\item Form and solve QP subproblem to obtain $(d_x,d_\lambda,d_\mu)$.
-	\item Choose steplength $\alpha$ so that
+%\begin{itemize}
+%	\item Inicializacia:\\
+%Given approximations $(x_0,\lambda_0,\mu_0)$, $B_0$ and a merit function $\phi$, set $k=0$
+%\item Loop:
+%\begin{enumerate}
+%	\item Form and solve QP subproblem to obtain $(d_x,d_\lambda,d_\mu)$.
+%	\item Choose steplength $\alpha$ so that
+%	\begin{equation}
+%		\phi(x_k + \alpha d_x)<\phi(x_k),
+%	\end{equation}
+%	\item Set
+%	\begin{subequations}
+%		\begin{align}
+%		x_{k+1} &= x_k + \alpha d_x.\\
+%		\lambda_{k+1} &= \lambda_k + \alpha d_\lambda.\\
+%		\mu_{k+1} &= \mu_k + \alpha d_\mu,
+%		\end{align}
+%	\end{subequations}
+%	\item Stop if converged.
+%	\item Compute $B_{k+1}$.
+%	\item Set $k = k+1$; go to 1.
+%\end{enumerate}
+%\end{itemize}
+
+\begin{algorithm}[H]
+	\caption{Basic SQP algorithm}\label{SQP:algorithm}
+	\begin{algorithmic}[1]
+	\Procedure{SQP}{$x_0,\lambda_0,\mu_0,B_0$}
+	\State $k\gets 0$
+	\While{not converged}
+	\State Form and solve QP subproblem to obtain $(d_x,d_\lambda,d_\mu)$.
+	\State Choose steplength $\alpha$ so that
 	\begin{equation}
-		\phi(x_k + \alpha d_x)<\phi(x_k),
+	f(x_k + \alpha d_x)<f(x_k).
 	\end{equation}
-	\item Set
-	\begin{subequations}
-		\begin{align}
-		x_{k+1} &= x_k + \alpha d_x.\\
-		\lambda_{k+1} &= \lambda_k + \alpha d_\lambda.\\
-		\mu_{k+1} &= \mu_k + \alpha d_\mu,
-		\end{align}
-	\end{subequations}
-	\item Stop if converged.
-	\item Compute $B_{k+1}$.
-	\item Set $k = k+1$; go to 1.
-\end{enumerate}
-\end{itemize}
+	\State 	$x_{k+1} \gets x_k + \alpha d_x$,
+	\State $\lambda_{k+1} \gets \lambda_k + \alpha d_\lambda$,
+	\State $\mu_{k+1} \gets \mu_k + \alpha d_\mu$.
+	\State Compute $B_{k+1}$.
+	\State $k \gets k+1$.
+	\EndWhile
+	\EndProcedure	
+	\end{algorithmic}
+\end{algorithm}	

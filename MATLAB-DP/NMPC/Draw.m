@@ -67,35 +67,35 @@ switch settings.model
         ylabel('$\tau\,[V]$','interpreter','latex')
         grid on
         
-        close all
-        
-        subplot(311)
-        plot(time,rad2deg(state_sim(:,1)));
-        %title('Arm Position');
-        box on
-        xlabel('t [s]')
-        ylabel('$\theta_0\,[deg]$','interpreter','latex')
-        grid on
-        axis([0 4 -30 30])
-        subplot(312)
-        plot(time,rad2deg(state_sim(:,3)));
-        %title('Pendulum Position');
-        axis([0 4 -20 200])
-        xlabel('t [s]')
-        ylabel({'$\theta_1\,[deg]$';' '},'interpreter','latex')
-        grid on
-        box on
-        subplot(313);
-        hold on
-        stairs(time,controls_MPC(:,1));
-        xlabel('t [s]')
-        ylabel('$\tau\,[V]$','interpreter','latex')
-        grid on
-        box on
-        plot([0,4],[10 10],'k--')
-        plot([0,4],[-10 -10],'k--')
-        axis([0 4 -10.5 10.5])
-        hold off
+%         close all
+%         
+%         subplot(311)
+%         plot(time,rad2deg(state_sim(:,1)));
+%         %title('Arm Position');
+%         box on
+%         xlabel('t [s]')
+%         ylabel('$\theta_0\,[deg]$','interpreter','latex')
+%         grid on
+%         axis([0 4 -30 30])
+%         subplot(312)
+%         plot(time,rad2deg(state_sim(:,3)));
+%         %title('Pendulum Position');
+%         axis([0 4 -20 200])
+%         xlabel('t [s]')
+%         ylabel({'$\theta_1\,[deg]$';' '},'interpreter','latex')
+%         grid on
+%         box on
+%         subplot(313);
+%         hold on
+%         stairs(time,controls_MPC(:,1));
+%         xlabel('t [s]')
+%         ylabel('$\tau\,[V]$','interpreter','latex')
+%         grid on
+%         box on
+%         plot([0,4],[10 10],'k--')
+%         plot([0,4],[-10 -10],'k--')
+%         axis([0 4 -10.5 10.5])
+%         hold off
     case 'ChainofMasses_Lin'
         figure(1);
         subplot(311);
