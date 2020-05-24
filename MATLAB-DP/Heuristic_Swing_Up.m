@@ -1,5 +1,4 @@
-clc;clear;close all
-
+clc;clear;
 %% State Representation
 syms theta0 theta1 d_theta0 d_theta1 d2_theta0  d2_theta1 tau
 syms m0 m1 L0 L1 l1 I0 I1 g
@@ -122,7 +121,7 @@ options = sdpsettings('verbose',0,'cachesolvers',1,'solver','gurobi');
 OPT = optimizer(cst, obj, options, xx{1}, uu{1});
 
 %% Simulation
-tf = 4; % sekundy
+tf = 15; % sekundy
 kf = tf/Ts;
 x0 = [0,0,0.01,-0.01];
 
@@ -131,87 +130,74 @@ u_sim = zeros(nu,kf);
 y_sim = zeros(1,kf);
 x_sim(:,1)=x0;
 
-%ISE_M = 0;
+IAE = 0;
 swg = 1;
+a = (m1*g*l1/2);
+om = sqrt(m1*g*l1/I1);
+opts = odeset('RelTol',1e-2,'AbsTol',1e-4);
+
 for k = 1:kf    
     if swg == 1 %swing up
-        E = (m1*g*l1/2)*((x_sim(4,k)/om)^2+cos(x_sim(3,k))-1)-2
+        E = a*((x_sim(4,k)/om)^2+cos(x_sim(3,k)-1));
         u_sim(:,k) = 4*E*sign(x_sim(4,k)*cos(x_sim(3,k)));
+        
         x_sim(:,k+1) = A2*x_sim(:,k)+B2*u_sim(:,k);
         y_sim(k) = C2*x_sim(:,k)+D2*u_sim(:,k)+pi;
         
+        x_sim(3,k) = x_sim(3,k) +pi;
         if y_sim(k)<0.9 
-           swg = 0;
-           x_sim(3,k+1)=x_sim(3,k+1)+pi;
+            swg = 0;
+            u = u_sim(:,k);
+            tspan = [0, 0.02];
+            [t,y] = ode45(@(t,x) odefun(t,x,u),tspan,x_sim(:,k),opts);
+            x_sim(:,k+1) = y(end,:)';
 
         end
     
     else %MPC
+        t0 = cputime;
         u_sim(:,k) = OPT(x_sim(:,k));
+        t_solver = cputime - t0
         x_sim(:,k+1) = A*x_sim(:,k)+B*u_sim(:,k);
         y_sim(:,k) = C*x_sim(:,k)+D*u_sim(:,k);
 
-        %ISE
-        %ISE_M = ISE_M+(y_sim(:,k))^2;
+        u = u_sim(:,k);
+        tspan = [0, 0.02];
+        [t,y] = ode45(@(t,x) odefun(t,x,u),tspan,x_sim(:,k),opts);
+        x_sim(:,k+1) = y(end,:)';
     end
-
+    IAE = IAE + abs(x_sim(3,k));
 end
 x_sim(:,end) = [];
+IAE
+%% Plots
 
-%% Plots Short
-t = linspace(0,tf,kf);
-% subplot(3,1,1)
-% plot(t,rad2deg(x_sim(1,:)))
-% hold on
-% legend({'MPC'},'Orientation','horizontal')
-% grid on
-% box on
-% xlabel('t [s]')
-% ylabel('$\theta_0\,[deg]$','interpreter','latex')
-% axis([0 tf -140 30])
-% 
-% subplot(3,1,2)
-% plot(t,rad2deg(y_sim))
-% hold on
-% legend({'MPC'},'Orientation','horizontal')
-% %title('Pendulum position')
-% xlabel('t [s]')
-% ylabel('$\theta_1\,[deg]$','interpreter','latex')
-% axis([0 tf -40 300])
-% grid on
-% hold off
-% subplot(3,1,3)
-% hold on
-% plot(t,u_sim)
-% plot([t(1),t(end)],[u_cst(1),u_cst(1)],'k--');
-% plot([t(1),t(end)],[u_cst(2),u_cst(2)],'k--');
-% %title('Torque')
-% xlabel('t [s]')
-% ylabel('$\tau\,[V]$','interpreter','latex')
-% axis([0 tf -5.3 5.3])
-% grid on
-% box on
-% hold off
-% legend({'MPC'},'Orientation','horizontal')
-
-% Plost Full
-figure
-txt = {'\theta_0','d\theta_0','\theta_1','d\theta_1'};
+path = 'Dswing/';
+close all
+t = linspace(0,kf*Ts,kf);
+w = 9;
+l = 21;
+txt = {'$\theta_0\;[deg]$ ','$\dot{\theta_0}\;[deg s^{-1}]$ ','$\theta_1\;[deg]$','$\dot{\theta_1}\;[deg s^{-1}]$ '};
+txt2 = {'arm','darm','pend','dpend'};
 for i = 1:nx
-    subplot(nx+1,1,i)
+    figure(i)
+    %subplot(nx+1,1,i)
     hold on
-    plot(t,x_sim(i,1:end))
-    title(txt{i})
-    legend('MPC')
+    plot(t,rad2deg(x_sim(i,1:end)))
+    ylabel(txt{i},'interpreter','latex')
     xlabel('t [s]')
     hold off
+        f2p(txt2{i}, 'Xlim', [0, tf],  'Ytol', 0.05, 'Xtol', 0,...
+        'extension', 'pdf','Path', path, 'dpi', 150, 'papersize', [l, w], 'Xsplit', 10,'Ysplit',7);
+
 end
-subplot(nx+1,1,nx+1)
+
+
+figure(5)
 hold on
 plot(t,u_sim)
 hold off
-legend('MPC')
+ylabel('$\tau\;[V]$','interpreter','latex')
 xlabel('t [s]')
-title('u')
-
-%ISE_M
+f2p('control', 'Xlim', [0, tf], 'Ytol', 0.05, 'Xtol', 0,...
+'extension', 'pdf', 'dpi', 150, 'Path', path, 'papersize', [l, w], 'Xsplit', 10,'Ysplit',7);

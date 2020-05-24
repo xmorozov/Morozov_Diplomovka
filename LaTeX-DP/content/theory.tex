@@ -1,4 +1,5 @@
-\chapter{Theory}
+\chapter{Theoretical Foundations}
+This part of the thesis dedicated to the theoretical foundations, necessary to control the pendulum. In the beginning, the pendulum device is described and its dynamic model is derived. Then the main control strategies and the theory for the individual controllers are discussed. There are two control strategies we are aiming for the heuristic swing-up and the optimal swing-up control strategies. Also, several controllers must be described, as in the heuristic swing-up approach an energy shaping controller and a predictive controller are used and in the optimal swing-up approach a nonlinear model predictive controller is used.
 \section{Furuta's Pendulum}\label{furuta_Theory}
 \subsection{Device Overview}
 Rotational inverted pendulum was first developed in 1992 at the Tokyo Institute of Technology by Katsuhisa Furuta as an example of a complex nonlinear oscillator in the need of control algorithms testing in process control theory.
@@ -11,9 +12,10 @@ The pendulum composes of motor-driven arm, which rotates in the horizontal plane
 \end{figure}
 \newpage
 Consider the rotational inverted pendulum
-mounted to a DC motor as shown in (\ref{furuta}). The DC motor
-is used to apply a torque $\tau$ to Arm. The link between Arm and Pendulum is not actuated but free to rotate. The two arms have lengths $L_0$ and $L_1$. The arm and pendulum have masses $m_1$ and $m_2$ which are located at $l_0$ and $l_1$, respectively, which are the lengths from the point of rotation of the arm to its center of mass. The arm and the pendulum have inertia tensors $J_0$ and $J_1$ (about the centre of mass of the arm).
-A right hand coordinate system has been used to define the inputs, states, and the Cartesian coordinate systems 0 and 1. The coordinate axes of Arm and Pendulum are the principalaxes, such that the inertia tensors are diagonal of the form
+mounted to a DC motor as shown in (\ref{furuta:schematic}). The DC motor
+is used to apply a torque $\tau$ to arm. The link between arm and pendulum is not actuated but free to rotate. The two arms have lengths $L_0$ and $L_1$. The arm and pendulum have masses $m_1$ and $m_2$ which are located at $l_0$ and $l_1$, respectively, which are the lengths from the point of rotation of the arm to its center of mass. The arm and the pendulum have inertia tensors $J_0$ and $J_1$ (about the centre of mass of the arm). \\
+
+To define the inputs, states, and coordinate systems for the arm and the pendulum a right-hand coordinate system is used. As the motion of Furuta pendulum is a 3D process, the coordinate systems of arm and pendulum are the three-dimensional so that the inertia tensors have the form of diagonal matrices
 \begin{subequations}
 	\begin{align}
 		J_0 = 	\begin{bmatrix}
@@ -29,7 +31,9 @@ A right hand coordinate system has been used to define the inputs, states, and t
 	\end{align}
 \end{subequations}
 \begin{table}[h]
+	\centering
 	\caption{Parametres of Furuta pendulum}
+	\label{furuta:params}
 	\begin{tabular}
 		{l l l}
 		\noalign{\hrule height 1pt}
@@ -51,7 +55,7 @@ A right hand coordinate system has been used to define the inputs, states, and t
 	\end{tabular}
 \end{table}
 \subsection{Lagrangian Formulation}
-To design a predictive controller, the knowledge of the dynamic model of the process is necessary. The analytical model based on the equations of motion could be derived from the Lagrange equations \cite{furuta:model}, which represent the most commonly used method for establishing equations of motion of difficult mechanical systems.
+To design a predictive controller, the knowledge of the dynamic model of the process is necessary. The analytical model based on the equations of motion could be derived from the Lagrange equations~\cite{furuta:model}, which represent the most commonly used method for establishing equations of motion of difficult mechanical systems.
 
 The Lagrangian defined as the difference in kinetic and potential energies
 \begin{equation}
@@ -59,8 +63,8 @@ L = \ui{E}{k} - \ui{E}{p}.
 \end{equation}
 As we know, the kinetic energy is a function of both the speed and position and the potential energy is a function of position. Therefore to define the energies, a way to describe the state of the point during the rotary motion is required.
 \subsubsection{Rotation Matrices}
-Rotation Matrices are used to describe rotation in a Euclidean space. For three-dimensional Cartesian coordinate system two rotation matrices are defined.
-The rotation matrix from the base to Arm is
+Rotation matrices are used to describe rotation in a Euclidean space. For three-dimensional Cartesian coordinate system two rotation matrices are defined.
+The rotation matrix from the base to arm is
 \begin{equation}
 	R_0 = 	\begin{bmatrix}
 					\ \ \,\cos(\theta_0) & \sin(\theta_0) & 0\\
@@ -69,7 +73,7 @@ The rotation matrix from the base to Arm is
 				\end{bmatrix}.
 \end{equation}
 The rotation matrix from arm to pendulum is derived by
-initially applying a (diagonal) matrix to that maps the frame
+initially applying a diagonal matrix to that maps the frame
 0 to frame 1, followed by a rotation matrix for $\theta_1$, given by
 \begin{equation}
 R_1 = 	\begin{bmatrix}
@@ -79,7 +83,7 @@ R_1 = 	\begin{bmatrix}
 		\end{bmatrix}.
 \end{equation}
 \subsubsection{Velocities}
-The angular velocity of arm is given by
+The angular velocity of the arm is given by
 \begin{equation}
 	\omega_0 = 	\begin{bmatrix}
 					0 & 0 & \dot{\theta}_0
@@ -209,10 +213,10 @@ Equations (\ref{motion1}) and (\ref{motion2}) are further utilized to establish 
 space model
 \begin{subequations}
 	\begin{align}
-	\dot{x}_1 &= \dot{\theta_0}, \\
-	\dot{x}_2 &= \frac{\gamma(\epsilon\dot{\theta_0}^2+\rho)-\delta(\tau+\beta\dot{\theta_1}^2-\sigma\dot{\theta_0}\dot{\theta_1})}{\gamma^2-\alpha\delta},\\
-	\dot{x}_3 &= \dot{\theta_1},\\
-	\dot{x}_4 &= \frac{\gamma(\tau+\beta\dot{\theta_1}^2-\sigma\dot{\theta_0}\dot{\theta_1})-\alpha(\epsilon\dot{\theta_0}^2+\rho)}{\gamma^2-\alpha\delta}.
+	\dot{x}_1 &= \dot{\theta}_0, \\
+	\dot{x}_2 &= \frac{\gamma(\epsilon\dot{\theta}_0^2+\rho)-\delta(\tau+\beta\dot{\theta}_1^2-\sigma\dot{\theta}_0\dot{\theta}_1)}{\gamma^2-\alpha\delta},\\
+	\dot{x}_3 &= \dot{\theta}_1,\\
+	\dot{x}_4 &= \frac{\gamma(\tau+\beta\dot{\theta}_1^2-\sigma\dot{\theta}_0\dot{\theta}_1)-\alpha(\epsilon\dot{\theta}_0^2+\rho)}{\gamma^2-\alpha\delta}.
 	\end{align}
 \end{subequations}
 Now these non-linear differential equations could be written in the form of matrices:
@@ -226,10 +230,9 @@ Now these non-linear differential equations could be written in the form of matr
 \frac{\gamma(\tau+\beta\dot{\theta}_1^2-\sigma\dot{\theta}_0\dot{\theta}_1)-\alpha(\epsilon\dot{\theta}_0^2+\rho)}{\gamma^2-\alpha\delta}
 \end{bmatrix}.
 \end{equation}
-As we can see the derivatives of the states are the functions of the current states and control input. And more importantly, those variables have nonlinear interactions within each dynamic equation. 
-\begin{equation}\begin{bmatrix}
-\dot{x}_1(t) \\ \dot{x}_2(t) \\ \dot{x}_3(t) \\ \dot{x}_4(t)
-\end{bmatrix} = f(x(t),u(t)) =\begin{bmatrix}f_1(x(t),u(t))\\f_2(x(t),u(t))\\f_3(x(t),u(t))\\f_4(x(t),u(t))\end{bmatrix}. \end{equation}
+Or, in the short form
+\begin{equation} \dot{x}(t) = f(x(t),u(t)). \end{equation}
+And this is the non-linear dynamic model of the Furuta pendulum, where the derivatives of the states are the functions of the current states and control input. And, also, there are nonlinear interactions between them. 
 \subsubsection{Linear Model}
 Non-linear model (\ref{nonlinmodel}) can be approximated around operation point by a linear, time-invariant state-space model in the following form
 \begin{equation}\dot{x}(t) = \ui{A}{c}x(t) + \ui{B}{c}u(t).\end{equation}
@@ -265,13 +268,11 @@ And when we compute these derivatives, we obtain a linearized continuous-time dy
 	D &= 0.
 	\end{align}
 \end{subequations}
-Now those linearized equations of motion would be evaluated at two equilibrium positions: upright and downward. The reason is that at the downward position the system's output, which is the position of the pendulum, has a stable point at “$+\pi$” and “$-\pi$”, while at the upright position system has no stable point.
-
-The model, obtained by linearization around the upright operation point, is used for fulfilling the main control objective, which is stabilizing the pendulum at the upright position. The second model is used to simulate process behavior during initial excitation by a Swing-up controller.
-\section{Controller Theory}\label{regulatory:teoria}
-In this section theory for the individual controllers is described. As we are aiming for swing-up control of the pendulum, several controllers should be designed. For the heuristic swing-up approach an energy shaping controller and a predictive controller. And for the optimal swing-up approach a nonlinear model predictive control strategy.
+At this point, as both linear and non-linear dynamic models of the pendulum are obtained, we are ready to proceed to the development of control strategies and controller design.
+\section{Heuristic Swing-Up Control}\label{Hswing:teoria}
+The Heuristic Swing-Up control strategy considers the control of the pendulum in tow steps. First is to bring the pendulum from the steady downside position to the vicinity of the upright position by an Energy-Shaping controller. Second is the stabilization of the pendulum by a predictive controller.
 \subsection{Model Predictive Control}\label{mpcsection}
-Model Predictive Control (MPC) uses a model of the system to make predictions about the system’s future behavior. MPC solves an online optimization algorithm to find the optimal control action that drives the predicted output to the reference. MPC can handle MIMO systems that may have interactions between their inputs and outputs. It can also handle input and output constraints. MPC has preview capability; it can incorporate future reference information into the control problem to improve controller performance. Due to all these properties MPC provides the highest quality of control performance at the moment.
+The Model Predictive Control (MPC) uses a model of the system to make predictions about the system’s future behavior. MPC solves an online optimization algorithm to find the optimal control action that drives the predicted output to the reference. The MPC also handles mulltiple-input and multiple-output (MIMO) systems that may have interactions between their inputs and outputs. It can also handle input and output constraints. The MPC has preview capability; it can incorporate future reference information into the control problem to improve controller performance. Due to all these properties MPC provides the highest quality of control performance at the moment.
 \subsubsection{Model Predictive Control Formulation}
 The model predictive control requires the linear discrete-time state-space model of the process
 \begin{subequations}\label{linmodel}
@@ -280,11 +281,11 @@ The model predictive control requires the linear discrete-time state-space model
 	y_k = Cx_k + Du_k.
 	\end{align}
 \end{subequations}
-Thanks to the knowledge of that model, we can predict the evolution of states and outputs of the system.\\
+Thanks to the knowledge of that model, MPC predicts and optimize the evolution of states and outputs of the system over the prediction horizon.\\
 Due to the setup of the controlled process, the MPC should be formulated to regulate the states of the system to the origin. And such MPC can be formulated as
 \begin{subequations}\label{mpcgeneral}
 	\begin{align}
-		\min_{u_0,...,u_{N-1}}\ &\sum_{k=0}^{N-1} \lrp{\left\| \ui{Q}{x}x_{k}\right\|_2+\left\|\ui{Q}{u}u_{k}\right\|_2}\\
+		\min_{u_0,...,u_{N-1}}\ &\sum_{k=0}^{N-1} \lrp{ x_{k}^\intercal\ui{Q}{x}x_{k}+u_{k}^\intercal\ui{Q}{u}u_{k}}\\
 	    \label{eq217b}\text{s.t.}\quad\,\ &x_{k+1} = Ax_{k} + Bu_{k}\qquad\quad  k \in \mathbb{N}_0^{N-1}\\
 		&x_0 = x(0)\\
 		\label{cst_x}&x_{k}\in\mathcal{X}\qquad\qquad\qquad\qquad\,  k \in \mathbb{N}_0^{N-1}\\
@@ -322,7 +323,7 @@ the matrices $\ui{H}{x}$, $\ui{K}{x}$, $\ui{H}{u}$ and $\ui{K}{u}$ have the foll
 					\end{bmatrix}.
 	\end{align}
 \end{subequations}
-Unfortunately, such formulation is inappropriate for quadratic programming solver, so it has to be reformulated in the form of a quadratic optimization problem. More detailed information could be find in \cite{MPC:kniha}.
+Unfortunately, such formulation is inappropriate for quadratic programming solver, so it has to be reformulated in the form of a quadratic optimization problem. More detailed information could be find in~\cite{MPC:kniha}.
 \subsubsection{Model Predictive Control as a Quadraic Programming Optimization Problem}
 To solve an MPC problem, the Quadratic Programming (QP) solver is used. Unfortunately, an MPC formulation (\ref{mpcgeneral}) is inappropriate for QP solver and has to be reformulated. The standard QP problem has the following form
 \begin{subequations}
@@ -452,7 +453,7 @@ Those constraints are in the standard form and by combining them, we obtain matr
 \end{equation}
 At this point, as matrices $R$, $Q$, $R$, $H$ and $G$ are defined, and MPC strategy can be implemented via using any QP solver.
 \subsection{Energy Shaping Controller}\label{energyshapingsection}
-For the initial excitation of the system, we use the energy-based swing-up controller \cite{furuta:swing}. The strategy with this controller is that we increase the amplitude of swings by increasing the energy of the system with every swing. The energy is added by controlling arms movements and depends on the actual energy of the pendulum. The actual energy of the pendulum can be calculated from the actual position of the pendulum and its velocity: 
+For the initial excitation of the system, we use the energy-based swing-up controller~\cite{furuta:swing}. The strategy with this controller is that we increase the amplitude of swings by increasing the energy of the system with every swing. The energy is added by controlling arms movements and depends on the actual energy of the pendulum. The actual energy of the pendulum can be calculated from the actual position of the pendulum and its velocity: 
 \begin{equation}
 E = \frac{m_1gl_1}{2}\lrp{\lrp{\frac{\dot{\theta}_1}{\omega_0}}^2+\cos\theta_1 - 1}.
 \end{equation}
@@ -461,11 +462,11 @@ Than the control law has following form:
 	u = \ui{k}{v}E\,\mathrm{sign}\lrp{\dot{\theta}_1\cos\theta_1}.
 \end{equation}
 Where element $\mathrm{sign}\lrp{\dot{\theta}_1\cos\theta_1}$ determines direction i which the force will be applied and $\ui{k}{v}$ is the gain of the controller.
-\newpage
-\subsection{Nonlinear Model Predictive Control}\label{nmpcsection}
-To control the process, MPC uses a model of the process to predict the evolution of states and outputs of the process in the following sampling periods. In general, the process dynamics are complex and cannot be described perfectly. Any modeling method introduces some uncertainties into the resulting model. For example, the linear model is valid only in som range around the linearization point. So linear MPC, which uses such could be designed to control the process only in that range. But nonlinear modeling is a much more precise approach to describe the process dynamic. And in the case of Furuta pendulum, its full range dynamic can be described by a nonlinear model (\ref{nonlinmodel}). And by using such a model to predict the behavior of the process an NMPC strategy to perform Swing-Up control of the pendulum can be designed.
+\section{Optimal Swing-Up Control}\label{nmpcsection}
+Unlike the Heuristic Swing-Up control strategy in Optimal Swing-Up control strategy only one controller - a Non-linear Model Predictive Controller (NMPC) is used to control the pendulum.\\
 
-To design an optimal controller, an optimization problem has to be solved. In case of NMPC a Nonlinear Programing (NLP) problem is solved
+Generally speaking, any MPC uses a model of the process to predict the evolution of states and outputs of the process in the following sampling periods. And in general, the dynamics of the real process are complex and cannot be described perfectly. Any modeling method introduces some uncertainties into the resulting model. For example, the linear model is valid only in som range around the linearization point. So linear MPC, which uses such could be designed to control the process only in that range. But nonlinear modeling is a much more precise approach to describe the process dynamic. And in the case of Furuta pendulum, its full range dynamic can be described by a nonlinear model (\ref{nonlinmodel}). And by using such a model, an NMPC strategy is capable to perform Swing-Up control of the pendulum by itself.\\
+Any predictive controller solves an optimization problem to ensure the best control performance. In case of NMPC, such optimization problem is a Nonlinear Programing (NLP) problem. Usually, such optimization problems are extremely difficult to solve analytically. And in this section a numerical method to solve a NLP problem is described. To illustrate the method, the general form of NLP problem, with the $x$ as an arbitraty optimization variable, is considered
 \begin{subequations}\label{nlpgeneral}
 	\begin{align}
 	\min_{x}\  &f(x)\\
@@ -473,9 +474,9 @@ To design an optimal controller, an optimization problem has to be solved. In ca
 		 &g(x)\leq 0
 	\end{align}
 \end{subequations}
-Sometimes, to obtain an analytical solution to such problem, could be extremely difficult. So a numerical method called Sequential Quatratic Programming (SQP) is used instead.
+In this thesis a numerical method called Sequential Quatratic Programming is used to solve an NMPC problem. 
 \subsubsection{Sequential Quatratic Programming}\label{SQP:theory}
-Sequential Quadratic Programming is arguably become the most successful method for solving nonlinearly constrained optimization problems \cite{SQP:Theory}. Its general idea is to approximate NLP at current iterate by QP subproblem, solve that subproblem, than use the solution to construct a new iterate. This construction is done in such a way that the sequence converges to a local minimum of the NLP.
+Sequential Quadratic Programming (SQP) is arguably the most successful method for solving nonlinearly constrained optimization problems~\cite{SQP:Theory}. Its general idea is to approximate NLP at current iterate by QP subproblem, solve that subproblem, than use the solution to construct a new iterate. This construction is done in such a way that the sequence converges to a local minimum of the NLP.
 
 The main condition for a QP subproblem is that it has to reflect the properties of NLP at current iteration. But before such subproblem could be constructed, a few terms should be establish first.
 \begin{itemize}
@@ -503,14 +504,14 @@ and the constraint functions $h$ and $g$ by their local affine approximations
 		g(x)&\approx g(x_k)+\nabla g(x_k)\lrp{x-x_k}.	
 	\end{align}
 \end{subequations}
-And after setting 
+And after setting $d_x$ as a solutiion of QP problem and matrix $B_k$ as the hessian matrix in each iteration
 \begin{subequations}
 	\begin{align}
 		d_x&=x-x_k,\\
-		B_k &= \nabla^2f(x_k).
+		B_k &= \nabla^2f(x_k),
 	\end{align}
 \end{subequations}
-The following form of the QP subproblem is accured
+the following form of the QP subproblem is accured
 \begin{subequations}
 	\begin{align}
 		\min_{d_x}\  &\nabla f(x_k)^\intercal d_x+\frac{1}{2}d_x^\intercal B_k d_x\\
@@ -518,7 +519,7 @@ The following form of the QP subproblem is accured
 		&g(x_k)+\nabla g(x_k)\lrp{x-x_k}\leq 0
 	\end{align}
 \end{subequations}
-This is a reasonable approximation in case of linear constraints. In case of nonlinear constraints makes such choice inappropriated. 
+Such formulation is reasonable in case of linear constraints. In case of nonlinear constraints such choice is inappropriated. 
 
 To take nonlinearities in the constraints into account a quadratic model of the Lagrangian function could be used as the obective instead.
 \begin{subequations}
@@ -528,23 +529,23 @@ To take nonlinearities in the constraints into account a quadratic model of the 
 	&g(x)\leq 0
 	\end{align}
 \end{subequations}
-Although the optimal multipliers are unknown, then approximations $\lambda_k$,$\mu_k$ could be contained as part of the iterative process. Then at a current iterate $(x_k,\lambda_k,\mu_k)$, the objective functional in stems from the quadratic Taylor series approximation.
+Although the optimal multipliers are unknown, then approximations $\lambda_k$,$\mu_k$ could be contained as part of the iterative process. Then at a current iterate $(x_k,\lambda_k,\mu_k)$, the objective functional in stems from the quadratic Taylor series approximation
 \begin{equation}
-	\mathcal{L}(x_k,\lambda_k,\mu_k)+\nabla\mathcal{L}(x_k,\lambda_k,\mu_k)^\intercal d(x)+\frac{1}{2}d(x)^\intercal H\mathcal{L}(x_k,\lambda_k,\mu_k) d(x).
+	\mathcal{L}(x_k,\lambda_k,\mu_k)+\nabla\mathcal{L}(x_k,\lambda_k,\mu_k)^\intercal d(x)+\frac{1}{2}d_x^\intercal \nabla^2\mathcal{L}(x_k,\lambda_k,\mu_k)d_x.
 \end{equation}
 What leads to the final QP subproblem
 \begin{subequations}
 	\begin{align}
-	\min_{d_x}\  &\nabla \mathcal{L}(x_k,\lambda_k,\mu_k)^\intercal d_x+\frac{1}{2}d_x^\intercal H\mathcal{L}(x_k,\lambda_k,\mu_k)d_x\\
+	\min_{d_x}\  &\nabla \mathcal{L}(x_k,\lambda_k,\mu_k)^\intercal d_x+\frac{1}{2}d_x^\intercal nabla^2\mathcal{L}(x_k,\lambda_k,\mu_k)d_x\\
 	\text{s.t.}\  &h(x_k)+\nabla h(x_k)\lrp{x-x_k} = 0\\
 	&g(x_k)+\nabla g(x_k)\lrp{x-x_k}\leq 0
 	\end{align}
 \end{subequations}
-By solving that QP subproblem solution $d_x$ as well as local optimal values of multipliers $\lambda_{qp}$ and $\mu_{qp}$ are accuried, and setting 
+By solving that QP subproblem solution $d_x$ as well as local optimal values of multipliers $\ui{\lambda}{qp}$ and $\ui{\mu}{qp}$ are accuried, and setting 
 \begin{subequations}
 	\begin{align}
-		d_\lambda &= \lambda_{qp}-\lambda_k,\\
-		d_\mu &= \mu_{qp}-\mu_k.
+		d_\lambda &= \ui{\lambda}{qp}-\lambda_k,\\
+		d_\mu &= \ui{\mu}{qp}-\mu_k.
 	\end{align}
 \end{subequations}
 allow the updates of $(x,\lambda,\mu)$ to be written in the compact form
@@ -555,33 +556,27 @@ allow the updates of $(x,\lambda,\mu)$ to be written in the compact form
 	\mu_{k+1} &= \mu_k + \alpha d_\mu.
 	\end{align}
 \end{subequations}
-for some selection of the steplength parameter $\alpha$. Once the new iterates are constructed, the problem functions and derivatives are evaluated and a
-prescribed choice of $B_k$ can be calculated.
+for some selection of the steplength parameter $\alpha$. Steplength $\alpha$ should be chosen that the following equation is fullfiled
+\begin{equation}\label{steplength}
+	m(x_k + \alpha d_x)\leq m(x_k).
+\end{equation}
+Where $m$ is a merit function, which is a scalar-valued function of $x$ that indicates whether a new iterate is better or worse than the current one. Also, an appropriate steplength $\alpha$ that decreases $m$ can be computed, for example by a ``backtracking'' procedure of trying successively smaller values of $\alpha$ until a suitable one is obtained. In unconstrained minimization, there is a natural merit function namely the objective function itself. In the constrained setting, unless the iterates are always feasible, a merit function has to balance the drive to decrease $f$ with the need to satisfy the constraints. This balance is often controlled by a parameter in that weights a measure of the infeasibility against the value of either the objective function or the Lagrangian function. The merit function used in this thesis is
+\begin{equation}
+m(x,p) = f(x) + p\left\|e(x)\right\|_1.
+\end{equation}
+Where $f(x)$ is the objective function of (\ref{nlpgeneral}), $e(x)$ contains all constraints in (\ref{nlpgeneral}) and $p$ is a penalty parameter.
 
-In summary the Basic SQP algorithm looks like this:
-%\begin{itemize}
-%	\item Inicializacia:\\
-%Given approximations $(x_0,\lambda_0,\mu_0)$, $B_0$ and a merit function $\phi$, set $k=0$
-%\item Loop:
-%\begin{enumerate}
-%	\item Form and solve QP subproblem to obtain $(d_x,d_\lambda,d_\mu)$.
-%	\item Choose steplength $\alpha$ so that
-%	\begin{equation}
-%		\phi(x_k + \alpha d_x)<\phi(x_k),
-%	\end{equation}
-%	\item Set
-%	\begin{subequations}
-%		\begin{align}
-%		x_{k+1} &= x_k + \alpha d_x.\\
-%		\lambda_{k+1} &= \lambda_k + \alpha d_\lambda.\\
-%		\mu_{k+1} &= \mu_k + \alpha d_\mu,
-%		\end{align}
-%	\end{subequations}
-%	\item Stop if converged.
-%	\item Compute $B_{k+1}$.
-%	\item Set $k = k+1$; go to 1.
-%\end{enumerate}
-%\end{itemize}
+Lastly, the global convergence proofs for the resulting SQP algorithm are generally similar to those found in unconstrained optimization. For example 
+\begin{equation}
+	|m(x_{k+1},p) - m(x_{k},p)|\leq 1\mathrm{e}{-6},
+\end{equation}
+or
+\begin{equation}
+	\lim_{k\to\infty} \nabla m(x_{k},p) = 0
+\end{equation}
+This implies that $\{x_k\}$ converges to a critical point of $m$.\\
+
+In summary the basic SQP algorithm looks like this:
 
 \begin{algorithm}[H]
 	\caption{Basic SQP algorithm}\label{SQP:algorithm}
@@ -590,10 +585,7 @@ In summary the Basic SQP algorithm looks like this:
 	\State $k\gets 0$
 	\While{not converged}
 	\State Form and solve QP subproblem to obtain $(d_x,d_\lambda,d_\mu)$.
-	\State Choose steplength $\alpha$ so that
-	\begin{equation}
-	f(x_k + \alpha d_x)<f(x_k).
-	\end{equation}
+	\State Choose steplength $\alpha$ so that equation (\ref{steplength}) is satisfied
 	\State 	$x_{k+1} \gets x_k + \alpha d_x$,
 	\State $\lambda_{k+1} \gets \lambda_k + \alpha d_\lambda$,
 	\State $\mu_{k+1} \gets \mu_k + \alpha d_\mu$.

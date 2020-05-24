@@ -89,7 +89,7 @@ mem = InitMemory(settings, opt, input);
 %% Simulation (start your simulation...)
 
 mem.iter = 1; time = 0.0;
-Tf = 4;  % simulation time
+Tf = 15;  % simulation time
 state_sim= input.x0';
 controls_MPC = input.u0';
 y_sim = [];

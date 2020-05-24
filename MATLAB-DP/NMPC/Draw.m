@@ -29,73 +29,36 @@ switch settings.model
         stairs(time,controls_MPC(:,1));
         
       case 'FurutaPendulum'
-        
-        figure(1);
-        subplot(511)
-        plot(time,state_sim(:,1));
-        %title('Arm Position');
-        box on
-        xlabel('t [s]')
-        ylabel('$\theta_0\,[rad]$','interpreter','latex')
-        grid on
-        axis([0 4 -0.55 0.55])
-        subplot(512)
-        plot(time,state_sim(:,2)*180/pi);
-        %title('Arm Velocity');
-        xlabel('t [s]')
-        ylabel('$\dot{\theta_0}\,[rad s^{-1}]$','interpreter','latex')
-        axis([0 4 -420 80])
-        grid on
-        subplot(513)
-        plot(time,state_sim(:,3));
-        %title('Pendulum Position');
-        axis([0 4 -0.5 3.8])
-        xlabel('t [s]')
-        ylabel({'$\theta_1\,[rad]$';' '},'interpreter','latex')
-        grid on
-        subplot(514)
-        plot(time,state_sim(:,4)*180/pi);
-        %title('Pendulum Velocity');
-        axis([0 4 -600 50])
-        xlabel('t [s]')
-        ylabel('$\dot{\theta_1}\,[rads^{-1}]$','interpreter','latex')
-        grid on
-        subplot(515);
-        stairs(time,controls_MPC(:,1));
-        %title('Torque');
-        xlabel('t [s]')
-        ylabel('$\tau\,[V]$','interpreter','latex')
-        grid on
-        
-%         close all
-%         
-%         subplot(311)
-%         plot(time,rad2deg(state_sim(:,1)));
-%         %title('Arm Position');
-%         box on
-%         xlabel('t [s]')
-%         ylabel('$\theta_0\,[deg]$','interpreter','latex')
-%         grid on
-%         axis([0 4 -30 30])
-%         subplot(312)
-%         plot(time,rad2deg(state_sim(:,3)));
-%         %title('Pendulum Position');
-%         axis([0 4 -20 200])
-%         xlabel('t [s]')
-%         ylabel({'$\theta_1\,[deg]$';' '},'interpreter','latex')
-%         grid on
-%         box on
-%         subplot(313);
-%         hold on
-%         stairs(time,controls_MPC(:,1));
-%         xlabel('t [s]')
-%         ylabel('$\tau\,[V]$','interpreter','latex')
-%         grid on
-%         box on
-%         plot([0,4],[10 10],'k--')
-%         plot([0,4],[-10 -10],'k--')
-%         axis([0 4 -10.5 10.5])
-%         hold off
+        figure
+path = '../Oswing/';
+close all
+
+w = 9;
+l = 21;
+txt = {'$\theta_0\;[deg]$ ','$\dot{\theta_0}\;[deg s^{-1}]$ ','$\theta_1\;[deg]$','$\dot{\theta_1}\;[deg s^{-1}]$ '};
+txt2 = {'arm','darm','pend','dpend'};
+for i = 1:4
+    figure
+    %subplot(nx+1,1,i)
+    hold on
+    plot(time,rad2deg(state_sim(:,i)))
+    ylabel(txt{i},'interpreter','latex')
+    xlabel('t [s]')
+    hold off
+        f2p(txt2{i},  'Ytol', 0.05, 'Xtol', 0,...
+        'extension', 'pdf','Path', path, 'dpi', 150, 'papersize', [l, w], 'Xsplit', 10,'Ysplit',7);
+
+end
+
+hold on
+figure
+plot(time,controls_MPC(:,1))
+hold off
+ylabel('$\tau\;[V]$','interpreter','latex')
+xlabel('t [s]')
+f2p('control', 'Ytol', 0.05, 'Xtol', 0,...
+'extension', 'pdf', 'dpi', 150, 'Path', path, 'papersize', [l, w], 'Xsplit', 10,'Ysplit',7);
+
     case 'ChainofMasses_Lin'
         figure(1);
         subplot(311);
