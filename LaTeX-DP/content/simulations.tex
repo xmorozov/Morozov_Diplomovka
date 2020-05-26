@@ -297,13 +297,13 @@ The parameters are similar, that were used in MPC, except for the initial condit
 Now, as the rules for the NMPC are defined, we can proceed to the controller design itself, using a \textsc{MATMPC} toolbox. From a user perspective, the design of such an NMPC strategy, usage of \textsc{MATMPC} toolbox is trivial. You only have to set the NMPC parameters and define a prediction model (\ref{nonlinmodel}). Then, the \textsc{MATMPC} toolbox will automatically construct and solve the following NLP problem
 \begin{subequations}\label{NLP}
 	\begin{align}
-	\min_{X,U}\ \frac{1}{2}&\sum_{k=0}^{N-1} (\left\| h_k(x_k, u_k)\right\|_2\ui{Q}{k}) + \frac{1}{2}\left\|h_N(x_N)\right\|_2\ui{Q}{N}\label{NLP:obj}\\
+	\min_{X,\,U}\ \frac{1}{2}&\sum_{k=0}^{N-1} (\left\| h_k(x_k, u_k)\right\|_2\ui{Q}{k}) + \frac{1}{2}\left\|h_N(x_N)\right\|_2\ui{Q}{N}\label{NLP:obj}\\
 	\text{s.t.}\quad &x_{k+1} = \phi_k(x_{k},u_{k})\qquad\qquad\qquad\, k \in \mathbb{N}_0^{N-1}\label{NLP:model}\\
 	&x_0 = x(0)\\
 	&\ui{u}{min}\leq u_{k}\leq \ui{u}{max}\qquad\qquad\qquad\;   k \in \mathbb{N}_0^{N-1}	
 	\end{align}
 \end{subequations}
-There are a couple of things about such formulation, which have to be highlighted. First of all, the objective function. Here, unlike the other formulations, the vectors of states and controls $X$ and $U$ are not part of the objective function directly, but they are represented by a vector function $h_k(x, u)$. Also the predicted states for the stage $N$, represented by $h_N(x_N)$, are present in the function. Next, the continuity constraint (\ref{NLP:model}). It supposes to represent the prediction model. However, instead of using a non-linear dynamic model of the pendulum,  a numerical integration operator $\phi_k(x_{k},u_{k})$,that solves the following initial value problem (IVP) and returns the solution at $t_{k+1}$, is used. 
+There are a couple of things about such formulation, which have to be highlighted. First of all, the objective function. Here, unlike the other formulations, the vectors of optimized states and controls $X$ and $U$ are not part of the objective function directly, but they are represented by a vector function $h_k(x, u)$. Also the predicted states for the stage $N$, represented by $h_N(x_N)$, are present in the function. Next, the continuity constraint (\ref{NLP:model}). It supposes to represent the prediction model. However, instead of using a non-linear dynamic model of the pendulum,  a numerical integration operator $\phi_k(x_{k},u_{k})$,that solves the following initial value problem (IVP) and returns the solution at $t_{k+1}$, is used. 
 \begin{equation}
 0=f\lrp{\dot{x}(t), x(t),u(t),t},\quad x(0)=x_k.
 \end{equation}
