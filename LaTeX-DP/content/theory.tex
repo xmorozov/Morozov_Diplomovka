@@ -1,36 +1,19 @@
 \chapter{Theoretical Foundations}
 This part of the thesis dedicated to the theoretical foundations, necessary to control the pendulum. In the beginning, the pendulum device is described and its dynamic model is derived. Then the main control strategies and the theory for the individual controllers are discussed. There are two control strategies we are aiming for the heuristic swing-up and the optimal swing-up control strategies. Also, several controllers must be described, as in the heuristic swing-up approach an energy shaping controller and a predictive controller are used and in the optimal swing-up approach a nonlinear model predictive controller is used.
 \section{Furuta's Pendulum}\label{furuta_Theory}
+In this section, the operation of the Furuta pendulum device will be explained, and then two dynamic models linear and non-linear will be derived.
 \subsection{Device Overview}
 Rotational inverted pendulum was first developed in 1992 at the Tokyo Institute of Technology by Katsuhisa Furuta as an example of a complex nonlinear oscillator in the need of control algorithms testing in process control theory.
 The pendulum composes of motor-driven arm, which rotates in the horizontal plane and a pendulum, attached to that arm, which freely rotates in the vertical plane. The system is underactuated and extremely nonlinear due to the gravitational forces and the coupling arising from the Coriolis and centripetal forces. The schematic representation of the pendulum is shown in \ref{furuta:schematic}.
+\newpage
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=.45\linewidth]{images/furuta}
-	\caption{Furuta's Pendulum}
+	\caption{Scematic Representation of Furuta's Pendulum device}
 	\label{furuta:schematic}
 \end{figure}
-\newpage
-Consider the rotational inverted pendulum
-mounted to a DC motor as shown in (\ref{furuta:schematic}). The DC motor
-is used to apply a torque $\tau$ to arm. The link between arm and pendulum is not actuated but free to rotate. The two arms have lengths $L_0$ and $L_1$. The arm and pendulum have masses $m_1$ and $m_2$ which are located at $l_0$ and $l_1$, respectively, which are the lengths from the point of rotation of the arm to its center of mass. The arm and the pendulum have inertia tensors $J_0$ and $J_1$ (about the centre of mass of the arm). \\
-
-To define the inputs, states, and coordinate systems for the arm and the pendulum a right-hand coordinate system is used. As the motion of Furuta pendulum is a 3D process, the coordinate systems of arm and pendulum are the three-dimensional so that the inertia tensors have the form of diagonal matrices
-\begin{subequations}
-	\begin{align}
-		J_0 = 	\begin{bmatrix}
-					J_{0,\text{xx}} & 0 & 0\\
-					0 & J_{0,\text{yy}} & 0\\
-					0 & 0 & J_{0,\text{zz}}\\
-				\end{bmatrix},\\
-		J_1 = 	\begin{bmatrix}
-					J_{1,\text{xx}} & 0 & 0\\
-					0 & J_{1,\text{yy}} & 0\\
-					0 & 0 & J_{1,\text{zz}}\\
-				\end{bmatrix}.
-	\end{align}
-\end{subequations}
-\begin{table}[h]
+The parameters from Fig.~\ref{furuta:schematic} are explained in the following table.
+\begin{table}[H]
 	\centering
 	\caption{Parametres of Furuta pendulum}
 	\label{furuta:params}
@@ -54,8 +37,9 @@ To define the inputs, states, and coordinate systems for the arm and the pendulu
 		\hline
 	\end{tabular}
 \end{table}
-\subsection{Lagrangian Formulation}
-To design a predictive controller, the knowledge of the dynamic model of the process is necessary. The analytical model based on the equations of motion could be derived from the Lagrange equations~\cite{furuta:model}, which represent the most commonly used method for establishing equations of motion of difficult mechanical systems.
+So, we consider the rotational inverted pendulum mounted to a DC motor as shown in (\ref{furuta:schematic}). The DC motor is used to apply a torque $\tau$ to arm. The link between arm and pendulum is not actuated but free to rotate. The two arms have lengths $L_0$ and $L_1$. The arm and pendulum have masses $m_1$ and $m_2$ which are located at $l_0$ and $l_1$, respectively, which are the lengths from the point of rotation of the arm to its center of mass. The arm and the pendulum have inertia tensors $J_0$ and $J_1$ (about the centre of mass of the arm). The angular rotation of arm is measured in the horizontal plane where a counterclockwise direction (when viewed from above) is positive. The angular rotation of pendulum is measured in the vertical plane where a counterclockwise direction (when viewed from the front) is positive.
+\subsection{Non-linear Dynamic Model}
+To design a predictive controller, the knowledge of the dynamic model of the process is necessary. The most precise way to describe the process dynamic is by the non-Linear dynamic model. The analytical model of Furuta pendulum, based on the equations of motion could be derived using the Lagrangian formulation of the system dynamics of the mechanical system ~\cite{furuta:model}, which represent the most commonly used method for establishing equations of motion of difficult mechanical systems.
 
 The Lagrangian defined as the difference in kinetic and potential energies
 \begin{equation}
@@ -82,6 +66,7 @@ R_1 = 	\begin{bmatrix}
 			1 & 0 & 0                      
 		\end{bmatrix}.
 \end{equation}
+These rotation matrices are necessary to define the velocities of the arm and the pendulum during the rotational motion. 
 \subsubsection{Velocities}
 The angular velocity of the arm is given by
 \begin{equation}
@@ -139,6 +124,24 @@ given by
 		-\dot{\theta}_0l_1\sin(\theta_1)
 	\end{bmatrix}.														
 \end{equation}
+As the velocities are defined, the next step is to define the energies of the system.
+\subsubsection{Inertia Tensors}
+The moment of inertia is a quantity that determines the torque needed for a desired angular acceleration about a rotational axis. As the motion of Furuta pendulum is a 3D process, the coordinate systems of arm and pendulum are the three-dimensional so that the inertia tensors have the form of diagonal matrices
+\begin{subequations}
+	\begin{align}
+	\text{\textbf{J}}_0 = 	\begin{bmatrix}
+	J_{0,\text{xx}} & 0 & 0\\
+	0 & J_{0,\text{yy}} & 0\\
+	0 & 0 & J_{0,\text{zz}}\\
+	\end{bmatrix},\\
+	\text{\textbf{J}}_1 = 	\begin{bmatrix}
+	J_{1,\text{xx}} & 0 & 0\\
+	0 & J_{1,\text{yy}} & 0\\
+	0 & 0 & J_{1,\text{zz}}\\
+	\end{bmatrix}.
+	\end{align}
+\end{subequations}
+Where the diagonal elements ($J_{\text{xx}},J_{\text{yy}},J_{\text{zz}}$) represent the singular moment of inertia around the corresponding axis when the objects are rotated around that axis. In the nex step those matrices are used to define the energies of the system.
 \subsubsection{Energies}
 The potential energy of arm is
 \begin{equation}
@@ -146,7 +149,7 @@ The potential energy of arm is
 \end{equation}
 and the kinetic energy is
 \begin{equation}
-	\ui{E}{k,0} = \frac{1}{2}\lrp{\text{\textbf{v}}_{0,\text{c}}^\intercal m_0\textbf{v}_{0,\text{c}} + \omega_0^\intercal J_0\omega_0 } = 
+	\ui{E}{k,0} = \frac{1}{2}\lrp{\text{\textbf{v}}_{0,\text{c}}^\intercal m_0\textbf{v}_{0,\text{c}} + \omega_0^\intercal \text{\textbf{J}}_0\omega_0 } = 
 	\frac{1}{2}\dot{\theta}_0^2\lrp{ m_0l_0^2+J_{0,\text{zz}} }.
 \end{equation}
 The potential energy of the pendulum is
@@ -156,7 +159,7 @@ The potential energy of the pendulum is
 and the kinetic energy is
 \begin{equation}
 \begin{split}
-	\ui{E}{k,1} = &\frac{1}{2}\lrp{\text{\textbf{v}}_{1,\text{c}}^\intercal m_1\textbf{v}_{1,\text{c}} + \omega_1^\intercal J_1\omega_1 }\\
+	\ui{E}{k,1} = &\frac{1}{2}\lrp{\text{\textbf{v}}_{1,\text{c}}^\intercal m_1\textbf{v}_{1,\text{c}} + \omega_1^\intercal \text{\textbf{J}}_1\omega_1 }\\
 	= &\frac{1}{2}\dot{\theta}_0^2\lrp{m_1L_1^2+\lrp{m_1l_1^2+J_{1,\text{yy}}}\sin^2(\theta_1)+J_{1,\text{xx}}\cos^2(\theta_1)}\\
 	&+\frac{1}{2}\dot{\theta}_1^2\lrp{ J_{1,\text{zz}}+m_1l_1^2 }+m_1L_0l_1\cos(\theta_1)\dot{\theta}_0\dot{\theta}_1.
 \end{split}
@@ -171,14 +174,44 @@ The total potential and kinetic energies are given, respectively, by
 Now, all necessary prerequisite equations for the derivation of the Lagrange equations are presented.
 \subsubsection{Euler-Lagrange Equations}
 For two degrees of freedom system the Euler-Lagrange equations have the following form
-\begin{subequations}
+\begin{subequations}\label{ELequation}
 	\begin{align}
 		\dif{}{t}\lrp{\diff{L}{\dot{\theta}_0}}-\diff{L}{\dot{\theta}_0} = \tau,\\
 		\dif{}{t}\lrp{\diff{L}{\dot{\theta}_1}}-\diff{L}{\dot{\theta}_1} = 0.
 	\end{align}
 \end{subequations}
-Evaluating the terms of those Euler-Lagrange equations and following substitution gives the following equations of motion
+Also, a few simplifications could be made. Furuta pendulum has long slender arm and pendulum, such that the moment of inertia along the axis of the arm and the pendulum is negligible. In addition, arm and pendulum have rotational symmetry, such that the moments of inertia in two of the principal axes are equal. Thus, the inertia tensors may be approximated as follows
 \begin{subequations}
+	\begin{align}
+	\text{\textbf{J}}_0 = 	\begin{bmatrix}
+	J_{0,\text{xx}} & 0 & 0\\
+	0 & J_{0,\text{yy}} & 0\\
+	0 & 0 & J_{0,\text{zz}}\\
+	\end{bmatrix} = \begin{bmatrix}
+		0 & 0 & 0\\
+	0 & J_0 & 0\\
+	0 & 0 & J_0\\
+	\end{bmatrix},\\
+	\text{\textbf{J}}_1 = 	\begin{bmatrix}
+	J_{1,\text{xx}} & 0 & 0\\
+	0 & J_{1,\text{yy}} & 0\\
+	0 & 0 & J_{1,\text{zz}}\\
+	\end{bmatrix}= \begin{bmatrix}
+	0 & 0 & 0\\
+	0 & J_1 & 0\\
+	0 & 0 & J_1\\
+	\end{bmatrix}.
+	\end{align}
+\end{subequations}
+Further simplifications are obtained by making the following substitutions. The total moment of inertia of the arm and the pendulum about the pivot point are
+\begin{subequations}
+		\begin{align}
+			I_0 = J_0 + m_0l_0^2\\
+			I_1 = J_1 + m_1l_1^2
+		\end{align}
+\end{subequations}
+Evaluating the terms of Euler-Lagrange equations (\ref{ELequation}) with all substitutions above, gives the following equations of motion
+\begin{subequations}\label{equations:motion}
 	\begin{align}
 	\ddot{\theta}_0 &= \frac{\gamma(\epsilon\dot{\theta}_0^2+\rho)-\delta(\tau+\beta\dot{\theta}_1^2-\sigma\dot{\theta}_0\dot{\theta}_1)}{\gamma^2-\alpha\delta}\label{motion1},\\
 	\ddot{\theta}_1 &= \frac{\gamma(\tau+\beta\dot{\theta}_1^2-\sigma\dot{\theta}_0\dot{\theta}_1)-\alpha(\epsilon\dot{\theta}_0^2+\rho)}{\gamma^2-\alpha\delta}\label{motion2},
@@ -196,7 +229,8 @@ where
 	\tau &= 2l^2_1m_1\sin\theta_1\cos\theta_1.
 	\end{align}
 \end{subequations}
-\subsection{State-Space Reprentation} 
+Now, form equations of motian (\ref{equations:motion}),the non-linear dynamic model in a form of state-space model can be derived.
+\subsubsection{State-Space Represntation} 
 To obtain the state representation of the process the state variables must be defined first:
 \begin{equation}
 \begin{bmatrix}
@@ -208,7 +242,7 @@ x_1(t)&x_2(t)&x_3(t)&x_4(t)
 \end{equation}
 And the control variable:
 \begin{equation} u(t) = \tau(t). \end{equation}
-\subsubsection{Nonlinear Model}
+
 Equations (\ref{motion1}) and (\ref{motion2}) are further utilized to establish the state
 space model
 \begin{subequations}
@@ -233,10 +267,10 @@ Now these non-linear differential equations could be written in the form of matr
 Or, in the short form
 \begin{equation} \dot{x}(t) = f(x(t),u(t)). \end{equation}
 And this is the non-linear dynamic model of the Furuta pendulum, where the derivatives of the states are the functions of the current states and control input. And, also, there are nonlinear interactions between them. 
-\subsubsection{Linear Model}
-Non-linear model (\ref{nonlinmodel}) can be approximated around operation point by a linear, time-invariant state-space model in the following form
+\subsection{Linear Dynamic Model}
+Dynamics of the process could also be described in a simpler, but also less precise way~-~by the linear dynamic model. It can be obtained by linearising the non-linear model (\ref{nonlinmodel}) at some operation point. Then by a linear, time-invariant state-space model can be obtained in the following form
 \begin{equation}\dot{x}(t) = \ui{A}{c}x(t) + \ui{B}{c}u(t).\end{equation}
-Its constant matrices can be obtained by calculating its partial derivatives with respect to the state and control variables.
+Its constant matrices can be obtained by calculating its partial derivatives with respect to the each state and control variables.
 \begin{subequations}\label{linSSmodel:general}
 	\begin{align}
 	\ui{A}{c} &= \begin{bmatrix}
@@ -595,3 +629,4 @@ In summary the basic SQP algorithm looks like this:
 	\EndProcedure	
 	\end{algorithmic}
 \end{algorithm}	
+And with the SQP theory explained, all theoretical foundations are made. And we can proceed to the next main part of the thesis, where all the theories above will be used to develop control strategies and finally control the Furuta pendulum.
