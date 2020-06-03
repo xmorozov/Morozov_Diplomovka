@@ -89,7 +89,7 @@ D2 = sys2_d.D;
 %% MPC setup
 N = 20;
 Qx = diag([8 0.08 10 0.2]);
-Qu = 1;
+Qu = 0.001;
 
 % vytvaranie sdpvarov
 xx = cell(N+1, 1);
@@ -106,7 +106,7 @@ end
 % vytvaranie obj a cst
 cst = [];
 obj = 0;
-u_cst = [-5,5];
+u_cst = [-10,10];
 for i = 1:N
     obj = obj + xx{i}'*Qx*xx{i} + uu{i}'*Qu*uu{i};
     
@@ -173,7 +173,7 @@ IAE
 %% Plots
 
 path = 'Dswing/';
-close all
+
 t = linspace(0,kf*Ts,kf);
 w = 9;
 l = 21;

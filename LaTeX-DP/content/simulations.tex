@@ -96,6 +96,7 @@ Energy-Shaping controller can be designed by applying the control law (\ref{ener
 	\caption{Control of the pendulum by the Energy-Shaping controller during the initial excitation scenario. The plots depict, respectively, the position of the pendulum $\theta_1(t)$, velocity of the pendulum $\dot{\theta}_1(t)$, and the control input $\tau(t)$.}
 	\label{swing1}
 \end{figure}
+Results, visualized in Fig.~\ref{swing} and Fig.~\ref{swing1} confirm that the Energy-Shaping controller is designed properly as it fulfills its task of the increasing amplitude of pendulums oscillations.
 \subsection{Stabilization at the Upright Position}
 After the pendulum was brought in the vicinity of the upright operation point, it's furtherly controlled by a predictive controller. Due to the pendulums setup, the MPC formulation (\ref{mpcgeneral}) could be applied directly. As known, a linear MPC uses a linear prediction model \ref{linSSmodel:up} of the process to predict the behavior of the system over the prediction horizon. Such a predictive model is only relevant in vicinity of linearization point. That is the reason why the linear MPC strategy is used to conrol the pendulum only around upright position. 
 The MPC is a discrete-time strategy, therefore the first step of the construction of such a controller is to obtain the discrete-time linear predictive model. Such model can be derived from continuous-time model (\ref{linSSmodel:up}) by some discretization method. In this thesis a zero-order hold method, with the discretization step, equal to devices sampling time, $\SI{0.02}{\second}$ is used. 
@@ -134,7 +135,7 @@ Now it is important to determine the range around the linearization point, where
 	\hline
 \end{tabular}
 \end{table}
-Those results demonstrate that an MPC can be used to control the pendulum roughly in $\pm50$deg around the upright position. Also, those results were obtained for the limit value of control input, for a smaller value of control input the difference, naturally, will be lesser.\\
+Those results demonstrate that an MPC can be used to control the pendulum roughly in $\pm50$ deg around the upright position. Also, those results were obtained for the limit value of control input, for a smaller value of control input the difference, naturally, will be lesser.\\
 
 The next, probably the most important, step is to design weight matrices $\ui{Q}{x}$ and $\ui{Q}{u}$. The main weights must be given to the position of the pendulum, what is our main controlled parameter, and the position of the arm, to prevent the possible scenario when the pendulum is stabilized at the upright position and the arm rotates constantly. 
 \begin{equation}
@@ -143,7 +144,7 @@ The next, probably the most important, step is to design weight matrices $\ui{Q}
 0&0.08&0&0\\
 0&0&10&0\\
 0&0&0&0.2
-\end{bmatrix}, \quad \ui{Q}{u} = 1.
+\end{bmatrix}, \quad \ui{Q}{u} = \num{1e-3}.
 \end{equation}
 Weight matrices are the key point of MPC, as through them we define for MPC a requested control performance.
 The remain MPC parametres can be set as shown in the following table
@@ -155,7 +156,7 @@ The remain MPC parametres can be set as shown in the following table
 		Parameter&Symbol&Value\\
 		\noalign{\hrule height 1pt}
 		Prediction horizon&$N$&$\ \; \,20$\\
-		Initial condition&$x_0$&$\begin{bmatrix}0&0&0.5&-0.7\end{bmatrix}^\intercal$\\
+		Initial condition&$x_0$&$\begin{bmatrix}0\ 0\ 0.5\ -0.7\end{bmatrix}^\intercal$\\
 		Constraint on control input-upper bound&$\ui{u}{max}$&$\ \; \,10$\\
 		Constraint on control input-lower bound&$\ui{u}{min}$&$-10$\\
 		\hline
@@ -171,7 +172,8 @@ Considering all aforesaid, the MPC formulation can be written in the following f
 	&\ui{u}{min}\leq u_{k}\leq \ui{u}{max}\qquad\qquad\qquad\;   k \in \mathbb{N}_0^{N-1}
 	\end{align}
 \end{subequations}
-This predictive controller is designed in \textsc{MATLAB}, using the \textsc{YALMIP} toolbox \cite{YALMIP} to formulate the problem and \textsc{Gurobi} solver to solve it.
+This predictive controller is designed in \textsc{Matlab}, using the \textsc{YALMIP} toolbox \cite{YALMIP} to formulate the problem and \textsc{Gurobi} solver to solve it.
+\newpage
 \begin{figure}[H]
 	\centering
 	\begin{subfigure}
@@ -212,8 +214,10 @@ This predictive controller is designed in \textsc{MATLAB}, using the \textsc{YAL
 	\caption{Control of the pendulum by the Model Predictive Controller during the stabilization scenario. The plots depict, respectively, the position of the pendulum $\theta_1(t)$, velocity of the pendulum $\dot{\theta}_1(t)$, and the control input $\tau(t)$.}
 	\label{mpc1}
 \end{figure}
+Results, visualized in Fig.~\ref{mpc} and Fig.~\ref{mpc1} confirm that the MPC strategy was developed correctly, as at the end of simulations the pendulum is stabilized at the upright position and the arm is returned to zero position.
 \subsection{Combined Control Strategy}
 To perform Swing-Up Control of the pendulum, a combined control strategy should be designed, because no MPC nor Swing-Up controller can not perform a Swing-Up control by itself. So the strategy of Heuristic Swing-Up Control is that at the beginning the pendulum is steady at the downside position and the Energy-Shaping controller is used to add the energy to the pendulum via its oscillation. As more energy is added to the pendulum, the greater the oscillations become. And as the pendulum is close to the upright operation point, the control law switches from Energy-Shaping to MPC, which finishes the Swing-Up Control by stabilizing the pendulum at the upright position.
+\newpage
 \begin{figure}[H]
 	\centering
 	\begin{subfigure}
@@ -254,20 +258,22 @@ To perform Swing-Up Control of the pendulum, a combined control strategy should 
 	\caption{Control of the pendulum during the Heuristic Swing-Up scenario. The plots depict, respectively, the position of the pendulum $\theta_1(t)$, velocity of the pendulum $\dot{\theta}_1(t)$, and the control input $\tau(t)$.}
 	\label{combo1}
 \end{figure}
+Results, visualized in Fig.~\ref{combo} and Fig.~\ref{combo1} confirm that by combining MPC and Energy-Shaping controllers, the swing-up control of the pendulum can be performed.
 \section{Optimal Swing-Up Control}
-The last control strategy is an Optimal Swing-Up Control. In this strategy, only one non-linear Model Predictive Controller (NMPC) is used to perform both the swing-up and the stabilization of the pendulum. Such control performance is possible due to the fact that in NMPC the non-linear model (\ref{nonlinmodel}) is used to predict the future evolution of the process.  Usage of this non-linear model, leads to a Non-linear Programing (NLP) problem, and solving a NLP problem is ot a trivial process. In this work a \textsc{MATMPC} toolbox is used \cite{MATMPC} to formulate and solve this problem.\\
+The last control strategy is an Optimal Swing-Up Control. In this strategy, only one non-linear Model Predictive Controller (NMPC) is used to perform both the swing-up and the stabilization of the pendulum. Such control performance is possible due to the fact that in NMPC the non-linear model (\ref{nonlinmodel}) is used to predict the future evolution of the process.  Usage of this non-linear model, leads to a Non-linear Programing (NLP) problem, and solving a NLP problem is ot a trivial process. In this work a \textsc{Matmpc} toolbox is used \cite{Matmpc} to formulate and solve this problem.\\
 
 A NMPC problen can be formulated in a similar form as linear MPC problem (\ref{mpc:linear}):
 \begin{subequations}\label{nmpcgeneral}
 	\begin{align}
-	\min_{U}\ &\sum_{k=0}^{N-1} \lrp{ x_{k}^\intercal\ui{Q}{x}x_{k}+u_{k}^\intercal\ui{Q}{u}u_{k}}\\
+	\min_{U}\ &\sum_{k=0}^{N-1} \lrp{ x_{k}^\intercal\ui{Q}{x}x_{k}+u_{k}^\intercal\ui{Q}{u}u_{k}}\label{nmpc:obj}\\
 \text{s.t.}\ &x_{k+1} = f(x_{k}, u_{k})\qquad\qquad\qquad \ \   k \in \mathbb{N}_0^{N-1}\label{eq3.6b}\\
-&x_0 = x(0)\\
-&\ui{u}{min}\leq u_{k}\leq \ui{u}{max}\qquad\qquad\qquad\;   k \in \mathbb{N}_0^{N-1}
+&x_0 = x(0)\label{nmpc:eq}\\
+&\ui{u}{min}\leq u_{k}\leq \ui{u}{max}\qquad\qquad\qquad\;   k \in \mathbb{N}_0^{N-1}\label{nmpc:ineq}
 	\end{align}
 \end{subequations}
-Tho only difference is in equality constraint (\ref{eq3.6b}), where instead of linear model (\ref{linSSmodel:up}) a non-linear dynamic model (\ref{mpc:linear}) is used. The presense of the non-linear constraint makes this optimization problem a Nonlinear Programming (NLP) problem. The way to solve the general NLP problem was described in Section~\ref{nmpcsection}. 
-The rules for weight matrices in NMPC strategy are similar to those, used in linear MPC, except that to the arm must be given more freedom and we are willing to invest more into control inputs. It's because of that the controller must not only stabilize the pendulum but also perform a swing-up.
+Tho only difference is in equality constraint (\ref{eq3.6b}), where instead of linear model (\ref{linSSmodel:up}) a non-linear dynamic model (\ref{mpc:linear}) is used. The presense of the non-linear constraint makes this optimization problem a Nonlinear Programming (NLP) problem. The way to solve such a problem was explained in Section~\ref{nmpcsection} on the example of general NLP problem. So, by substituting NMPC objective function (\ref{nmpc:obj}) as $f(x)$, equality constraints (\ref{eq3.6b} and \ref{nmpc:eq}) as $h(x)$, and inequality constraints (\ref{nmpc:ineq}) as $g(x)$ in the \ref{nlpgeneral} and following steps, described in Section~\ref{SQP:theory}, our optimization problem (\ref{nmpcgeneral}) can be solved.\\
+
+The next big step is to design the weight matrices for NMPC. In NMPC strategy the rules for the weight matrices are similar to those, used in linear MPC, except that to the arm must be given more freedom and we are willing to invest more into control inputs. It's because of that the controller must not only stabilize the pendulum but also perform a swing-up.
 \begin{equation}\label{NMPC:weights}
 \ui{Q}{x} = \begin{bmatrix}
 1&0&0&0\\
@@ -284,8 +290,8 @@ Other NMPC parameters are shown in the following table
 		\noalign{\hrule height 1pt}
 		Parameter&Symbol&Value\\
 		\noalign{\hrule height 1pt}
-		Prediction horizon&$N$&$20$\\
-		Initial condition&$x_0$&$\begin{bmatrix}0,0,\pi,0\end{bmatrix}^\intercal$\\
+		Prediction horizon&$N$&$\ \; \,20$\\
+		Initial condition&$x_0$&$\begin{bmatrix}0\ 0\ \pi\ 0\end{bmatrix}^\intercal$\\
 		Constraint on control input-upper bound&$\ui{u}{max}$&$\ \; \,10$\\
 		Constraint on control input-lower bound&$\ui{u}{min}$&$-10$\\
 		\hline
@@ -293,7 +299,7 @@ Other NMPC parameters are shown in the following table
 \end{table}
 The parameters are similar, that were used in MPC, except for the initial condition, that in case of NMPC the pendulum's steady downside position.\\
 
-Now, as the rules for the NMPC are defined, we can proceed to the controller design itself, using a \textsc{MATMPC} toolbox. From a user perspective, the design of such an NMPC strategy, usage of \textsc{MATMPC} toolbox is trivial. You only have to set the NMPC parameters and define a prediction model (\ref{nonlinmodel}). Then, the \textsc{MATMPC} toolbox will automatically construct and solve the following NLP problem
+Now, as the rules for the NMPC are defined, we can proceed to the controller design itself, using a \textsc{Matmpc} toolbox. From a user perspective, the design of such an NMPC strategy, usage of \textsc{Matmpc} toolbox is trivial. You only have to set the NMPC parameters and define a prediction model (\ref{nonlinmodel}). Then, the \textsc{Matmpc} toolbox will automatically construct and solve the following NLP problem
 \begin{subequations}\label{NLP}
 	\begin{align}
 	\min_{X,\,U}\ \frac{1}{2}&\sum_{k=0}^{N-1} (\left\| h_k(x_k, u_k)\right\|_2\ui{Q}{k}) + \frac{1}{2}\left\|h_N(x_N)\right\|_2\ui{Q}{N}\label{NLP:obj}\\
@@ -302,7 +308,7 @@ Now, as the rules for the NMPC are defined, we can proceed to the controller des
 	&\ui{u}{min}\leq u_{k}\leq \ui{u}{max}\qquad\qquad\qquad\;   k \in \mathbb{N}_0^{N-1}	
 	\end{align}
 \end{subequations}
-There are a couple of things about such formulation, which have to be highlighted. First of all, the objective function. Here, unlike the other formulations, the vectors of optimized states and controls $X$ and $U$ are not part of the objective function directly, but they are represented by a vector function $h_k(x, u)$. Also the predicted states for the stage $N$, represented by $h_N(x_N)$, are present in the function. Next, the continuity constraint (\ref{NLP:model}). It supposes to represent the prediction model. However, instead of using a non-linear dynamic model of the pendulum,  a numerical integration operator $\phi_k(x_{k},u_{k})$, that solves the following initial value problem (IVP) and returns the solution at $t_{k+1}$, is used. 
+There are a couple of things about such formulation, which have to be highlighted. First of all, the objective function. Here, unlike the other formulations, the vectors of optimized states and controls $X$ and $U$ are not part of the objective function directly, but they are represented by a vector function of states and controls $h_k(x, u)$. Also the predicted states for the stage $N$, represented by $h_N(x_N)$, are present in the function. Next, the continuity constraint (\ref{NLP:model}). It supposes to represent the prediction model. However, instead of using a non-linear dynamic model of the pendulum,  a numerical integration operator $\phi_k(x_{k},u_{k})$, that solves the following initial value problem (IVP) and returns the solution at $t_{k+1}$, is used. 
 \begin{equation}
 \phi_k(x(t),u(t))=f\lrp{\dot{x}(t), x(t),u(t),t},\quad x(0)=x_k,\ u(0)=u_k.
 \end{equation}
@@ -324,10 +330,10 @@ Matrices $\ui{Q}{k}$ and $\ui{Q}{N}$ are the weights for each term for stage $k$
 				0&0&0&0.1
 			\end{bmatrix}.
 \end{equation}
-With this setup the \textsc{MATMPC} toolbox solves the listed above NLP, using the Sequential Quadratic Programming (SQP) method, which was described in the corresponding part of the thesis - Section~\ref{SQP:theory}. Also, additional software must be installed:
+With this setup the \textsc{Matmpc} toolbox solves the listed above NLP, using the Sequential Quadratic Programming (SQP) method, which was described in the corresponding part of the thesis - Section~\ref{SQP:theory}. Also, additional software must be installed:
 \begin{itemize}
 	\item \textbf{CasAdi} - to obtain the needed derivatives to perform optimization (\url{https://github.com/casadi/casadi/wiki}).
-	\item \textbf{MinGW-w64 C/C++ Compiler} - to compile \textsc{MATMPC} modules into MEX functions with performance comparable to plain C/C++ solvers.
+	\item \textbf{MinGW-w64 C/C++ Compiler} - to compile \textsc{Matmpc} modules into MEX functions with performance comparable to plain C/C++ solvers.
 \end{itemize}
 And with such setup, a Optimal Swing-Up control of the Pendulum can be performed.
 \newpage
@@ -380,7 +386,7 @@ The second control strategy was the Optimal Swing-Up Control strategy. Consideri
 Now the question is, which control strategy is better. To answer that question, we compare the quality of controlled responses for the Heuristic and Optimal Swing-Up control strategies. Here, we evaluate the settling time for the pendulum stabilization, sum of abslolute error (SAE), sum of squared control differences (SSCD) and optimisation problem solving time.
 \begin{subequations}
 	\begin{align}
-		\text{IAE} &= \sum_{i = 0}^{\ui{i}{max}} \lrp{y_i-\ui{y}{ref}}\\
+		\text{IAE} &= \sum_{i = 0}^{\ui{i}{max}} |y_i-\ui{y}{ref}|\\
 		\text{SSCD} &= \sum_{i = 0}^{\ui{i}{max}-1}\lrp{\Delta u_i^2}
 	\end{align}
 \end{subequations}
@@ -393,8 +399,8 @@ Where $\ui{i}{max}$ is a total count of simulation steps.
 		\multirow{2}{*}{Strategy}&\multirow{2}{*}{Settling Time}&\multirow{2}{*}{SAE}&\multirow{2}{*}{SSCD}&\multicolumn{3}{c}{Solving Time}\\
 		&&&&$\ui{t}{min}$&$\ui{t}{avg}$&$\ui{t}{max}$\\
 		\noalign{\hrule height 1pt}
-		Heuristic Swing-Up&7.51&304.81&14.1543&0.0156&0.0234&0.0313\\
-		Optimal Swing-Up&3.20&205.56&88.9454&0.0313&0.0469&0.0625\\
+		Heuristic Swing-Up&7.51&305.15&86.77&0.0156&0.0234&0.0313\\
+		Optimal Swing-Up&3.20&205.56&88.94&0.0313&0.0469&0.0625\\
 		\hline
 	\end{tabular}
 \end{table}
@@ -440,4 +446,4 @@ Settling time and SAE are evaluated for the control of the pendulum's position $
 \caption{Comparison of the arm control arm during by the Optimal and Heuristic Swing-Up control strategies. The plots depict, respectively, the position of the pendulum $\theta_1(t)$, velocity of the pendulum $\dot{\theta}_1(t)$, and the control input $\tau(t)$.}
 \label{results1}
 \end{figure}
-Based on the SAE and regulation time, the  Optimal Swing-Up control strategy shows much better control performance. It also regulates the position of the arm $\theta_0$ to the origin much faster than the Heuristic Swing-Up control strategy. But it is much more expensive both in software, as it requires a \textsc{MATMPC} toolbox, CasADi tool, C/C++ compiler, and hardware, as it requires a stronger computation machine to achieve a comparable solving time of optimization problem. Also, neither of the strategies were able to solve an optimization problem under the sampling time. From my point of view, the most obvious solution to that problem is a hardware upgrade, as the simulations were performed on a much-used laptop.
+Based on the SAE and regulation time, the  Optimal Swing-Up control strategy shows much better control performance. It also regulates the position of the arm $\theta_0$ to the origin more than twice as fast as the Heuristic Swing-Up control strategy, with the comparable value of SSCD. However it is much more expensive both in software, as it requires a \textsc{Matmpc} toolbox, CasADi tool, C/C++ compiler, and hardware, as it requires a stronger computation machine to achieve a comparable solving time of optimization problem. Also, neither of the strategies were able to solve an optimization problem under the sampling time. From my point of view, the most obvious solution to that problem is a hardware upgrade, as the simulations were performed on a much-used laptop.

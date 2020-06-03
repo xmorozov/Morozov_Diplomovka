@@ -8,7 +8,7 @@ The pendulum composes of motor-driven arm, which rotates in the horizontal plane
 \newpage
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=.45\linewidth]{images/furuta}
+	\includegraphics[width=.6\linewidth]{images/furuta}
 	\caption{Scematic Representation of Furuta's Pendulum device}
 	\label{furuta:schematic}
 \end{figure}
@@ -37,7 +37,7 @@ The parameters from Fig.~\ref{furuta:schematic} are explained in the following t
 		\hline
 	\end{tabular}
 \end{table}
-So, we consider the rotational inverted pendulum mounted to a DC motor as shown in (\ref{furuta:schematic}). The DC motor is used to apply a torque $\tau$ to arm. The link between arm and pendulum is not actuated but free to rotate. The two arms have lengths $L_0$ and $L_1$. The arm and pendulum have masses $m_1$ and $m_2$ which are located at $l_0$ and $l_1$, respectively, which are the lengths from the point of rotation of the arm to its center of mass. The arm and the pendulum have inertia tensors $J_0$ and $J_1$ (about the centre of mass of the arm). The angular rotation of arm is measured in the horizontal plane where a counterclockwise direction (when viewed from above) is positive. The angular rotation of pendulum is measured in the vertical plane where a counterclockwise direction (when viewed from the front) is positive.
+So, we consider the rotational inverted pendulum mounted to a DC motor as shown in (\ref{furuta:schematic}). The DC motor is used to apply a torque $\tau$ to arm. The link between arm and pendulum is not actuated but free to rotate. The two arms have lengths $L_0$ and $L_1$. The arm and pendulum have masses $m_1$ and $m_2$ which are located at $l_0$ and $l_1$, respectively, which are the lengths from the point of rotation of the arm to its center of mass. $I_0$ and $I_1$ are the total moments of inertia of the arm and the pendulum. The angular rotation of arm is measured in the horizontal plane where a counterclockwise direction (when viewed from above) is positive. The angular rotation of pendulum is measured in the vertical plane where a counterclockwise direction (when viewed from the front) is positive.
 \subsection{Non-linear Dynamic Model}
 To design a predictive controller, the knowledge of the dynamic model of the process is necessary. The most precise way to describe the process dynamic is by the non-Linear dynamic model. The analytical model of Furuta pendulum, based on the equations of motion could be derived using the Lagrangian formulation of the system dynamics of the mechanical system ~\cite{furuta:model}, which represent the most commonly used method for establishing equations of motion of difficult mechanical systems.
 
@@ -203,11 +203,11 @@ Also, a few simplifications could be made. Furuta pendulum has long slender arm 
 	\end{bmatrix}.
 	\end{align}
 \end{subequations}
-Further simplifications are obtained by making the following substitutions. The total moment of inertia of the arm and the pendulum about the pivot point are
+Further simplifications are obtained by replacing the inertia tensors by the total moments of inertia of the arm and the pendulum about the pivot point as
 \begin{subequations}
 		\begin{align}
-			I_0 = J_0 + m_0l_0^2\\
-			I_1 = J_1 + m_1l_1^2
+			I_0 = J_0 + m_0l_0^2,\\
+			I_1 = J_1 + m_1l_1^2.
 		\end{align}
 \end{subequations}
 Evaluating the terms of Euler-Lagrange equations (\ref{ELequation}) with all substitutions above, gives the following equations of motion
@@ -285,6 +285,7 @@ Its constant matrices can be obtained by calculating its partial derivatives wit
 	\end{align}
 \end{subequations}
 And when we compute these derivatives, we obtain a linearized continuous-time dynamic model of the pendulum in the form of state matrices
+\newpage
 \begin{subequations}\label{linmatrices}
 	\begin{align}
 	\ui{A}{c} &=\begin{bmatrix}0&1&0&0\\
@@ -358,7 +359,7 @@ the matrices $\ui{H}{x}$, $\ui{K}{x}$, $\ui{H}{u}$ and $\ui{K}{u}$ have the foll
 	\end{align}
 \end{subequations}
 Unfortunately, such formulation is inappropriate for quadratic programming solver, so it has to be reformulated in the form of a quadratic optimization problem. More detailed information could be find in~\cite{MPC:kniha}.
-\subsubsection{Model Predictive Control as a Quadraic Programming Optimization Problem}
+\subsubsection{Model Predictive Control as a Quadraic Programming Problem}
 To solve an MPC problem, the Quadratic Programming (QP) solver is used. Unfortunately, an MPC formulation (\ref{mpcgeneral}) is inappropriate for QP solver and has to be reformulated. The standard QP problem has the following form
 \begin{subequations}
 	\begin{align}
@@ -497,19 +498,19 @@ Than the control law has following form:
 \end{equation}
 Where element $\mathrm{sign}\lrp{\dot{\theta}_1\cos\theta_1}$ determines direction i which the force will be applied and $\ui{k}{v}$ is the gain of the controller.
 \section{Optimal Swing-Up Control}\label{nmpcsection}
-Unlike the Heuristic Swing-Up control strategy in Optimal Swing-Up control strategy only one controller - a Non-linear Model Predictive Controller (NMPC) is used to control the pendulum.\\
-
-Generally speaking, any MPC uses a model of the process to predict the evolution of states and outputs of the process in the following sampling periods. And in general, the dynamics of the real process are complex and cannot be described perfectly. Any modeling method introduces some uncertainties into the resulting model. For example, the linear model is valid only in som range around the linearization point. So linear MPC, which uses such could be designed to control the process only in that range. But nonlinear modeling is a much more precise approach to describe the process dynamic. And in the case of Furuta pendulum, its full range dynamic can be described by a nonlinear model (\ref{nonlinmodel}). And by using such a model, an NMPC strategy is capable to perform Swing-Up control of the pendulum by itself.\\
-Any predictive controller solves an optimization problem to ensure the best control performance. In case of NMPC, such optimization problem is a Nonlinear Programing (NLP) problem. Usually, such optimization problems are extremely difficult to solve analytically. And in this section a numerical method to solve a NLP problem is described. To illustrate the method, the general form of NLP problem, with the $x$ as an arbitraty optimization variable, is considered
+In the Optimal Swing-Up control strategy, the control task is still bringing the pendulum from the downside position to the upright position with the following stabilization. But unlike in Heuristic Swing-Up control strategy, both steps are performed optimally via using only one controller - a Non-linear Model Predictive Controller (NMPC) is used to control the pendulum.\\
+\subsection{Non-linear Model Predictive Control}
+Generally speaking, every MPC strategy uses a model of the process to predict the evolution of states and outputs of the process in the following sampling periods. And in general, the dynamics of the real process are complex and cannot be described perfectly. Any modeling method introduces some uncertainties into the resulting model. For example, the linear model is valid only in som range around the linearization point. So linear MPC, which uses such could be designed to control the process only in that range. But nonlinear modeling is a much more precise approach to describe the process dynamic. And in the case of Furuta pendulum, its full range dynamic can be described by a nonlinear model (\ref{nonlinmodel}). And by using such a model, an NMPC strategy is capable to perform Swing-Up control of the pendulum by itself.\\
+Every predictive controller solves an optimization problem to ensure the best control performance. In case of NMPC, such optimization problem is a Nonlinear Programing (NLP) problem. Usually, such optimization problems are extremely difficult to solve analytically. And in this section a numerical method to solve a NLP problem is described. To illustrate the method, the general form of NLP problem, with the $x$ as an arbitraty optimization variable, is considered
 \begin{subequations}\label{nlpgeneral}
 	\begin{align}
-	\min_{x}\  &f(x)\\
-	\text{s.t.}\  &h(x) = 0\\
-		 &g(x)\leq 0
+	\min_{x}\  &f(x)\label{nlp:obj}\\
+	\text{s.t.}\  &h(x) = 0\label{nlp:eq}\\
+		 &g(x)\leq 0\label{nlp:ineq}
 	\end{align}
 \end{subequations}
 In this thesis a numerical method called Sequential Quatratic Programming is used to solve an NMPC problem. 
-\subsubsection{Sequential Quatratic Programming}\label{SQP:theory}
+\subsection{Sequential Quatratic Programming}\label{SQP:theory}
 Sequential Quadratic Programming (SQP) is arguably the most successful method for solving nonlinearly constrained optimization problems~\cite{SQP:Theory}. Its general idea is to approximate NLP at current iterate by QP subproblem, solve that subproblem, than use the solution to construct a new iterate. This construction is done in such a way that the sequence converges to a local minimum of the NLP.
 
 The main condition for a QP subproblem is that it has to reflect the properties of NLP at current iteration. But before such subproblem could be constructed, a few terms should be establish first.
@@ -570,7 +571,7 @@ Although the optimal multipliers are unknown, then approximations $\lambda_k$,$\
 What leads to the final QP subproblem
 \begin{subequations}
 	\begin{align}
-	\min_{d_x}\  &\nabla \mathcal{L}(x_k,\lambda_k,\mu_k)^\intercal d_x+\frac{1}{2}d_x^\intercal nabla^2\mathcal{L}(x_k,\lambda_k,\mu_k)d_x\\
+	\min_{d_x}\  &\nabla \mathcal{L}(x_k,\lambda_k,\mu_k)^\intercal d_x+\frac{1}{2}d_x^\intercal \nabla^2\mathcal{L}(x_k,\lambda_k,\mu_k)d_x\\
 	\text{s.t.}\  &h(x_k)+\nabla h(x_k)\lrp{x-x_k} = 0\\
 	&g(x_k)+\nabla g(x_k)\lrp{x-x_k}\leq 0
 	\end{align}
@@ -598,7 +599,7 @@ Where $m$ is a merit function, which is a scalar-valued function of $x$ that ind
 \begin{equation}
 m(x,p) = f(x) + p\left\|e(x)\right\|_1.
 \end{equation}
-Where $f(x)$ is the objective function of (\ref{nlpgeneral}), $e(x)$ contains all constraints in (\ref{nlpgeneral}) and $p$ is a penalty parameter.
+Where $f(x)$ is the objective function of (\ref{nlpgeneral}), $e(x)$ contains all constraints in (\ref{nlpgeneral}) and $p$ is a penalty parameter, given by user.
 
 Lastly, the global convergence proofs for the resulting SQP algorithm are generally similar to those found in unconstrained optimization. For example 
 \begin{equation}
