@@ -55,7 +55,14 @@ With this model obtained, we can proceed to controller design and pendulum contr
 The first control Strategy is a Heuristic Swing-Up Control strategy. As was discussed in the respective part of the thesis (Section~\ref{Hswing:teoria}) it is a combined control strategy, where the control of the device is split into two phases: initial excitation and stabilization of the pendulum. So the Heuristic Swing-Up Control will be developed in three steps. First is the development of the Energy-Shaping controller to excite the pendulum. Second is the development of a linear MPC to stabilize the pendulum. And the final step is to combine those two controllers to perform swing-up control of the pendulum.
 \subsection{Swing-Up of the Pendulum}
 In the first phase of control of the pendulum, the Energy-Shaping controller is used to swing the pendulum from the downside position into the upright position where the control of the process will be taken by another controller. 
-Energy-Shaping controller can be designed by applying the control law (\ref{energy-shaping}) directly as a state-feedback controller.
+Energy-Shaping controller can be designed by applying the control law (\ref{energy-shaping}) directly as a state-feedback controller. Then by choosing the gain of the controller $\ui{k}{v} = -4$, and calculating constants in \ref{energy}, the control law for Energy-Shaping controller has the following form
+\begin{subequations}
+	\begin{align}
+			E &= 0.2039\lrp{\lrp{\frac{\dot{\theta}_1}{21.6176}}^2+\cos\theta_1 - 1},\\
+			u &= -4E\,\mathrm{sign}\lrp{\dot{\theta}_1\cos\theta_1}.
+	\end{align}
+\end{subequations}
+And by applying this control law, the following results are obtained.
 \begin{figure}[H]
 	\centering
 \begin{subfigure}
@@ -98,8 +105,8 @@ Energy-Shaping controller can be designed by applying the control law (\ref{ener
 \end{figure}
 Results, visualized in Fig.~\ref{swing} and Fig.~\ref{swing1} confirm that the Energy-Shaping controller is designed properly as it fulfills its task of the increasing amplitude of pendulums oscillations.
 \subsection{Stabilization at the Upright Position}
-After the pendulum was brought to the vicinity of the upright operation point, it will be further controlled by a predictive controller. Due to the pendulums setup, the MPC formulation (\ref{mpcgeneral}) could be applied directly. As known, a linear MPC uses a linear prediction model \ref{linSSmodel:up} of the process to predict the behavior of the system over the prediction horizon. Such a predictive model is only relevant in vicinity of linearization point. That is the reason why the linear MPC strategy is used to conrol the pendulum only around upright position. 
-The MPC is a discrete-time strategy, therefore the first step of the construction of such a controller is to obtain the discrete-time linear predictive model. Such model can be derived from continuous-time model (\ref{linSSmodel:up}) by a discretization method. In this thesis a zero-order hold method, with the discretization step, equal to devices sampling time, $\SI{0.02}{\second}$ is used. 
+After the pendulum was brought to the vicinity of the upright operation point, it will be further controlled by a predictive controller. But before we can proceed to MPC strategy design, the operating range of MPC has to be be defined. So, the vicinity concept must be explained. As known, a linear MPC uses a linear prediction model (\ref{linSSmodel:up}) of the process to predict the behavior of the system over the prediction horizon. Such a prediction model is only precise in vicinity of linearization point. That is the reason why the linear MPC strategy is used to conrol the pendulum only around upright position. 
+The MPC is a discrete-time strategy, therefore the discrete-time form of linear prediction model (\ref{linSSmodel:up}) is required. To obtain this discrete-time linear predictive model a discretization method - ``zero-order hold''  with the discretization step, equal to devices sampling time, $\SI{0.02}{\second}$ is used.
 \begin{subequations}\label{dismatrices}
 	\begin{align}
 	\ui{A}{d} &=\begin{bmatrix}
@@ -118,10 +125,12 @@ The MPC is a discrete-time strategy, therefore the first step of the constructio
 \end{subequations}
 The output matrices remain unchanged from (\ref{linmatrices}).\\ 
 
-Now it is important to determine the range around the linearization point, where such a model is relevant. For that purpose will be evaluated the difference in outputs from the non-linear and linear model. For that purpose both models will be simulated with the same value of control input.
+Now it is important to determine the range around the linearization point, where such a model describes reality precisely. For that purpose, the non-linear and the linear models will be compared. 
+The strategy is as follows: both models will be simulated with the same initial conditions and value of control input, then the difference in outputs between models will be evaluated.
+\newpage
 \begin{table}[H]
 	\centering
-	\caption{Comparisson of linear and non-linear models}
+	\caption{Absolute values of output differences between linear and non-linear models, according to initial angles of the pendulum.}
 	\label{models:comparisson}
 \begin{tabular}{c c}	
 	\noalign{\hrule height 1pt}
@@ -135,9 +144,9 @@ Now it is important to determine the range around the linearization point, where
 	\hline
 \end{tabular}
 \end{table}
-Those results demonstrate that an MPC can be used to control the pendulum roughly in $\pm50$ deg around the upright position. Also, those results were obtained for the limit value of control input, for a smaller value of control input the difference, naturally, will be lesser.\\
+These results demonstrate that up to $50$ deg. the difference in outputs between linear and non-linear models is almost negligible. Also, as the behavior of the pendulum around the upright position is symmetrical, the MPC can be used to control the pendulum roughly in $\pm50$ deg. around the upright position. So, the condition of change from Energy-Shaping controller to MPC strategy in order to control the pendulum can be formulated as ``As the angle of the pendulum reaches range $[-50,\ 50]$ deg, the control law changes from Energy-Shaping to MPC.''  Also, as these results were obtained for the limit value of control input, for a lower value of control input the difference, naturally, will be lesser.\\
 
-The next, probably the most important, step is to design weight matrices $\ui{Q}{x}$ and $\ui{Q}{u}$. The main weights must be given to the position of the pendulum, what is our main controlled parameter, and the position of the arm, to prevent the possible scenario when the pendulum is stabilized at the upright position and the arm rotates constantly. 
+Now, as the operating range of MPC is determined, we can proceed to design of the MPC strategy. Due to the pendulums setup, the MPC formulation (\ref{mpcgeneral}) could be applied directly. Then, probably the most important step of MPC design is design of weight matrices $\ui{Q}{x}$ and $\ui{Q}{u}$. The main weights must be given to the position of the pendulum, what is our main controlled parameter, and the position of the arm, to prevent the possible scenario when the pendulum is stabilized at the upright position and the arm rotates constantly. 
 \begin{equation}
 \ui{Q}{x} = \begin{bmatrix}
 10&0&0&0\\
@@ -148,6 +157,7 @@ The next, probably the most important, step is to design weight matrices $\ui{Q}
 \end{equation}
 Weight matrices are the key point of MPC, as through them we define for MPC a requested control performance.
 The remain MPC parametres can be set as shown in the following table
+\newpage
 \begin{table}[H]
 	\centering
 	\caption{MPC parameters during the stabilization at the upright position}
@@ -386,8 +396,8 @@ The second control strategy was the Optimal Swing-Up Control strategy. Consideri
 Now the question is, which control strategy is better. To answer that question, we compare the quality of controlled responses for the Heuristic and Optimal Swing-Up control strategies. Here, we evaluate the settling time for the pendulum stabilization, sum of abslolute error (SAE), sum of squared control differences (SSCD) and optimisation problem solving time.
 \begin{subequations}
 	\begin{align}
-		\text{IAE} &= \sum_{i = 0}^{\ui{i}{max}} |y_i-\ui{y}{ref}|\\
-		\text{SSCD} &= \sum_{i = 0}^{\ui{i}{max}-1}\lrp{\Delta u_i^2}
+		\text{IAE} &= \sum_{i = 0}^{\ui{i}{max}} |y_i-\ui{y}{ref}|,\\
+		\text{SSCD} &= \sum_{i = 0}^{\ui{i}{max}-1}\lrp{\Delta u_i}^2.
 	\end{align}
 \end{subequations}
 Where $\ui{i}{max}$ is a total count of simulation steps.

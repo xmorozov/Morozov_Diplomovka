@@ -338,7 +338,7 @@ For case of box constraints
 \begin{subequations}
 	\begin{align}
 		\ui{x}{min}\leq x_k \leq\ui{x}{max},\\
-		\ui{u}{min}\leq x_k \leq\ui{u}{max},\\
+		\ui{u}{min}\leq x_k \leq\ui{u}{max},
 	\end{align}
 \end{subequations}
 matrices $\ui{H}{x}$, $\ui{K}{x}$, $\ui{H}{u}$ and $\ui{K}{u}$ have the following form
@@ -489,7 +489,7 @@ Those constraints are in the standard form and by combining them, we obtain matr
 At this point, as matrices $R$, $Q$, $R$, $H$ and $G$ are defined, and the MPC strategy can be implemented with using any QP solver.
 \subsection{Energy Shaping Controller}\label{energyshapingsection}
 For the initial excitation of the system, we use the energy-based swing-up controller~\cite{furuta:swing}. The strategy with this controller is that we increase the amplitude of swings by increasing the energy of the system with every swing. The energy is added by controlling arms movements and depends on the actual energy of the pendulum. The actual energy of the pendulum can be calculated from the actual position of the pendulum and its velocity: 
-\begin{equation}
+\begin{equation}\label{energy}
 E = \frac{m_1gl_1}{2}\lrp{\lrp{\frac{\dot{\theta}_1}{\omega_0}}^2+\cos\theta_1 - 1}.
 \end{equation}
 Then the control law will have following form:
@@ -602,8 +602,8 @@ m(x,p) = f(x) + p\left\|e(x)\right\|_1.
 Where $f(x)$ is the objective function of (\ref{nlpgeneral}), $e(x)$ contains all constraints in (\ref{nlpgeneral}) and $p$ is a penalty parameter, given by user.
 
 Lastly, the proofs of global convergence for the resulting SQP algorithm are generally similar to those found in unconstrained optimization. For example 
-\begin{equation}
-	|m(x_{k+1},p) - m(x_{k},p)|\leq 1\mathrm{e}{-6},
+\begin{equation}\label{convergence}
+	|m(x_{k+1},p) - m(x_{k},p)|\leq \num{1e-6},
 \end{equation}
 or
 \begin{equation}
@@ -620,14 +620,15 @@ In summary the basic SQP algorithm looks like this:
 	\State $k\gets 0$
 	\While{not converged}
 	\State Form and solve QP subproblem to obtain $(d_x,d_\lambda,d_\mu)$.
-	\State Choose steplength $\alpha$ so that equation (\ref{steplength}) is satisfied
+	\State Choose steplength $\alpha$ so that equation \ref{steplength} is satisfied
 	\State 	$x_{k+1} \gets x_k + \alpha d_x$,
 	\State $\lambda_{k+1} \gets \lambda_k + \alpha d_\lambda$,
 	\State $\mu_{k+1} \gets \mu_k + \alpha d_\mu$.
+	\State Check convergence condition \ref{convergence}.
 	\State Compute $B_{k+1}$.
-	\State $k \gets k+1$.
+	\State $k \gets k+1$.	
 	\EndWhile
 	\EndProcedure	
 	\end{algorithmic}
 \end{algorithm}	
-And with the SQP theory explained, all theoretical foundations are made. And we can proceed to the next main part of the thesis, where all the theories above will be used to develop control strategies and finally control the Furuta pendulum.
+And with the SQP theory explained, all theoretical foundations have been made. And we can proceed to the next main part of the thesis, where all the theories above will be used to develop control strategies and finally control the Furuta pendulum.
