@@ -89,7 +89,7 @@ mem = InitMemory(settings, opt, input);
 %% Simulation (start your simulation...)
 
 mem.iter = 1; time = 0.0;
-Tf = 15;  % simulation time
+Tf = 10;  % simulation time
 state_sim= input.x0';
 controls_MPC = input.u0';
 y_sim = [];
@@ -121,7 +121,7 @@ while time(end) < Tf
     % call the NMPC solver 
     t0 = cputime;
     [output, mem]=mpc_nmpcsolver(input, settings, mem, opt);
-    t_solver = cputime - t0
+    t_solver = cputime - t0;
     
     % obtain the solution and update the data
     switch opt.shifting

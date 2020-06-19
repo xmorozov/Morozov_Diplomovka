@@ -121,7 +121,7 @@ options = sdpsettings('verbose',0,'cachesolvers',1,'solver','gurobi');
 OPT = optimizer(cst, obj, options, xx{1}, uu{1});
 
 %% Simulation
-tf = 15; % sekundy
+tf = 10; % sekundy
 kf = tf/Ts;
 x0 = [0,0,0.01,-0.01];
 
@@ -151,13 +151,14 @@ for k = 1:kf
             tspan = [0, 0.02];
             [t,y] = ode45(@(t,x) odefun(t,x,u),tspan,x_sim(:,k),opts);
             x_sim(:,k+1) = y(end,:)';
+            CP = [k,x_sim(3,k)]
 
         end
     
     else %MPC
         t0 = cputime;
         u_sim(:,k) = OPT(x_sim(:,k));
-        t_solver = cputime - t0
+        t_solver = cputime - t0;
         x_sim(:,k+1) = A*x_sim(:,k)+B*u_sim(:,k);
         y_sim(:,k) = C*x_sim(:,k)+D*u_sim(:,k);
 
@@ -176,19 +177,21 @@ path = 'Dswing/';
 
 t = linspace(0,kf*Ts,kf);
 w = 9;
-l = 21;
-txt = {'$\theta_0\;[deg]$ ','$\dot{\theta_0}\;[deg s^{-1}]$ ','$\theta_1\;[deg]$','$\dot{\theta_1}\;[deg s^{-1}]$ '};
+l = 42;
+txt = {'$\theta_0\;\rm{[deg]}$ ','$\dot{\theta_0}\;[\rm{deg\:s^{-1}}]$ ','$\theta_1\;\rm{[deg]}$','$\dot{\theta_1}\;[\rm{deg\: s^{-1}}]$ '};
 txt2 = {'arm','darm','pend','dpend'};
+txt3 = {'Position of the Arm','darm','Position of the Pendulum','dpend'};
 for i = 1:nx
     figure(i)
     %subplot(nx+1,1,i)
     hold on
     plot(t,rad2deg(x_sim(i,1:end)))
-    ylabel(txt{i},'interpreter','latex')
-    xlabel('t [s]')
+    ylabel(txt{i},'interpreter','latex','FontSize',25)
+    %title(txt3{i},'FontSize',25)
+    xlabel('$\rm{t [s]}$','interpreter','latex','FontSize',25)
     hold off
         f2p(txt2{i}, 'Xlim', [0, tf],  'Ytol', 0.05, 'Xtol', 0,...
-        'extension', 'pdf','Path', path, 'dpi', 150, 'papersize', [l, w], 'Xsplit', 10,'Ysplit',7);
+        'extension', 'pdf','Path', path, 'dpi', 150, 'papersize', [l, w], 'Xsplit', 8,'Ysplit',4);
 
 end
 
@@ -197,7 +200,8 @@ figure(5)
 hold on
 plot(t,u_sim)
 hold off
-ylabel('$\tau\;[V]$','interpreter','latex')
-xlabel('t [s]')
+yl = ylabel('$\rm{\tau\;[N\:m]}$','interpreter','latex','FontSize',25);
+xlabel('$\rm{t [s]}$','interpreter','latex','FontSize',25)
+%title('Control Input','FontSize',25)
 f2p('control', 'Xlim', [0, tf], 'Ytol', 0.05, 'Xtol', 0,...
-'extension', 'pdf', 'dpi', 150, 'Path', path, 'papersize', [l, w], 'Xsplit', 10,'Ysplit',7);
+'extension', 'pdf', 'dpi', 150, 'Path', path, 'papersize', [l, w], 'Xsplit', 8,'Ysplit',6);

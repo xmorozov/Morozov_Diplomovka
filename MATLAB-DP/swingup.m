@@ -44,9 +44,9 @@ A_down = double(subs(A, [theta0, theta1, d_theta0, d_theta1, tau], [0 pi 0 0 0])
 B_down = double(subs(B, [theta0 theta1 d_theta0 d_theta1 tau], [0 pi 0 0 0]));
 
 %% Swings
-Tsim = 4;
+tf = 4;
 Ts = 0.02;
-kf = Tsim/Ts;
+kf = tf/Ts;
 [nx,nu] = size(B);
 C = [0,0,1,0];
 ny = size(C,1);
@@ -95,18 +95,20 @@ path = 'swings/';
 close all
 t = linspace(0,kf*Ts,kf);
 w = 9;
-l = 21;
-txt = {'$\theta_0\;[deg]$ ','$\dot{\theta_0}\;[deg s^{-1}]$ ','$\theta_1\;[deg]$','$\dot{\theta_1}\;[deg s^{-1}]$ '};
+l = 42;
+txt = {'$\theta_0\;\rm{[deg]}$ ','$\dot{\theta_0}\;[\rm{deg\:s^{-1}}]$ ','$\theta_1\;\rm{[deg]}$','$\dot{\theta_1}\;[\rm{deg\: s^{-1}}]$ '};
 txt2 = {'arm','darm','pend','dpend'};
+txt3 = {'Position of the Arm','darm','Position of the Pendulum','dpend'};
 for i = 1:nx
     figure
     %subplot(nx+1,1,i)
     hold on
     plot(t,rad2deg(x_swing(i,1:end)))
-    ylabel(txt{i},'interpreter','latex')
-    xlabel('t [s]')
+    ylabel(txt{i},'interpreter','latex','FontSize',25)
+    title(txt3{i},'FontSize',25)
+    xlabel('$\rm{t [s]}$','interpreter','latex','FontSize',25)
     hold off
-        f2p(txt2{i}, 'Xlim', [0, Tsim],  'Ytol', 0.05, 'Xtol', 0,...
+        f2p(txt2{i}, 'Xlim', [0, tf],  'Ytol', 0.05, 'Xtol', 0,...
         'extension', 'pdf','Path', path, 'dpi', 150, 'papersize', [l, w], 'Xsplit', 8,'Ysplit',4);
 
 end
@@ -115,9 +117,10 @@ hold on
 figure
 plot(t,u_swing)
 hold off
-ylabel('$\tau\;[V]$','interpreter','latex')
-xlabel('t [s]')
-f2p('control', 'Xlim', [0, Tsim], 'Ytol', 0.05, 'Xtol', 0,...
+ylabel('$\tau\;\rm{[N\:m]}$','interpreter','latex','FontSize',25,'position',[-0.13 5.7220e-06 -1])
+xlabel('$\rm{t [s]}$','interpreter','latex','FontSize',25)
+title('Control Input','FontSize',25)
+f2p('control', 'Xlim', [0, tf], 'Ytol', 0.05, 'Xtol', 0,...
 'extension', 'pdf', 'dpi', 150, 'Path', path, 'papersize', [l, w], 'Xsplit', 8,'Ysplit',6);
 
 

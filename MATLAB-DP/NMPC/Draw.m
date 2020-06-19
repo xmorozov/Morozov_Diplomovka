@@ -34,16 +34,18 @@ path = '../Oswing/';
 close all
 
 w = 9;
-l = 21;
-txt = {'$\theta_0\;[deg]$ ','$\dot{\theta_0}\;[deg s^{-1}]$ ','$\theta_1\;[deg]$','$\dot{\theta_1}\;[deg s^{-1}]$ '};
+l = 42;
+txt = {'$\theta_0\;\rm{[deg]}$ ','$\dot{\theta_0}\;[\rm{deg\:s^{-1}}]$ ','$\theta_1\;\rm{[deg]}$','$\dot{\theta_1}\;[\rm{deg\: s^{-1}}]$ '};
 txt2 = {'arm','darm','pend','dpend'};
+txt3 = {'Position of the Arm','darm','Position of the Pendulum','dpend'};
 for i = 1:4
     figure
     %subplot(nx+1,1,i)
     hold on
     plot(time,rad2deg(state_sim(:,i)))
-    ylabel(txt{i},'interpreter','latex')
-    xlabel('t [s]')
+    ylabel(txt{i},'interpreter','latex','FontSize',25)
+    title(txt3{i},'FontSize',25)
+    xlabel('$\rm{t [s]}$','interpreter','latex','FontSize',25)
     hold off
         f2p(txt2{i},  'Ytol', 0.05, 'Xtol', 0,...
         'extension', 'pdf','Path', path, 'dpi', 150, 'papersize', [l, w], 'Xsplit', 10,'Ysplit',7);
@@ -54,8 +56,9 @@ hold on
 figure
 plot(time,controls_MPC(:,1))
 hold off
-ylabel('$\tau\;[V]$','interpreter','latex')
-xlabel('t [s]')
+ylabel('$\rm{\tau\;[N\:m]}$','interpreter','latex','FontSize',25);
+title('Control Input','FontSize',25)
+xlabel('$\rm{t [s]}$','interpreter','latex','FontSize',25)
 f2p('control', 'Ytol', 0.05, 'Xtol', 0,...
 'extension', 'pdf', 'dpi', 150, 'Path', path, 'papersize', [l, w], 'Xsplit', 10,'Ysplit',7);
 

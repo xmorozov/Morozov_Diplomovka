@@ -270,7 +270,7 @@ To perform Swing-Up Control of the pendulum, a combined control strategy has to 
 \end{figure}
 Results, visualized in Fig.~\ref{combo} and Fig.~\ref{combo1} confirm that by combining MPC and Energy-Shaping controllers, the swing-up control of the pendulum can be performed.
 \section{Optimal Swing-Up Control}
-The last control strategy is an Optimal Swing-Up Control. In this strategy, only one non-linear Model Predictive Controller (NMPC) is used to perform both the swing-up and the stabilization of the pendulum. Such control performance is possible due to the fact that in NMPC the non-linear model (\ref{nonlinmodel}) is used to predict the future evolution of the process.  Usage of this non-linear model, leads to a Non-linear Programing (NLP) problem, and solving a NLP problem is not a trivial process. In this work a \textsc{Matmpc} toolbox is used \cite{Matmpc} to formulate and solve this problem.\\
+The last control strategy is an Optimal Swing-Up Control. In this strategy, only one non-linear Model Predictive Controller (NMPC) is used to perform both the swing-up and the stabilization of the pendulum. Such control performance is possible due to the fact that in NMPC the non-linear model (\ref{nonlinmodel}) is used to predict the future evolution of the process.  Usage of this non-linear model, leads to a Non-linear Programing (NLP) problem, and solving a NLP problem is not a trivial process. In this work a \textsc{Matmpc} toolbox is used \cite{MATMPC} to formulate and solve this problem.\\
 
 A NMPC problen can be formulated in a similar form as linear MPC problem (\ref{mpc:linear}):
 \begin{subequations}\label{nmpcgeneral}
