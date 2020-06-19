@@ -73,7 +73,7 @@
 \title{Nonlinear Model Predictive Control\\ of Rotary Inverted Pendulum}    % Enter your title between curly braces
 \subtitle{MASTER THESIS}
 \author{Bc. Alexey Morozov}                 % Enter your name between curly braces
-\institute{\footnotesize{lInstitute of Information Engineering, Automation, and Mathematics\newline SLOVAK UNIVERSITY OF TECHNOLOGY IN BRATISLAVA\\ FACULTY OF CHEMICAL AND FOOD TECHNOLOGY}}      % Enter your institute name between curly braces
+\institute{\footnotesize{ SLOVAK UNIVERSITY OF TECHNOLOGY IN BRATISLAVA\\ FACULTY OF CHEMICAL AND FOOD TECHNOLOGY\\lInstitute of Information Engineering, Automation, and Mathematics}}      % Enter your institute name between curly braces
 \author{Bc. Alexey Morozov} 
 \date{\monthyeardate\today}                    % Enter the date or \today between curly braces
 \usepackage{sidecap}
@@ -96,12 +96,9 @@
 			{\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
 			\fi%     
 		\end{beamercolorbox}%
-		\vskip1em\par
+		\vskip2em\par
 		\begin{beamercolorbox}[sep=8pt,center]{author}
 			\usebeamerfont{author}\insertauthor
-		\end{beamercolorbox}
-		\begin{beamercolorbox}[sep=8pt,center]{date}
-			\usebeamerfont{date}\insertdate
 		\end{beamercolorbox}
 	\vskip1em
 	\end{centering}
@@ -117,15 +114,22 @@
 \begin{frame}[plain]
 	\maketitle
 	\small
+	\vskip1em
 	\begin{columns}[c]
-		\column{0.58\textwidth}
 		\column{0.6\textwidth}
+
 		\begin{tabular}[t]{@{}l@{\hspace{3pt}}p{.6\textwidth}@{}}
-			Supervisor: & Ing. Martin Klaučo, PhD. \\
+			Supervisor: & Ing. Martin Klaučo, PhD. 
+		\end{tabular}%
+		\column{0.4\textwidth}
+
+		\begin{tabular}[t]{@{}l@{\hspace{3pt}}p{.6\textwidth}@{}}
 			Consultant: & Ing. Matúš Furka
 		\end{tabular}%
 	\end{columns}
-
+	\normalsize
+	\vskip2.5em
+	\centering\insertdate
 \end{frame}
 
 \section{Intro}                          
@@ -178,7 +182,8 @@
 \subsection{Mathematical Model}
 
 \begin{frame}
-	\frametitle{Lagrangian Formulation}
+	\frametitle{Derivation of the Mathematical Model}
+	\framesubtitle{Lagrangian Formulation}
 Lagrangian
 \begin{equation*}
 L = \ui{E}{k} - \ui{E}{p}
@@ -192,7 +197,8 @@ Euler-Lagrange Equations
 \end{subequations}
 \end{frame}
 \begin{frame}
-	\frametitle{Lagrangian Formulation}
+	\frametitle{Derivation of the Mathematical Model}
+	\framesubtitle{Lagrangian Formulation}
 	Equations of motion
 	\begin{subequations}
 		\begin{align*}
@@ -214,7 +220,8 @@ Parametres
 \end{subequations}
 \end{frame}
 \begin{frame}
-	\frametitle{State-Space Formulation}
+	\frametitle{Derivation of the Mathematical Model}
+	\framesubtitle{State-Space Formulation}
 	  	\begin{columns}[c]
 		\column{2in}  % slides are 3in high by 5in wide
 State variables
@@ -234,7 +241,8 @@ u(t) = \tau (t)
 	\end{columns}
 \end{frame}
 \begin{frame}
-	\frametitle{State-Space Formulation}
+	\frametitle{Derivation of the Mathematical Model}
+	\framesubtitle{State-Space Formulation}
 	Non-linear model
 	\begin{equation*}
 	\begin{bmatrix}
@@ -248,7 +256,8 @@ u(t) = \tau (t)
 	\end{equation*}
 \end{frame}
 \begin{frame}
-	\frametitle{State-Space Formulation}
+	\frametitle{Derivation of the Mathematical Model}
+	\framesubtitle{State-Space Formulation}
 	Linear model
 	\begin{subequations}
 		\begin{align*}
@@ -272,7 +281,7 @@ u(t) = \tau (t)
 \begin{frame}
 	\frametitle{Swing-Up Control of the Pendulum}	
 	\begin{columns}[c]	
-		\column{0.6\textwidth}
+		\column{0.5\textwidth}
 		Main control strategies
 		\begin{enumerate}
 			\item Heuristic Swing-Up Control strategy\\
@@ -288,11 +297,11 @@ u(t) = \tau (t)
 \begin{frame}
 	\frametitle{Swing-Up Control of the Pendulum}	
 	\begin{columns}[c]	
-		\column{0.6\textwidth}
+		\column{0.5\textwidth}
 		Main control strategies
 		\begin{enumerate}
-			\item Heuristic Swing-Up Control strategy\\
-			\item \textcolor{mygray}{Optimal Swing-Up Control strategy}
+			\item Heuristic Swing-Up Control \\strategy\\
+			\item \textcolor{mygray}{Optimal Swing-Up Control\\ strategy}
 		\end{enumerate}
 		\column{0.4\textwidth}
 		\includegraphics[scale=0.29]{images/OP_total.pdf}
@@ -301,25 +310,45 @@ u(t) = \tau (t)
 
 \begin{frame}	
 	\frametitle{Heuristic Swing-Up Control}	
+	\vskip0.9em
+		\begin{columns}[c]	
+		\column{0.6\textwidth}
 	Two phases of control:
 	\begin{enumerate}
 		\item Initial excitation of the system\\ (by Energy-Shaping controller)\\
 		\item Stabilisation of the pendulum\\(by Predictive controller)
 	\end{enumerate}
+		\column{0.3\textwidth}
+		\end{columns}
 \end{frame}	
 
 \begin{frame}	
 	\frametitle{Heuristic Swing-Up Control}	
+	\vskip1.05em
+	\begin{columns}[c]	
+		\column{0.6\textwidth}
 	Development of control strategy:
 	\begin{enumerate}
 		\item Design of Energy-Shaping controller\\
 		\item Design of Model Predictive controller\\
 		\item Full-range control of the pendulum
 	\end{enumerate}
-\end{frame}	
+	\column{0.3\textwidth}
+	\end{columns}
+\end{frame}
+	
+\begin{frame}
+	\frametitle{First Phase of Control}	
+	\begin{columns}[c]	
+		\column{0.5\textwidth}
+		Pendulum is controlled by Energy-Shaping controller.
+		\column{0.4\textwidth}
+		\includegraphics[scale=0.29]{images/first_phase.pdf}
+	\end{columns}
+\end{frame}
  
 \begin{frame}
-	\frametitle{Initial Excitation of the System}
+	\frametitle{First Phase of Control}
 	Energy-Shaping controller
 	\begin{subequations}\begin{align*}
 			E &= \frac{m_1gl_1}{2}\lrp{\lrp{\frac{\dot{\theta}_1}{\omega_0}}^2+\cos(\theta_1) - 1}\\
@@ -328,7 +357,7 @@ u(t) = \tau (t)
 	\end{subequations}
 \end{frame}
 \begin{frame}
-	\frametitle{Initial Excitation of the System}
+	\frametitle{First Phase of Control}
 	\begin{figure}[H]
 		\centering
 		\begin{subfigure}
@@ -350,7 +379,7 @@ u(t) = \tau (t)
 \end{frame}
 
 \begin{frame}
-	\frametitle{Initial Excitation of the System}
+	\frametitle{First Phase of Control}
 	\begin{figure}[H]
 		\centering
 		\begin{subfigure}
@@ -361,13 +390,13 @@ u(t) = \tau (t)
 		\begin{subfigure}
 			\centering
 			% include first image
-			\includegraphics[scale=0.25]{images/OP2.pdf}  
+			\includegraphics[scale=0.25]{images/swing0.pdf}  
 		\end{subfigure}
 	\end{figure}
 \end{frame}
 
 \begin{frame}
-	\frametitle{Initial Excitation of the System}
+	\frametitle{First Phase of Control}
 	\begin{figure}[H]
 		\centering
 		\begin{subfigure}
@@ -384,7 +413,7 @@ u(t) = \tau (t)
 \end{frame}
 
 \begin{frame}
-	\frametitle{Initial Excitation of the System}
+	\frametitle{First Phase of Control}
 	\begin{figure}[H]
 		\centering
 		\begin{subfigure}
@@ -401,7 +430,7 @@ u(t) = \tau (t)
 \end{frame}
 
 \begin{frame}
-	\frametitle{Initial Excitation of the System}
+	\frametitle{First Phase of Control}
 	\begin{figure}[H]
 		\centering
 		\begin{subfigure}
@@ -418,7 +447,17 @@ u(t) = \tau (t)
 \end{frame}
 
 \begin{frame}
-	\frametitle{Stabilisation at the Upright Position} 
+	\frametitle{Second Phase of Control}	
+	\begin{columns}[c]	
+		\column{0.5\textwidth}
+		Pendulum is controlled by Predictive controller.
+		\column{0.4\textwidth}
+		\includegraphics[scale=0.29]{images/second_phase.pdf}
+	\end{columns}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Second Phase of Control} 
 	Model Predictive Control strategy
 \begin{subequations}
 \begin{align*}
@@ -427,6 +466,7 @@ u(t) = \tau (t)
 &\ui{u}{min}\leq u_{k}\leq \ui{u}{max}\qquad\qquad\qquad\;   k \in \mathbb{N}_0^{N-1}\\
 &x_0 = x(0)		
 \end{align*}
+\small
 	\begin{table}[H]
 		\centering
 		\begin{tabular}{l c c}
@@ -444,7 +484,7 @@ u(t) = \tau (t)
 \end{frame}
 
 \begin{frame}
-	\frametitle{Stabilisation at the Upright Position} 
+	\frametitle{Second Phase of Control} 
 	Model Predictive Control strategy
 	\begin{subequations}
 		\begin{align*}
@@ -455,18 +495,18 @@ u(t) = \tau (t)
 		\end{align*}
 	\end{subequations}
 Weight matrices
-\begin{equation}
+\begin{equation*}
 \ui{Q}{x} = \begin{bmatrix}
 5&0&0&0\\
 0&0.08&0&0\\
 0&0&10&0\\
 0&0&0&0.2
 \end{bmatrix} \quad \ui{Q}{u} = \num{1e-3}
-\end{equation}
+\end{equation*}
 \end{frame}	
 
 \begin{frame}
-	\frametitle{Stabilisation at the Upright Position}
+	\frametitle{Second Phase of Control}
 	\begin{figure}[H]
 		\centering
 		\begin{subfigure}
@@ -529,7 +569,7 @@ Weight matrices
 \begin{frame}
 	\frametitle{Swing-Up Control of the Pendulum}	
 	\begin{columns}[c]	
-		\column{0.6\textwidth}
+		\column{0.5\textwidth}
 		Main control strategies
 		\begin{enumerate}
 			\item \textcolor{mygray}{Heuristic Swing-Up Control strategy}
@@ -541,14 +581,20 @@ Weight matrices
 \end{frame}
 \begin{frame}
 	\frametitle{Optimal Control Strategy}
+		\vskip0.9em
+		\begin{columns}[c]	
+		\column{0.6\textwidth}
 		Two phases of control:
 	\begin{enumerate}
 		\item Initial excitation of the system\\ (by Non-linear Predictive controller)\\
 		\item Stabilisation of the pendulum\\(by Non-linear Predictive controller)
 	\end{enumerate}
+		\column{0.3\textwidth}
+		\end{columns}
 \end{frame}
 \begin{frame}
 	\frametitle{Non-Linerar Model Predictive Control}
+	\phantom{Aa}
 	\begin{subequations}
 		\begin{align*}
 		\min_{u_0,...,u_{N-1}}\ &\sum_{k=0}^{N-1} \lrp{ x_{k}^\intercal\ui{Q}{x}x_{k}^{\phantom{\intercal}}+u_{k}^\intercal\ui{Q}{u}u_{k}^{\phantom{\intercal}}}^{\phantom{\intercal}}\\
@@ -557,6 +603,7 @@ Weight matrices
 		&x_0 = x(0)
 		\end{align*}
 	\end{subequations}
+\small
 \begin{table}[H]
 	\begin{tabular}{l c c}
 		\noalign{\hrule height 1pt}
@@ -569,9 +616,11 @@ Weight matrices
 		\hline
 	\end{tabular}
 \end{table}
+\newpage
 \end{frame}
 \begin{frame}
 	\frametitle{Non-Linerar Model Predictive Control}
+	\phantom{Aa}
 	\begin{subequations}
 		\begin{align*}
 			\min_{u_0,...,u_{N-1}}\ &\sum_{k=0}^{N-1} \lrp{ x_{k}^\intercal\ui{Q}{x}x_{k}^{\phantom{\intercal}}+u_{k}^\intercal\ui{Q}{u}u_{k}^{\phantom{\intercal}}}^{\phantom{\intercal}}\\
@@ -589,6 +638,7 @@ Weight matrices
 0&0&0&0.1
 \end{bmatrix} \quad \ui{Q}{u} = 0.1
 \end{equation*}
+\newpage
 \end{frame}
 
 \begin{frame}
@@ -710,7 +760,7 @@ Weight matrices
 	\begin{itemize}
 	\item Design of Optimal Swing-Up control strategy\\
 	\item Its comparisson against the heuristic method\\
-	\item Evaluation of control quality and execution time\\ of individual approaches
+	\item Evaluation of control quality and calculation time\\ of individual approaches
 \end{itemize}
 \end{frame}
 

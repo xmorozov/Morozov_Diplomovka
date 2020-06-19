@@ -7,7 +7,7 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   sodipodi:docname="swing1.svg"
+   sodipodi:docname="first_phase.svg"
    inkscape:version="1.0 (4035a4fb49, 2020-05-01)"
    id="svg5103"
    version="1.1"
@@ -16,6 +16,28 @@
    width="210mm">
   <defs
      id="defs5097">
+    <inkscape:path-effect
+       effect="bspline"
+       id="path-effect910"
+       is_visible="true"
+       lpeversion="1"
+       weight="33.333333"
+       steps="2"
+       helper_size="0"
+       apply_no_weight="true"
+       apply_with_weight="true"
+       only_selected="false" />
+    <inkscape:path-effect
+       only_selected="false"
+       apply_with_weight="true"
+       apply_no_weight="true"
+       helper_size="0"
+       steps="2"
+       weight="33.333333"
+       lpeversion="1"
+       is_visible="true"
+       id="path-effect891"
+       effect="bspline" />
     <inkscape:path-effect
        only_selected="false"
        apply_with_weight="true"
@@ -95,9 +117,9 @@
      inkscape:document-rotation="0"
      inkscape:current-layer="layer1"
      inkscape:document-units="mm"
-     inkscape:cy="424.91968"
-     inkscape:cx="380.96361"
-     inkscape:zoom="2"
+     inkscape:cy="272.30227"
+     inkscape:cx="498.46858"
+     inkscape:zoom="1"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
      borderopacity="1.0"
@@ -112,7 +134,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -120,6 +142,16 @@
      id="layer1"
      inkscape:groupmode="layer"
      inkscape:label="Слой 1">
+    <ellipse
+       ry="5.7922902"
+       rx="5.7899227"
+       inkscape:transform-center-x="-41.182307"
+       transform="matrix(-0.6555389,-0.7551614,0.75700888,-0.65340459,0,0)"
+       inkscape:transform-center-y="-35.546123"
+       cy="80.340553"
+       cx="-123.88354"
+       id="path5752"
+       style="fill:#6666ff;fill-opacity:1;stroke:#000000;stroke-width:0.434703;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;paint-order:fill markers stroke" />
     <ellipse
        ry="59.799786"
        rx="59.799587"
@@ -132,12 +164,22 @@
        d="M 41.813614,76.044085 160.92336,76.020458"
        style="fill:none;stroke:#000000;stroke-width:0.26458299;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:0.52916597,0.26458299;stroke-dashoffset:0" />
     <ellipse
-       style="fill:#000000;stroke:#000000;stroke-width:0.46099699;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;paint-order:fill markers stroke;fill-opacity:1"
+       style="fill:#ff0000;stroke:#000000;stroke-width:0.46099699;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;paint-order:fill markers stroke;fill-opacity:1"
        id="path5668-8"
        cx="101.43503"
        cy="16.111073"
        rx="1.7694563"
        ry="1.769501" />
+    <rect
+       transform="matrix(-0.6555389,-0.7551614,0.75700888,-0.65340459,0,0)"
+       inkscape:transform-center-y="-16.457329"
+       inkscape:transform-center-x="-19.043138"
+       y="27.525982"
+       x="-124.9241"
+       height="47.164715"
+       width="2.1120722"
+       id="rect5754"
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.500705;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;paint-order:fill markers stroke" />
     <text
        id="text5758"
        y="12.775592"
@@ -195,7 +237,7 @@
        inkscape:transform-center-x="-0.58239954"
        r="5.7829542" />
     <ellipse
-       style="fill:#000000;stroke:#000000;stroke-width:0.46099699;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;paint-order:fill markers stroke"
+       style="fill:#0000ff;stroke:#000000;stroke-width:0.46099699;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;paint-order:fill markers stroke"
        id="path5668-7"
        cx="101.43503"
        cy="136.11107"
@@ -203,11 +245,11 @@
        ry="1.769501" />
     <path
        sodipodi:nodetypes="ccccc"
-       inkscape:original-d="m 88.714645,129.32288 c 1.080993,0.56831 2.162019,1.13651 3.243094,1.70461 1.367214,0.49199 2.733851,0.98361 4.100902,1.47521 1.109086,-0.007 2.217115,-0.0143 3.325618,-0.0219 0.805311,-0.2496 1.609861,-0.49932 2.414641,-0.74945"
+       inkscape:original-d="m 147.22731,49.301526 c 2.56294,4.637291 5.12578,9.274619 7.68852,13.911986 0.24582,9.229757 0.49134,18.457952 0.73662,27.686675 -4.19796,8.40734 -8.39609,16.814243 -12.59453,25.220963 -10.76474,4.23153 -21.52975,8.46279 -32.29503,12.69379"
        inkscape:path-effect="#path-effect6199"
        id="path6197"
-       d="m 88.714645,129.32288 c 1.081045,0.56821 2.162071,1.13641 3.386216,1.66643 1.224144,0.53002 2.590782,1.02164 3.828823,1.26386 1.238041,0.24223 2.34607,0.23493 3.302928,0.10632 0.956858,-0.12861 1.761408,-0.37832 2.566288,-0.62814"
-       style="fill:none;stroke:#ff0000;stroke-width:0.6;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:4.8, 0.6;stroke-dashoffset:3.00001;stroke-opacity:1;marker-start:url(#Arrow2Lstart)" />
+       d="m 147.22731,49.301526 c 2.56285,4.637342 5.12569,9.27467 6.52989,16.20821 1.40419,6.93354 1.64971,16.161735 -0.32665,24.979684 -1.97637,8.81795 -6.17451,17.22485 -13.656,23.54389 -7.4815,6.31905 -18.24651,10.55031 -29.01166,14.78163"
+       style="fill:none;stroke:#ff0000;stroke-width:0.6;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:4.8, 0.6;stroke-dashoffset:3;stroke-opacity:1;marker-start:url(#Arrow2Lstart)" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
@@ -235,25 +277,22 @@
          y="93.361916"
          style="stroke-width:0.264583"
          id="tspan892" /></text>
-    <circle
-       r="5.7829542"
-       inkscape:transform-center-x="19.587163"
-       transform="rotate(21.138911)"
-       inkscape:transform-center-y="50.658847"
-       cy="88.216011"
-       cx="121.79884"
-       id="path5752"
-       style="fill:#6666ff;fill-opacity:1;stroke:#000000;stroke-width:0.434091;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;paint-order:fill markers stroke" />
-    <rect
-       transform="rotate(21.138911)"
-       inkscape:transform-center-y="23.443216"
-       inkscape:transform-center-x="9.0477264"
-       y="35.486572"
-       x="120.75953"
-       height="47.088696"
-       width="2.1095302"
-       id="rect5754"
-       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.5;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;paint-order:fill markers stroke" />
+    <path
+       inkscape:transform-center-y="-19.723755"
+       inkscape:transform-center-x="22.242218"
+       inkscape:original-d="M 56.814525,37.006857 C 71.623866,49.981325 86.432986,62.955498 101.24188,75.929369"
+       inkscape:path-effect="#path-effect891"
+       id="path889"
+       d="M 56.814525,37.006857 C 71.623917,49.981267 86.433037,62.95544 101.24188,75.929369"
+       style="fill:none;stroke:#ff0000;stroke-width:0.262642;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:0.787927, 0.262642;stroke-dashoffset:0;stroke-opacity:1" />
+    <path
+       inkscape:transform-center-y="-19.621642"
+       inkscape:transform-center-x="-22.374835"
+       style="fill:none;stroke:#ff0000;stroke-width:0.264999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:0.794999, 0.264999;stroke-dashoffset:0;stroke-opacity:1"
+       d="M 101.40409,76.181869 C 116.36334,63.112616 131.32231,50.043608 146.281,36.974843"
+       id="path889-7"
+       inkscape:path-effect="#path-effect910"
+       inkscape:original-d="M 101.40409,76.181869 C 116.36339,63.112673 131.32236,50.043667 146.281,36.974843" />
     <ellipse
        ry="1.769501"
        rx="1.7694563"
