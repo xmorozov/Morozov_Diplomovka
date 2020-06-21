@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7140 64-bit) (preloaded format=pdflatex 2019.9.26)  19 JUN 2020 20:56
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7140 64-bit) (preloaded format=pdflatex 2019.9.26)  21 JUN 2020 11:39
 entering extended mode
 **./main.tex
 (main.tex
@@ -1979,10 +1979,10 @@ Overfull \hbox (11.1421pt too wide) in paragraph at lines 242--242
 ]
 File: images/OP_total.pdf Graphic file (type pdf)
 <use images/OP_total.pdf>
-Package pdftex.def Info: images/OP_total.pdf  used on input line 293.
+Package pdftex.def Info: images/OP_total.pdf  used on input line 298.
 (pdftex.def)             Requested size: 133.23665pt x 127.51976pt.
 
-Overfull \hbox (10.32259pt too wide) in paragraph at lines 293--293
+Overfull \hbox (10.32259pt too wide) in paragraph at lines 298--298
 [][]  
  []
 
@@ -1991,10 +1991,10 @@ Overfull \hbox (10.32259pt too wide) in paragraph at lines 293--293
 ]
 File: images/OP_total.pdf Graphic file (type pdf)
 <use images/OP_total.pdf>
-Package pdftex.def Info: images/OP_total.pdf  used on input line 309.
+Package pdftex.def Info: images/OP_total.pdf  used on input line 314.
 (pdftex.def)             Requested size: 133.23665pt x 127.51976pt.
 
-Overfull \hbox (10.32259pt too wide) in paragraph at lines 309--309
+Overfull \hbox (10.32259pt too wide) in paragraph at lines 314--314
 [][]  
  []
 
@@ -2008,10 +2008,10 @@ Overfull \hbox (10.32259pt too wide) in paragraph at lines 309--309
 <images/first_phase.pdf, id=935, 457.29723pt x 410.20995pt>
 File: images/first_phase.pdf Graphic file (type pdf)
 <use images/first_phase.pdf>
-Package pdftex.def Info: images/first_phase.pdf  used on input line 348.
+Package pdftex.def Info: images/first_phase.pdf  used on input line 353.
 (pdftex.def)             Requested size: 132.6128pt x 118.95782pt.
 
-Overfull \hbox (9.69873pt too wide) in paragraph at lines 348--348
+Overfull \hbox (9.69873pt too wide) in paragraph at lines 353--353
 [][]  
  []
 
@@ -2023,17 +2023,17 @@ Overfull \hbox (9.69873pt too wide) in paragraph at lines 348--348
 <images/swings/arm.pdf, id=1040, 1195.46625pt x 255.95625pt>
 File: images/swings/arm.pdf Graphic file (type pdf)
 <use images/swings/arm.pdf>
-Package pdftex.def Info: images/swings/arm.pdf  used on input line 379.
+Package pdftex.def Info: images/swings/arm.pdf  used on input line 384.
 (pdftex.def)             Requested size: 298.86583pt x 63.98889pt.
 <images/swings/pend.pdf, id=1041, 1195.46625pt x 255.95625pt>
 File: images/swings/pend.pdf Graphic file (type pdf)
 <use images/swings/pend.pdf>
-Package pdftex.def Info: images/swings/pend.pdf  used on input line 379.
+Package pdftex.def Info: images/swings/pend.pdf  used on input line 384.
 (pdftex.def)             Requested size: 298.86583pt x 63.98889pt.
 <images/swings/control.pdf, id=1042, 1195.46625pt x 255.95625pt>
 File: images/swings/control.pdf Graphic file (type pdf)
 <use images/swings/control.pdf>
-Package pdftex.def Info: images/swings/control.pdf  used on input line 379.
+Package pdftex.def Info: images/swings/control.pdf  used on input line 384.
 (pdftex.def)             Requested size: 298.86583pt x 63.98889pt.
  [19
 
@@ -2042,12 +2042,12 @@ pdf>]
 <images/swings2/swing1.pdf, id=1145, 1195.46625pt x 255.95625pt>
 File: images/swings2/swing1.pdf Graphic file (type pdf)
 <use images/swings2/swing1.pdf>
-Package pdftex.def Info: images/swings2/swing1.pdf  used on input line 396.
+Package pdftex.def Info: images/swings2/swing1.pdf  used on input line 401.
 (pdftex.def)             Requested size: 298.86583pt x 63.98889pt.
 <images/swing0.pdf, id=1146, 457.29755pt x 410.20917pt>
 File: images/swing0.pdf Graphic file (type pdf)
 <use images/swing0.pdf>
-Package pdftex.def Info: images/swing0.pdf  used on input line 396.
+Package pdftex.def Info: images/swing0.pdf  used on input line 401.
 (pdftex.def)             Requested size: 114.3241pt x 102.55203pt.
  [20
 
@@ -2055,12 +2055,12 @@ Package pdftex.def Info: images/swing0.pdf  used on input line 396.
 <images/swings2/swing2.pdf, id=1219, 1195.46625pt x 255.95625pt>
 File: images/swings2/swing2.pdf Graphic file (type pdf)
 <use images/swings2/swing2.pdf>
-Package pdftex.def Info: images/swings2/swing2.pdf  used on input line 413.
+Package pdftex.def Info: images/swings2/swing2.pdf  used on input line 418.
 (pdftex.def)             Requested size: 298.86583pt x 63.98889pt.
 <images/swing1.pdf, id=1220, 457.29723pt x 410.20995pt>
 File: images/swing1.pdf Graphic file (type pdf)
 <use images/swing1.pdf>
-Package pdftex.def Info: images/swing1.pdf  used on input line 413.
+Package pdftex.def Info: images/swing1.pdf  used on input line 418.
 (pdftex.def)             Requested size: 114.32402pt x 102.55223pt.
  [21
 
@@ -2068,12 +2068,12 @@ Package pdftex.def Info: images/swing1.pdf  used on input line 413.
 <images/swings2/swing3.pdf, id=1293, 1195.46625pt x 255.95625pt>
 File: images/swings2/swing3.pdf Graphic file (type pdf)
 <use images/swings2/swing3.pdf>
-Package pdftex.def Info: images/swings2/swing3.pdf  used on input line 430.
+Package pdftex.def Info: images/swings2/swing3.pdf  used on input line 435.
 (pdftex.def)             Requested size: 298.86583pt x 63.98889pt.
 <images/swing2.pdf, id=1294, 457.29723pt x 410.20995pt>
 File: images/swing2.pdf Graphic file (type pdf)
 <use images/swing2.pdf>
-Package pdftex.def Info: images/swing2.pdf  used on input line 430.
+Package pdftex.def Info: images/swing2.pdf  used on input line 435.
 (pdftex.def)             Requested size: 114.32402pt x 102.55223pt.
  [22
 
@@ -2081,12 +2081,12 @@ Package pdftex.def Info: images/swing2.pdf  used on input line 430.
 <images/swings2/swing4.pdf, id=1367, 1195.46625pt x 255.95625pt>
 File: images/swings2/swing4.pdf Graphic file (type pdf)
 <use images/swings2/swing4.pdf>
-Package pdftex.def Info: images/swings2/swing4.pdf  used on input line 447.
+Package pdftex.def Info: images/swings2/swing4.pdf  used on input line 452.
 (pdftex.def)             Requested size: 298.86583pt x 63.98889pt.
 <images/swing3.pdf, id=1368, 457.29723pt x 410.20995pt>
 File: images/swing3.pdf Graphic file (type pdf)
 <use images/swing3.pdf>
-Package pdftex.def Info: images/swing3.pdf  used on input line 447.
+Package pdftex.def Info: images/swing3.pdf  used on input line 452.
 (pdftex.def)             Requested size: 114.32402pt x 102.55223pt.
  [23
 
@@ -2094,17 +2094,17 @@ Package pdftex.def Info: images/swing3.pdf  used on input line 447.
 <images/second_phase.pdf, id=1441, 457.29723pt x 410.20995pt>
 File: images/second_phase.pdf Graphic file (type pdf)
 <use images/second_phase.pdf>
-Package pdftex.def Info: images/second_phase.pdf  used on input line 457.
+Package pdftex.def Info: images/second_phase.pdf  used on input line 462.
 (pdftex.def)             Requested size: 132.6128pt x 118.95782pt.
 
-Overfull \hbox (9.69873pt too wide) in paragraph at lines 457--457
+Overfull \hbox (9.69873pt too wide) in paragraph at lines 462--462
 [][]  
  []
 
 [24
 
  <./images/second_phase.pdf>]
-Overfull \hbox (3.34918pt too wide) in paragraph at lines 484--484
+Overfull \hbox (3.34918pt too wide) in paragraph at lines 489--489
  [] 
  []
 
@@ -2116,24 +2116,24 @@ Overfull \hbox (3.34918pt too wide) in paragraph at lines 484--484
 <images/MPC/arm.pdf, id=1599, 1195.46625pt x 255.95625pt>
 File: images/MPC/arm.pdf Graphic file (type pdf)
 <use images/MPC/arm.pdf>
-Package pdftex.def Info: images/MPC/arm.pdf  used on input line 528.
+Package pdftex.def Info: images/MPC/arm.pdf  used on input line 533.
 (pdftex.def)             Requested size: 298.86583pt x 63.98889pt.
 <images/MPC/pend.pdf, id=1600, 1195.46625pt x 255.95625pt>
 File: images/MPC/pend.pdf Graphic file (type pdf)
 <use images/MPC/pend.pdf>
-Package pdftex.def Info: images/MPC/pend.pdf  used on input line 528.
+Package pdftex.def Info: images/MPC/pend.pdf  used on input line 533.
 (pdftex.def)             Requested size: 298.86583pt x 63.98889pt.
 <images/MPC/control.pdf, id=1601, 1195.46625pt x 255.95625pt>
 File: images/MPC/control.pdf Graphic file (type pdf)
 <use images/MPC/control.pdf>
-Package pdftex.def Info: images/MPC/control.pdf  used on input line 528.
+Package pdftex.def Info: images/MPC/control.pdf  used on input line 533.
 (pdftex.def)             Requested size: 298.86583pt x 63.98889pt.
  [27
 
  <./images/MPC/arm.pdf> <./images/MPC/pend.pdf> <./images/MPC/control.pdf>]
 
 LaTeX Font Warning: Font shape `T1/lmss/m/sc' in size <10.95> not available
-(Font)              Font shape `T1/lmr/m/sc' tried instead on input line 544.
+(Font)              Font shape `T1/lmr/m/sc' tried instead on input line 549.
 
 Package microtype Info: Character `029' is missing
 (microtype)             in font `T1/lmr/m/sc/10.95'.
@@ -2144,17 +2144,17 @@ Package microtype Info: Character `029' is missing
 <images/Hswing/arm.pdf, id=1764, 1195.46625pt x 255.95625pt>
 File: images/Hswing/arm.pdf Graphic file (type pdf)
 <use images/Hswing/arm.pdf>
-Package pdftex.def Info: images/Hswing/arm.pdf  used on input line 566.
+Package pdftex.def Info: images/Hswing/arm.pdf  used on input line 571.
 (pdftex.def)             Requested size: 298.86583pt x 63.98889pt.
 <images/Hswing/pend.pdf, id=1765, 1195.46625pt x 255.95625pt>
 File: images/Hswing/pend.pdf Graphic file (type pdf)
 <use images/Hswing/pend.pdf>
-Package pdftex.def Info: images/Hswing/pend.pdf  used on input line 566.
+Package pdftex.def Info: images/Hswing/pend.pdf  used on input line 571.
 (pdftex.def)             Requested size: 298.86583pt x 63.98889pt.
 <images/Hswing/control.pdf, id=1766, 1195.46625pt x 255.95625pt>
 File: images/Hswing/control.pdf Graphic file (type pdf)
 <use images/Hswing/control.pdf>
-Package pdftex.def Info: images/Hswing/control.pdf  used on input line 566.
+Package pdftex.def Info: images/Hswing/control.pdf  used on input line 571.
 (pdftex.def)             Requested size: 298.86583pt x 63.98889pt.
  [29
 
@@ -2162,10 +2162,10 @@ Package pdftex.def Info: images/Hswing/control.pdf  used on input line 566.
 pdf>]
 File: images/OP_total.pdf Graphic file (type pdf)
 <use images/OP_total.pdf>
-Package pdftex.def Info: images/OP_total.pdf  used on input line 581.
+Package pdftex.def Info: images/OP_total.pdf  used on input line 586.
 (pdftex.def)             Requested size: 133.23665pt x 127.51976pt.
 
-Overfull \hbox (10.32259pt too wide) in paragraph at lines 581--581
+Overfull \hbox (10.32259pt too wide) in paragraph at lines 586--586
 [][]  
  []
 
@@ -2178,23 +2178,23 @@ Overfull \hbox (10.32259pt too wide) in paragraph at lines 581--581
 ] [33
 
 ]
-<images/Oswing/arm.pdf, id=2073, 1195.46625pt x 255.95625pt>
+<images/Oswing/arm.pdf, id=2071, 1195.46625pt x 255.95625pt>
 File: images/Oswing/arm.pdf Graphic file (type pdf)
 <use images/Oswing/arm.pdf>
-Package pdftex.def Info: images/Oswing/arm.pdf  used on input line 663.
+Package pdftex.def Info: images/Oswing/arm.pdf  used on input line 668.
 (pdftex.def)             Requested size: 298.86583pt x 63.98889pt.
-<images/Oswing/pend.pdf, id=2074, 1195.46625pt x 255.95625pt>
+<images/Oswing/pend.pdf, id=2072, 1195.46625pt x 255.95625pt>
 File: images/Oswing/pend.pdf Graphic file (type pdf)
 <use images/Oswing/pend.pdf>
-Package pdftex.def Info: images/Oswing/pend.pdf  used on input line 663.
+Package pdftex.def Info: images/Oswing/pend.pdf  used on input line 668.
 (pdftex.def)             Requested size: 298.86583pt x 63.98889pt.
-<images/Oswing/control.pdf, id=2075, 1195.46625pt x 255.95625pt>
+<images/Oswing/control.pdf, id=2073, 1195.46625pt x 255.95625pt>
 File: images/Oswing/control.pdf Graphic file (type pdf)
 <use images/Oswing/control.pdf>
-Package pdftex.def Info: images/Oswing/control.pdf  used on input line 663.
+Package pdftex.def Info: images/Oswing/control.pdf  used on input line 668.
 (pdftex.def)             Requested size: 298.86583pt x 63.98889pt.
 
-Overfull \vbox (12.4904pt too high) detected at line 663
+Overfull \vbox (12.4904pt too high) detected at line 668
  []
 
 [34
@@ -2203,20 +2203,20 @@ Overfull \vbox (12.4904pt too high) detected at line 663
 pdf>] [35
 
 ]
-<images/Dswing/arm.pdf, id=2230, 1195.46625pt x 255.95625pt>
+<images/Dswing/arm.pdf, id=2228, 1195.46625pt x 255.95625pt>
 File: images/Dswing/arm.pdf Graphic file (type pdf)
 <use images/Dswing/arm.pdf>
-Package pdftex.def Info: images/Dswing/arm.pdf  used on input line 697.
+Package pdftex.def Info: images/Dswing/arm.pdf  used on input line 702.
 (pdftex.def)             Requested size: 298.86583pt x 63.98889pt.
-<images/Dswing/pend.pdf, id=2231, 1195.46625pt x 255.95625pt>
+<images/Dswing/pend.pdf, id=2229, 1195.46625pt x 255.95625pt>
 File: images/Dswing/pend.pdf Graphic file (type pdf)
 <use images/Dswing/pend.pdf>
-Package pdftex.def Info: images/Dswing/pend.pdf  used on input line 697.
+Package pdftex.def Info: images/Dswing/pend.pdf  used on input line 702.
 (pdftex.def)             Requested size: 298.86583pt x 63.98889pt.
-<images/Dswing/control.pdf, id=2232, 1195.46625pt x 255.95625pt>
+<images/Dswing/control.pdf, id=2230, 1195.46625pt x 255.95625pt>
 File: images/Dswing/control.pdf Graphic file (type pdf)
 <use images/Dswing/control.pdf>
-Package pdftex.def Info: images/Dswing/control.pdf  used on input line 697.
+Package pdftex.def Info: images/Dswing/control.pdf  used on input line 702.
 (pdftex.def)             Requested size: 298.86583pt x 63.98889pt.
  [36
 
@@ -2224,32 +2224,32 @@ Package pdftex.def Info: images/Dswing/control.pdf  used on input line 697.
 pdf>]
 File: images/Dswing/pend.pdf Graphic file (type pdf)
 <use images/Dswing/pend.pdf>
-Package pdftex.def Info: images/Dswing/pend.pdf  used on input line 726.
+Package pdftex.def Info: images/Dswing/pend.pdf  used on input line 731.
 (pdftex.def)             Requested size: 298.86583pt x 63.98889pt.
 File: images/Dswing/control.pdf Graphic file (type pdf)
 <use images/Dswing/control.pdf>
-Package pdftex.def Info: images/Dswing/control.pdf  used on input line 726.
+Package pdftex.def Info: images/Dswing/control.pdf  used on input line 731.
 (pdftex.def)             Requested size: 298.86583pt x 63.98889pt.
  [37
 
 ]
 File: images/Dswing/pend.pdf Graphic file (type pdf)
 <use images/Dswing/pend.pdf>
-Package pdftex.def Info: images/Dswing/pend.pdf  used on input line 755.
+Package pdftex.def Info: images/Dswing/pend.pdf  used on input line 760.
 (pdftex.def)             Requested size: 298.86583pt x 63.98889pt.
 File: images/Dswing/control.pdf Graphic file (type pdf)
 <use images/Dswing/control.pdf>
-Package pdftex.def Info: images/Dswing/control.pdf  used on input line 755.
+Package pdftex.def Info: images/Dswing/control.pdf  used on input line 760.
 (pdftex.def)             Requested size: 298.86583pt x 63.98889pt.
  [38
 
 ] [39
 
 ]
-<images/furuta.png, id=2490, 283.0575pt x 287.57437pt>
+<images/furuta.png, id=2488, 283.0575pt x 287.57437pt>
 File: images/furuta.png Graphic file (type png)
 <use images/furuta.png>
-Package pdftex.def Info: images/furuta.png  used on input line 788.
+Package pdftex.def Info: images/furuta.png  used on input line 793.
 (pdftex.def)             Requested size: 155.6821pt x 158.16638pt.
  [40
 
@@ -2266,18 +2266,18 @@ Package pdftex.def Info: images/furuta.png  used on input line 788.
 
 
 AED: lastpage setting LastPage
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 789.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 789.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 794.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 794.
 (main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 789.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 789.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 794.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 794.
 Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: 63483FE25D51AD0671DEF08D2A0EB053;603.
  ) 
 Here is how much of TeX's memory you used:
  37803 strings out of 492895
  728835 string characters out of 3133491
- 870336 words of memory out of 3000000
+ 871339 words of memory out of 3000000
  40839 multiletter control sequences out of 15000+200000
  664591 words of font info for 133 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -2301,9 +2301,9 @@ les/MiKTeX 2.9/fonts/type1/public/lm/lmsy8.pfb><C:/Program Files/MiKTeX 2.9/fon
 ts/type1/public/amsfonts/symbols/msam10.pfb><C:/Program Files/MiKTeX 2.9/fonts/
 type1/public/amsfonts/symbols/msam7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type
 1/public/amsfonts/symbols/msbm10.pfb>
-Output written on main.pdf (40 pages, 2710515 bytes).
+Output written on main.pdf (40 pages, 2710467 bytes).
 PDF statistics:
- 2627 PDF objects out of 2984 (max. 8388607)
+ 2625 PDF objects out of 2984 (max. 8388607)
  91 named destinations out of 1000 (max. 500000)
  39736 words of extra memory for PDF output out of 42996 (max. 10000000)
 

@@ -173,7 +173,7 @@ x_sim(:,end) = [];
 IAE
 %% Plots
 
-path = 'Dswing/';
+path = 'Hswing/';
 
 t = linspace(0,kf*Ts,kf);
 w = 9;
@@ -202,6 +202,6 @@ plot(t,u_sim)
 hold off
 yl = ylabel('$\rm{\tau\;[N\:m]}$','interpreter','latex','FontSize',25);
 xlabel('$\rm{t [s]}$','interpreter','latex','FontSize',25)
-%title('Control Input','FontSize',25)
+title('Control Input','FontSize',25)
 f2p('control', 'Xlim', [0, tf], 'Ytol', 0.05, 'Xtol', 0,...
 'extension', 'pdf', 'dpi', 150, 'Path', path, 'papersize', [l, w], 'Xsplit', 8,'Ysplit',6);

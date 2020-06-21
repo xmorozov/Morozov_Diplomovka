@@ -221,7 +221,7 @@ Parametres
 \end{frame}
 \begin{frame}
 	\frametitle{Derivation of the Mathematical Model}
-	\framesubtitle{State-Space Formulation}
+	\framesubtitle{State-Space Representation}
 	  	\begin{columns}[c]
 		\column{2in}  % slides are 3in high by 5in wide
 State variables
@@ -242,31 +242,36 @@ u(t) = \tau (t)
 \end{frame}
 \begin{frame}
 	\frametitle{Derivation of the Mathematical Model}
-	\framesubtitle{State-Space Formulation}
+	\framesubtitle{State-Space Representation}
 	Non-linear model
-	\begin{equation*}
+	\begin{subequations}
+	\begin{align*}
+	\dot{x}(t) \; \, \, &= f(x(t),u(t))\\ \\
 	\begin{bmatrix}
 	\dot{x}_1(t) \\ \dot{x}_2(t) \\ \dot{x}_3(t) \\ \dot{x}_4(t)
-	\end{bmatrix} = \begin{bmatrix}
+	\end{bmatrix} &= \begin{bmatrix}
 	\dot{\theta}_0\\
 	\frac{\gamma(\epsilon\dot{\theta}_0^2+\rho)-\delta(\tau+\beta\dot{\theta}_1^2-\sigma\dot{\theta}_0\dot{\theta}_1)}{\gamma^2-\alpha\delta}\\
 	\dot{\theta}_1\\
 	\frac{\gamma(\tau+\beta\dot{\theta}_1^2-\sigma\dot{\theta}_0\dot{\theta}_1)-\alpha(\epsilon\dot{\theta}_0^2+\rho)}{\gamma^2-\alpha\delta}
 	\end{bmatrix}
-	\end{equation*}
+	\end{align*}
+	\end{subequations}
 \end{frame}
 \begin{frame}
 	\frametitle{Derivation of the Mathematical Model}
-	\framesubtitle{State-Space Formulation}
+	\framesubtitle{State-Space Representation}
 	Linear model
 	\begin{subequations}
 		\begin{align*}
-		A &=\begin{bmatrix}0&1&0&0\\
+		\dot{x}(t) &= Ax(t) + Bu(t)\\
+		\\
+		A\ \ &=\begin{bmatrix}0&1&0&0\\
 		0&0&\frac{-gL_0l_1^2m_1^2}{(m_1L_0^2+I_0)(m_1l_1^2+I_1)-L_0^2l_1^2m_1^2}&0\\
 		0&0&0&1\\
 		0&0&\frac{gl_1m_1(m_1L_0^2+I_0)}{(m_1L_0^2+I_0)(m_1l_1^2+I_1)-L_0^2l_1^2m_1^2}&0
 		\end{bmatrix}\\
-		B &=	\begin{bmatrix}
+		B\ \  &=	\begin{bmatrix}
 		0\\ 
 		\frac{m_1L_1^2+I_1}{(m_1L_0^2+I_0)(m_1l_1^2+I_1)-L_0^2l_1^2m_1^2}\\
 		0\\
@@ -666,7 +671,7 @@ Weight matrices
 
 \begin{frame}
 	\frametitle{Discussion About Results}
-	Quality criteria:
+	Quality of control criteria:
 	\begin{itemize}
 		\item Settling time\\
 		\item Sum of abslolute error (SAE)\\
@@ -696,7 +701,7 @@ Weight matrices
 	\end{figure}
 \end{frame}
 
-\begin{frame}
+\begin{frame}[t]
 	\frametitle{Discussion About Results}
 	\begin{figure}[H]
 	\begin{subfigure}
@@ -725,7 +730,7 @@ Weight matrices
 \framebreak
 \end{frame}
 
-\begin{frame}
+\begin{frame}[t]
 	\frametitle{Discussion About Results}
 	\begin{figure}[H]
 		\begin{subfigure}
